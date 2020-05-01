@@ -1,6 +1,6 @@
-cost mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-cost UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -17,25 +17,7 @@ cost UserSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
-  },
-  theoreticalMaxes: {
-    squat:{
-      type: Number,
-      required: true
-    },
-    bench:{
-      type: Number,
-      required: true
-    },
-    deadlift:{
-      type: Number,
-      required: true
-    },
-    press:{
-      type: Number,
-      required: true
-    }
   }
-})
+});
 
-module.exports = User = mongoose.Model('user', UserSchema);
+module.exports = User = mongoose.model('user', UserSchema);
