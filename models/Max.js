@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const MaxSchema = new mongoose.Schema({
-  // user: {
-  //   type: UserSchema.Model.ObjectId
-  // },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  },
   date: {
     type: Date,
     default: Date.now
@@ -26,4 +27,4 @@ const MaxSchema = new mongoose.Schema({
   }
 });
 
-module.exports = Max = mongoose.model('max', UserSchema);
+module.exports = Max = mongoose.model('max', MaxSchema);
