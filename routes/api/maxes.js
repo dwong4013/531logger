@@ -48,7 +48,7 @@ router.post(
 );
 
 // @route   Get api/maxes
-// @desc    Get maxes
+// @desc    Get all maxes
 // @access  Private
 
 router.get('/', auth, async (req, res) => {
@@ -62,15 +62,51 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+// @route   Get api/maxes
+// @desc    Get all maxes
+// @access  Private
+
+router.get('/max/:max_id', auth, async (req, res) => {
+  try {
+    const max = await Max.findOne({
+      user: req.user.id,
+      _id: req.params.max_id
+    }).populate('user', ['name']);
+
+    return res.json(max);
+  } catch (err) {
+    if (err.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'Maxes not found' });
+    }
+    return res.status(500).send('Server Error');
+  }
+});
+
 // @route   DELETE api/maxes
 // @desc    Delete a max record based on id
 // @access  Private
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:max_id', auth, async (req, res) => {
   try {
-    await Max.findOneAndDelete({ _id: req.params.id });
+    const max = await Max.findOne({
+      user: req.user.id,
+      _id: req.params.max_id
+    });
+
+    if (!max) {
+      return res
+        .status(401)
+        .json({ msg: 'You are not authorized to delete this record' });
+    }
+
+    await Max.findOneAndDelete({ user: req.user.id, _id: req.params.max_id });
+
     return res.json({ msg: 'Max Deleted' });
   } catch (err) {
+    if (err.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'Maxes not found' });
+    }
+
     return res.status(500).send('Server Error');
   }
 });
