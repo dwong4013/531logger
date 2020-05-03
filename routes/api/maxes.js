@@ -62,11 +62,11 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   Get api/maxes
+// @route   Get api/max
 // @desc    Get all maxes
 // @access  Private
 
-router.get('/max/:max_id', auth, async (req, res) => {
+router.get('/:max_id', auth, async (req, res) => {
   try {
     const max = await Max.findOne({
       user: req.user.id,
