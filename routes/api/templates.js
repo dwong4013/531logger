@@ -28,8 +28,8 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   GET api/templates
-// @desc    Get all templates by user and id
+// @route   GET api/templates/:template_id
+// @desc    Get template by user and id
 // @access  Private
 
 router.get('/:template_id', auth, async (req, res) => {
@@ -60,7 +60,8 @@ router.post(
   [
     auth,
     [
-      check('trainingMax', 'Please enter a Training Max').not().isEmpty(),
+      check('trainingMax', 'Please enter a training max').not().isEmpty(),
+      check('volumeSets', 'Please eneter volume sets').not().isEmpty(),
       check('name', 'Please enter a name for this template').not().isEmpty(),
       check('push', 'Please enter reps for push assistance').not().isEmpty(),
       check('pull', 'Please enter reps for pull assistance').not().isEmpty()
