@@ -6,6 +6,8 @@ import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
+import Maxes from './components/maxes/Maxes';
+import MaxForm from './components/maxes/MaxForm';
 import PrivateRoute from './components/routing/PrivateRoute';
 
 // Redux
@@ -35,6 +37,8 @@ const App = ({ location }) => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/maxes" component={Maxes} />
+            <PrivateRoute exact path="/create-max" component={MaxForm} />
           </Switch>
         </Fragment>
       </Router>

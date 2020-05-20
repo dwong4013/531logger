@@ -53,9 +53,9 @@ router.post(
 
 router.get('/', auth, async (req, res) => {
   try {
-    const maxes = await Max.find({ user: req.user.id }).populate('user', [
-      'name'
-    ]);
+    const maxes = await Max.find({ user: req.user.id })
+      .populate('user', ['name'])
+      .sort({ date: 'desc' });
     return res.json(maxes);
   } catch (err) {
     return res.status(500).send('Server Error');
