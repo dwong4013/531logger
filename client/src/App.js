@@ -9,6 +9,8 @@ import Dashboard from './components/dashboard/Dashboard';
 import Maxes from './components/maxes/Maxes';
 import MaxForm from './components/maxes/MaxForm';
 import PrivateRoute from './components/routing/PrivateRoute';
+import MainTemplates from './components/main-templates/MainTemplates';
+import VolumeTemplates from './components/volume-templates/VolumeTemplates';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -39,6 +41,16 @@ const App = ({ location }) => {
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/maxes" component={Maxes} />
             <PrivateRoute exact path="/create-max" component={MaxForm} />
+            <PrivateRoute
+              exact
+              path="/main-templates"
+              component={MainTemplates}
+            />
+            <PrivateRoute
+              exact
+              path="/volume-templates"
+              component={VolumeTemplates}
+            />
           </Switch>
         </Fragment>
       </Router>

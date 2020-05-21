@@ -9,3 +9,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const GET_MAXES = 'GET_MAXES';
 export const NO_MAXES = 'NO_MAXES';
+export const GET_VOLUME = 'GET_VOLUME';
+export const NO_VOLUME = 'NO_VOLUME';
