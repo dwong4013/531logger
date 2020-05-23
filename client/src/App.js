@@ -11,6 +11,7 @@ import MaxForm from './components/maxes/MaxForm';
 import PrivateRoute from './components/routing/PrivateRoute';
 import MainTemplates from './components/main-templates/MainTemplates';
 import VolumeTemplates from './components/volume-templates/VolumeTemplates';
+import VolumeForm from './components/volume-templates/VolumeForm';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -51,6 +52,7 @@ const App = ({ location }) => {
               path="/volume-templates"
               component={VolumeTemplates}
             />
+            <PrivateRoute exact path="/create-volume" component={VolumeForm} />
           </Switch>
         </Fragment>
       </Router>

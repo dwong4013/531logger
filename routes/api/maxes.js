@@ -14,10 +14,10 @@ router.post(
   [
     auth,
     [
-      check('squat', 'Name is required').not().isEmpty(),
-      check('bench', 'Name is required').not().isEmpty(),
-      check('deadlift', 'Name is required').not().isEmpty(),
-      check('press', 'Name is required').not().isEmpty()
+      check('squat', 'Squat is required').not().isEmpty(),
+      check('bench', 'Bench is required').not().isEmpty(),
+      check('deadlift', 'Deadlift is required').not().isEmpty(),
+      check('press', 'Press is required').not().isEmpty()
     ]
   ],
   async (req, res) => {

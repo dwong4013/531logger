@@ -6,33 +6,57 @@ const TemplateSchema = new mongoose.Schema({
     ref: 'user'
   },
   name: {
-    type: String,
-    required: true
+    type: String
+    // required: true
   },
   trainingMax: {
-    type: Number,
-    required: true
+    type: Number
+    // required: true
   },
-  volumeSets: [
+  week5s: [
     {
       weight: {
-        type: Number,
-        required: true
+        type: Number
+        // required: true
       },
       reps: {
-        type: Number,
-        required: true
+        type: Number
+        // required: true
+      }
+    }
+  ],
+  week3s: [
+    {
+      weight: {
+        type: Number
+        // required: true
+      },
+      reps: {
+        type: Number
+        // required: true
+      }
+    }
+  ],
+  week531: [
+    {
+      weight: {
+        type: Number
+        // required: true
+      },
+      reps: {
+        type: Number
+        // required: true
       }
     }
   ],
   accessoryReps: {
     push: {
-      type: Number,
-      required: true
+      type: Number
+      // required: true
     },
     pull: {
-      type: Number,
-      required: true
+      type: Number
+      // required: true
     }
   }
 });

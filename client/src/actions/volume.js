@@ -1,6 +1,42 @@
-import { GET_VOLUME, NO_VOLUME } from './types';
+import { GET_VOLUME, NO_VOLUME, ADD_VOLUME, VOLUME_ERROR } from './types';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
+import { setAlert } from './alert';
+
+export const createVolume = (formData, history) => async (dispatch) => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.post('/api/templates', formData, config);
+
+    dispatch({
+      type: ADD_VOLUME,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Max Created', 'success'));
+    history.push('/volume-templates');
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: VOLUME_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
 
 export const getVolume = () => async (dispatch) => {
   if (localStorage.token) {

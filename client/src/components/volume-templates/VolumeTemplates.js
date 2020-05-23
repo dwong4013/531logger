@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getVolume } from '../../actions/volume';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
+import { Link } from 'react-router-dom';
 
 const VolumeTemplates = ({ volume: { volume, loading }, getVolume }) => {
   useEffect(() => {
@@ -22,9 +23,9 @@ const VolumeTemplates = ({ volume: { volume, loading }, getVolume }) => {
                 Volume templates accompany your main templates when generating a
                 cycle.
               </p>
-              <a href="create-volume.html" className="btn btn-primary my-2">
+              <Link to="/create-volume" className="btn btn-primary my-2">
                 <i className="fas fa-plus"></i> Create
-              </a>
+              </Link>
               <hr className="my-2" />
               <div
                 className="btn-group"

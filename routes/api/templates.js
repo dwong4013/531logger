@@ -61,7 +61,6 @@ router.post(
     auth,
     [
       check('trainingMax', 'Please enter a training max').not().isEmpty(),
-      check('volumeSets', 'Please eneter volume sets').not().isEmpty(),
       check('name', 'Please enter a name for this template').not().isEmpty(),
       check('push', 'Please enter reps for push assistance').not().isEmpty(),
       check('pull', 'Please enter reps for pull assistance').not().isEmpty()
@@ -74,14 +73,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, trainingMax, volumeSets, push, pull } = req.body;
+    const { name, trainingMax, week5s, week3s, week531, push, pull } = req.body;
 
     // Build template object
     const templateFields = {
       user: req.user.id,
       name,
       trainingMax,
-      volumeSets
+      week5s,
+      week3s,
+      week531
     };
 
     // Build accessories object

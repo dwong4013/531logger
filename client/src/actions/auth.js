@@ -12,20 +12,15 @@ import {
 import setAuthToken from '../utils/setAuthToken';
 
 //Login User
-export const loginUser = ({ email, password }) => async (dispatch) => {
+export const loginUser = (formData) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  const body = JSON.stringify({
-    email,
-    password
-  });
-
   try {
-    const res = await axios.post('/api/auth', body, config);
+    const res = await axios.post('/api/auth', formData, config);
 
     dispatch({
       type: LOGIN_SUCCESS,

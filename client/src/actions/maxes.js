@@ -1,8 +1,7 @@
-import { GET_MAXES, NO_MAXES } from './types';
+import { GET_MAXES, NO_MAXES, ADD_VOLUME } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
-import { loadUser } from './auth';
 
 export const getMaxes = () => async (dispatch) => {
   if (localStorage.token) {
@@ -34,7 +33,13 @@ export const createMax = (formData, history) => async (dispatch) => {
       }
     };
 
-    const res = await axios.post('api/maxes', formData, config);
+    const res = await axios.post('/api/maxes', formData, config);
+
+    dispatch({
+      type: ADD_VOLUME,
+      payload: res.data,
+      loading: true
+    });
 
     dispatch(setAlert('Max Created', 'success'));
     history.push('/maxes');

@@ -1,4 +1,9 @@
-import { GET_VOLUME, NO_VOLUME } from '../actions/types';
+import {
+  GET_VOLUME,
+  NO_VOLUME,
+  VOLUME_ERROR,
+  ADD_VOLUME
+} from '../actions/types';
 
 const initialState = {
   volume: null,
@@ -10,9 +15,17 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case GET_VOLUME:
+    case ADD_VOLUME:
       return {
         ...state,
         volume: payload,
+        loading: false
+      };
+    case VOLUME_ERROR:
+      return {
+        ...state,
+        error: payload,
+        volume: null,
         loading: false
       };
     case NO_VOLUME:

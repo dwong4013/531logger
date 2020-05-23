@@ -11,3 +11,5 @@ export const GET_MAXES = 'GET_MAXES';
 export const NO_MAXES = 'NO_MAXES';
 export const GET_VOLUME = 'GET_VOLUME';
 export const NO_VOLUME = 'NO_VOLUME';
+export const ADD_VOLUME = 'ADD_VOLUME';
+export const VOLUME_ERROR = 'VOLUME_ERROR';

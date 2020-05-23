@@ -1736,6 +1736,19 @@ table tbody {
   border-bottom: 1px solid;
 }
 
+.list-set {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+}
+.list-set ul {
+  display: flex;
+  flex-direction: column;
+}
+.list-set ul li {
+  margin: 0.6rem 0;
+}
+
 .m-1 {
   margin: 0 1rem;
 }
@@ -1910,3 +1923,5 @@ a {
   display: flex;
   justify-content: center;
 }
+
+/*# sourceMappingURL=style.css.map */

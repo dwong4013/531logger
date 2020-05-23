@@ -1,4 +1,4 @@
-import { GET_MAXES, NO_MAXES } from '../actions/types';
+import { GET_MAXES, NO_MAXES, ADD_VOLUME } from '../actions/types';
 
 const initialState = {
   maxes: null,
@@ -10,6 +10,7 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case GET_MAXES:
+    case ADD_VOLUME:
       return {
         ...state,
         maxes: payload,

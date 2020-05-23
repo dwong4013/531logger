@@ -152,7 +152,7 @@ const Dashboard = ({ auth: { isAuthenticated, loading }, logout }) => {
 
 Dashboard.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.bool.isRequired
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
