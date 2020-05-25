@@ -1679,6 +1679,11 @@
   margin: 3rem 0 3rem;
 }
 
+.container-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .horizontal-list {
   list-style: none;
   display: flex;
@@ -1747,6 +1752,11 @@ table tbody {
 }
 .list-set ul li {
   margin: 0.6rem 0;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
 }
 
 .m-1 {

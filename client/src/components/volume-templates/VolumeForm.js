@@ -34,7 +34,7 @@ const VolumeForm = ({ createVolume, history }) => {
 
   // Remaining form data
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value }, history);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Submit form data
@@ -130,6 +130,8 @@ const VolumeForm = ({ createVolume, history }) => {
               onChange={(e) => handleChange(e)}
               name="trainingMax"
               value={trainingMax}
+              min="1"
+              max="100"
               placeholder="Percentage"
             />
           </div>
@@ -138,6 +140,8 @@ const VolumeForm = ({ createVolume, history }) => {
             <div key={idx} className="form-volume">
               <input
                 type="text"
+                min="1"
+                max="100"
                 placeholder={`Set ${idx + 1} Percentage`}
                 name="weight"
                 value={set.weight}
@@ -169,6 +173,8 @@ const VolumeForm = ({ createVolume, history }) => {
             <div key={idx} className="form-volume">
               <input
                 type="text"
+                min="1"
+                max="100"
                 placeholder={`Set ${idx + 1} Percentage`}
                 name="weight"
                 value={set.weight}
@@ -200,6 +206,8 @@ const VolumeForm = ({ createVolume, history }) => {
             <div key={idx} className="form-volume">
               <input
                 type="text"
+                min="1"
+                max="100"
                 placeholder={`Set ${idx + 1} Percentage`}
                 name="weight"
                 value={set.weight}

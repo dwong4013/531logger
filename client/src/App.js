@@ -12,6 +12,8 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import MainTemplates from './components/main-templates/MainTemplates';
 import VolumeTemplates from './components/volume-templates/VolumeTemplates';
 import VolumeForm from './components/volume-templates/VolumeForm';
+import Cycles from './components/cycles/Cycles';
+import CycleForm from './components/cycles/CycleForm';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -53,6 +55,8 @@ const App = ({ location }) => {
               component={VolumeTemplates}
             />
             <PrivateRoute exact path="/create-volume" component={VolumeForm} />
+            <PrivateRoute exact path="/cycles" component={Cycles} />
+            <PrivateRoute exact path="/create-cycle" component={CycleForm} />
           </Switch>
         </Fragment>
       </Router>

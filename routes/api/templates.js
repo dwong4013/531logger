@@ -75,14 +75,28 @@ router.post(
 
     const { name, trainingMax, week5s, week3s, week531, push, pull } = req.body;
 
+    const newTrainingMax = trainingMax / 100;
+
+    const newWeek5s = week5s.map((set) => {
+      return { weight: set.weight / 100, reps: set.reps };
+    });
+
+    const newWeek3s = week3s.map((set) => {
+      return { weight: set.weight / 100, reps: set.reps };
+    });
+
+    const newWeek531 = week531.map((set) => {
+      return { weight: set.weight / 100, reps: set.reps };
+    });
+
     // Build template object
     const templateFields = {
       user: req.user.id,
       name,
-      trainingMax,
-      week5s,
-      week3s,
-      week531
+      trainingMax: newTrainingMax,
+      week5s: newWeek5s,
+      week3s: newWeek3s,
+      week531: newWeek531
     };
 
     // Build accessories object

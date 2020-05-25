@@ -1,9 +1,21 @@
 const mongoose = require('mongoose');
 
 const CycleSchema = new mongoose.Schema({
+  date: {
+    type: Date,
+    default: Date.now
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
+  },
+  main: {
+    type: String,
+    required: true
+  },
+  volume: {
+    type: String,
+    required: true
   },
   week5s: [
     {
@@ -13,10 +25,6 @@ const CycleSchema = new mongoose.Schema({
       },
       workingSets: [
         {
-          set: {
-            type: String,
-            required: true
-          },
           weight: {
             type: Number,
             required: true
@@ -33,10 +41,6 @@ const CycleSchema = new mongoose.Schema({
       ],
       volumeSets: [
         {
-          set: {
-            type: String,
-            required: true
-          },
           weight: {
             type: Number,
             required: true
@@ -79,10 +83,6 @@ const CycleSchema = new mongoose.Schema({
       },
       workingSets: [
         {
-          set: {
-            type: String,
-            required: true
-          },
           weight: {
             type: Number,
             required: true
@@ -99,10 +99,6 @@ const CycleSchema = new mongoose.Schema({
       ],
       volumeSets: [
         {
-          set: {
-            type: String,
-            required: true
-          },
           weight: {
             type: Number,
             required: true
@@ -145,10 +141,6 @@ const CycleSchema = new mongoose.Schema({
       },
       workingSets: [
         {
-          set: {
-            type: String,
-            required: true
-          },
           weight: {
             type: Number,
             required: true
@@ -165,10 +157,6 @@ const CycleSchema = new mongoose.Schema({
       ],
       volumeSets: [
         {
-          set: {
-            type: String,
-            required: true
-          },
           weight: {
             type: Number,
             required: true

@@ -5,8 +5,8 @@ const WorkingSetSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  week5s: {
-    set1: {
+  week5s: [
+    {
       weight: {
         type: Number,
         default: 0.65
@@ -14,84 +14,30 @@ const WorkingSetSchema = new mongoose.Schema({
       reps: {
         type: Number
       }
-    },
-    set2: {
+    }
+  ],
+  week3s: [
+    {
       weight: {
         type: Number,
-        default: 0.75
-      },
-      reps: {
-        type: Number
-      }
-    },
-    set3: {
-      weight: {
-        type: Number,
-        default: 0.85
+        default: 0.65
       },
       reps: {
         type: Number
       }
     }
-  },
-  week3s: {
-    set1: {
+  ],
+  week531: [
+    {
       weight: {
         type: Number,
-        default: 0.7
-      },
-      reps: {
-        type: Number
-      }
-    },
-    set2: {
-      weight: {
-        type: Number,
-        default: 0.8
-      },
-      reps: {
-        type: Number
-      }
-    },
-    set3: {
-      weight: {
-        type: Number,
-        default: 0.9
+        default: 0.65
       },
       reps: {
         type: Number
       }
     }
-  },
-  week531: {
-    set1: {
-      weight: {
-        type: Number,
-        default: 0.75
-      },
-      reps: {
-        type: Number
-      }
-    },
-    set2: {
-      weight: {
-        type: Number,
-        default: 0.85
-      },
-      reps: {
-        type: Number
-      }
-    },
-    set3: {
-      weight: {
-        type: Number,
-        default: 0.95
-      },
-      reps: {
-        type: Number
-      }
-    }
-  }
+  ]
 });
 
 module.exports = WorkingSet = new mongoose.model(
