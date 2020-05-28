@@ -114,4 +114,27 @@ router.post(
   }
 );
 
+// @route   Delete api/templates/:template_id
+// @desc    Delete template id
+// @access  Private
+
+router.delete('/:template_id', auth, async (req, res) => {
+  try {
+    const template = await Template.findById({
+      _id: req.params.template_id
+    });
+
+    if (!req.params.template_id.match(/^[0-9a-fA-F]{24}$/) || !template) {
+      return res.status(404).json({ msg: 'Template not found' });
+    }
+
+    await template.remove();
+
+    res.json({ msg: 'Template removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server Error' });
+  }
+});
+
 module.exports = router;

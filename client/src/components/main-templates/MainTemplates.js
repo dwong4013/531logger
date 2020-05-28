@@ -19,7 +19,7 @@ const MainTemplates = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg my-1">
-              <div className="card btn-card my-2">
+              <div className="card my-2">
                 <div className="card-body">
                   <h1 className="card-title lead">5/3/1</h1>
                   <table>
@@ -50,7 +50,7 @@ const MainTemplates = () => {
                   </table>
                 </div>
               </div>
-              <div className="card btn-card my-2">
+              <div className="card my-2">
                 <div className="card-body">
                   <h1 className="card-title lead">5's Progression</h1>
                   <table>

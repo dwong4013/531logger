@@ -2,12 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 
-const MaxCard = ({ max: { date, squat, bench, deadlift, press } }) => {
+const MaxCard = ({
+  onClick,
+  max: { _id, date, squat, bench, deadlift, press }
+}) => {
   return (
     <div className="row">
       <div className="col-lg my-1">
         <div className="card btn-card">
           <div className="card-body">
+            <button
+              onClick={(e) => onClick(e, _id)}
+              className="close btn btn-danger"
+              type="button"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+
             <h1 className="card-title lead">
               <Moment format="MM/DD/YY">{date}</Moment>
             </h1>

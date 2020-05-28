@@ -112,6 +112,7 @@ const VolumeForm = ({ createVolume, history }) => {
         <h1 className="medium">Create Your Volume Template</h1>
         <p>Enter as many sets as you need.</p>
         <hr className="my-2" />
+        <p>Enter all percentages as whole numbers (Example: 90 = 90%)</p>
         <p className="lead">Template Name</p>
         <form onSubmit={(e) => onSubmit(e)} className="form">
           <div className="form-volume">

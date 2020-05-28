@@ -1,16 +1,19 @@
 import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCycles } from '../../actions/cycles';
+import { getCycles, deleteCycle } from '../../actions/cycles';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import CycleCard from './CycleCard';
 
-const Cycles = ({ cycles: { cycles, loading }, getCycles }) => {
+const Cycles = ({ cycles: { cycles, loading }, getCycles, deleteCycle }) => {
   useEffect(() => {
     getCycles();
-  }, [getCycles]);
+  }, [getCycles, deleteCycle]);
 
+  const onClick = (e, id) => {
+    deleteCycle(id);
+  };
   return (
     <Fragment>
       {loading ? (
@@ -35,10 +38,10 @@ const Cycles = ({ cycles: { cycles, loading }, getCycles }) => {
             <div className="container-row">
               {cycles.length > 0 ? (
                 cycles.map((cycle) => (
-                  <CycleCard key={cycle._id} cycle={cycle} />
+                  <CycleCard onClick={onClick} key={cycle._id} cycle={cycle} />
                 ))
               ) : (
-                <h4>No maxes found...</h4>
+                <h4>No cycles found...</h4>
               )}
             </div>
           </section>
@@ -50,6 +53,7 @@ const Cycles = ({ cycles: { cycles, loading }, getCycles }) => {
 
 Cycles.propTypes = {
   getCycles: PropTypes.func.isRequired,
+  deleteCycle: PropTypes.func.isRequired,
   cycles: PropTypes.object.isRequired
 };
 
@@ -57,4 +61,4 @@ const mapStateToProps = (state) => ({
   cycles: state.cycles
 });
 
-export default connect(mapStateToProps, { getCycles })(Cycles);
+export default connect(mapStateToProps, { getCycles, deleteCycle })(Cycles);

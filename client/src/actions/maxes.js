@@ -1,4 +1,10 @@
-import { GET_MAXES, NO_MAXES, ADD_VOLUME } from './types';
+import {
+  GET_MAXES,
+  NO_MAXES,
+  ADD_VOLUME,
+  DELETE_MAX,
+  MAX_ERROR
+} from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
@@ -49,5 +55,23 @@ export const createMax = (formData, history) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
+  }
+};
+
+export const deleteMax = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/maxes/${id}`);
+
+    dispatch({
+      type: DELETE_MAX,
+      payload: id
+    });
+
+    dispatch(setAlert('Max Removed', 'success'));
+  } catch (err) {
+    dispatch({
+      type: MAX_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
   }
 };

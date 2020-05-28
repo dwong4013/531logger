@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { getCycles } from '../../actions/cycles';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-import DashboardCard from './DashboardCard';
+import WorkoutsCard from './WorkoutsCard';
 
-const Dashboard = ({ cycles: { cycles, loading }, getCycles }) => {
+const Workouts = ({ cycles: { cycles, loading }, getCycles }) => {
   useEffect(() => {
     getCycles();
   }, [getCycles]);
@@ -26,7 +26,8 @@ const Dashboard = ({ cycles: { cycles, loading }, getCycles }) => {
             <div className="jumbotron">
               <h1 className="medium text-primary">Hello, Derrick!</h1>
               <p className="lead text-primary">
-                Here's the main sets of your current cycle.
+                Here's the workouts of your current cycle. Select one to begin a
+                workout.
               </p>
               <hr className="my-4" />
               <div
@@ -64,7 +65,7 @@ const Dashboard = ({ cycles: { cycles, loading }, getCycles }) => {
               <div className="row">
                 {cycles.length > 0 ? (
                   cycles[0][week].map((workout, index) => (
-                    <DashboardCard
+                    <WorkoutsCard
                       key={workout._id}
                       index={index}
                       workout={workout}
@@ -72,7 +73,7 @@ const Dashboard = ({ cycles: { cycles, loading }, getCycles }) => {
                     />
                   ))
                 ) : (
-                  <h4>No cycles found... Begin by creating your maxes</h4>
+                  <h4>No cycles found... </h4>
                 )}
               </div>
             </div>
@@ -83,7 +84,7 @@ const Dashboard = ({ cycles: { cycles, loading }, getCycles }) => {
   );
 };
 
-Dashboard.propTypes = {
+Workouts.propTypes = {
   cycles: PropTypes.object.isRequired,
   getCycles: PropTypes.func.isRequired
 };
@@ -92,4 +93,4 @@ const mapStateToProps = (state) => ({
   cycles: state.cycles
 });
 
-export default connect(mapStateToProps, { getCycles })(Dashboard);
+export default connect(mapStateToProps, { getCycles })(Workouts);

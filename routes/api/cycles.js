@@ -17,7 +17,7 @@ router.get('/', auth, async (req, res) => {
   try {
     const cycles = await Cycle.find({
       user: req.user.id
-    });
+    }).sort({ date: 'desc' });
 
     if (!cycles) {
       return res
@@ -37,11 +37,10 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/:cycle_id', auth, async (req, res) => {
   try {
-    const cycle = await Template.findOne({
+    const cycle = await Cycle.findOne({
       _id: req.params.cycle_id,
       user: req.user.id
     });
-
     if (!cycle) {
       return res
         .status(400)
@@ -58,189 +57,160 @@ router.get('/:cycle_id', auth, async (req, res) => {
 // @desc    Create a cycle
 // @access  Private
 
-router.post('/', auth, async (req, res) => {
-  const { maxId, mainId, volumeId } = req.body;
+router.post(
+  '/',
+  [
+    auth,
+    [
+      check('mainId', 'Please select a Main Template').not().isEmpty(),
+      check('volumeId', 'Please select a Volume Template').not().isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
 
-  const mainTemplate = await WorkingSet.findById(mainId);
-  const volumeTemplate = await Template.findById(volumeId);
-  const maxes = await Max.findById(maxId);
-
-  const generateWeek = (main, volume) => {
-    const exercises = ['squat', 'bench', 'deadlift', 'press'];
-
-    let week = [];
-    for (e = 0; e < exercises.length; e++) {
-      let exerciseMax = maxes[exercises[e]];
-      let workout = {
-        exercise: exercises[e],
-        accessoryReps: {
-          push: volumeTemplate.accessoryReps.push,
-          pull: volumeTemplate.accessoryReps.pull
-        }
-      };
-      mainSetsArray = [];
-      main.map((set, index) =>
-        mainSetsArray.push({
-          weight: exerciseMax * volumeTemplate.trainingMax * set.weight,
-          reps: set.reps
-        })
-      );
-
-      volumeSetsArray = [];
-      volume.map((set, index) =>
-        volumeSetsArray.push({
-          weight: exerciseMax * volumeTemplate.trainingMax * set.weight,
-          reps: set.reps
-        })
-      );
-
-      workout.workingSets = mainSetsArray;
-      workout.volumeSets = volumeSetsArray;
-      week.push(workout);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-    return week;
-  };
 
-  let week5s = generateWeek(mainTemplate.week5s, volumeTemplate.week5s);
+    const { maxId, mainId, volumeId } = req.body;
 
-  let week3s = generateWeek(mainTemplate.week3s, volumeTemplate.week3s);
+    const mainTemplate = await WorkingSet.findById(mainId);
+    const volumeTemplate = await Template.findById(volumeId);
+    const maxes = await Max.findById(maxId);
 
-  let week531 = generateWeek(mainTemplate.week531, volumeTemplate.week531);
+    const round5 = (x) => {
+      return x % 5 >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
+    };
 
-  const newCycle = {
-    user: req.user.id,
-    main: mainTemplate.name,
-    volume: volumeTemplate.name,
-    week5s,
-    week3s,
-    week531
-  };
+    // Generates the workouts for the week (each exercise has a workout)
+    const generateWeek = (main, volume) => {
+      const exercises = ['squat', 'bench', 'deadlift', 'press'];
 
-  // const newCycle = {
-  //   user: req.user.id,
-  //   main: mainTemplate.name,
-  //   volume: volumeTemplate.name,
-  //   week5s: [],
-  //   week3s: [],
-  //   week531: []
-  // };
+      let week = [];
+      for (e = 0; e < exercises.length; e++) {
+        let exerciseMax = maxes[exercises[e]];
 
-  // const exercises = ['squat', 'bench', 'deadlift', 'press'];
-  // const weeks = ['week5s', 'week3s', 'week531'];
+        // Build workout object
+        let workout = {
+          exercise: exercises[e],
+          accessoryReps: {
+            push: volumeTemplate.accessoryReps.push,
+            pull: volumeTemplate.accessoryReps.pull
+          }
+        };
 
-  // // Build week5s
-  // for (w = 0; w < weeks.length; w++) {
-  //   for (i = 0; i < exercises.length; i++) {
-  //     let workingSets = [];
-  //     let volumeSets = [];
+        // Build main sets array
+        mainSetsArray = [];
+        main.map((set) =>
+          mainSetsArray.push({
+            weight: round5(
+              exerciseMax * volumeTemplate.trainingMax * set.weight
+            ),
+            reps: set.reps
+          })
+        );
 
-  //     for (f = 0; f < mainTemplate.week5s.length; f++) {
-  //       workingSets.push({
-  //         weight:
-  //           maxes[i] *
-  //           volumeTemplate.trainingMax *
-  //           mainTemplate.week5s[f].weight,
-  //         reps: week5s[f].reps
-  //       });
-  //     }
+        // Build volume sets array
+        volumeSetsArray = [];
+        volume.map((set) =>
+          volumeSetsArray.push({
+            weight: round5(
+              exerciseMax * volumeTemplate.trainingMax * set.weight
+            ),
+            reps: set.reps
+          })
+        );
 
-  //     for (v = 0; v < volumeTemplate.week5s.length; v++) {
-  //       volumeSets.push({
-  //         weight:
-  //           maxes[i] *
-  //           volumeTemplate.trainingMax *
-  //           volumeTemplate.week5s[v].weight,
-  //         reps: week5s[v].reps
-  //       });
-  //     }
-  //     week5s.push({
-  //       exercise: exercises[i],
-  //       workingSets,
-  //       volumeSets,
-  //       accessoryReps: {
-  //         push: volumeTemplate.push,
-  //         pull: volumeTemplate.pull
-  //       }
-  //     });
-  //   }
-  // }
-  // // Build week3s
-  // for (w = 0; w < weeks.length; w++) {
-  //   for (i = 0; i < exercises.length; i++) {
-  //     let workingSets = [];
-  //     let volumeSets = [];
+        // Put the newly construced arrays into the workout object
+        workout.workingSets = mainSetsArray;
+        workout.volumeSets = volumeSetsArray;
+        week.push(workout);
+      }
+      return week;
+    };
 
-  //     for (f = 0; f < mainTemplate.week3s.length; f++) {
-  //       workingSets.push({
-  //         weight:
-  //           maxes[i] *
-  //           volumeTemplate.trainingMax *
-  //           mainTemplate.week3s[f].weight,
-  //         reps: week3s[f].reps
-  //       });
-  //     }
+    // Generate each weeks workouts
+    let week5s = generateWeek(mainTemplate.week5s, volumeTemplate.week5s);
 
-  //     for (v = 0; v < volumeTemplate.week3s.length; v++) {
-  //       volumeSets.push({
-  //         weight:
-  //           maxes[i] *
-  //           volumeTemplate.trainingMax *
-  //           volumeTemplate.week3s[v].weight,
-  //         reps: week3s[v].reps
-  //       });
-  //     }
-  //     week3s.push({
-  //       exercise: exercises[i],
-  //       workingSets,
-  //       volumeSets,
-  //       accessoryReps: {
-  //         push: volumeTemplate.push,
-  //         pull: volumeTemplate.pull
-  //       }
-  //     });
-  //   }
-  // }
-  // // Build week531
-  // for (w = 0; w < weeks.length; w++) {
-  //   for (i = 0; i < exercises.length; i++) {
-  //     let workingSets = [];
-  //     let volumeSets = [];
+    let week3s = generateWeek(mainTemplate.week3s, volumeTemplate.week3s);
 
-  //     for (f = 0; f < mainTemplate.week531.length; f++) {
-  //       workingSets.push({
-  //         weight:
-  //           maxes[i] *
-  //           volumeTemplate.trainingMax *
-  //           mainTemplate.week531[f].weight,
-  //         reps: week531[f].reps
-  //       });
-  //     }
+    let week531 = generateWeek(mainTemplate.week531, volumeTemplate.week531);
 
-  //     for (v = 0; v < volumeTemplate.week531.length; v++) {
-  //       volumeSets.push({
-  //         weight:
-  //           maxes[i] *
-  //           volumeTemplate.trainingMax *
-  //           volumeTemplate.week531[v].weight,
-  //         reps: week531[v].reps
-  //       });
-  //     }
-  //     week531.push({
-  //       exercise: exercises[i],
-  //       workingSets,
-  //       volumeSets,
-  //       accessoryReps: {
-  //         push: volumeTemplate.push,
-  //         pull: volumeTemplate.pull
-  //       }
-  //     });
-  //   }
-  // }
+    const newCycle = {
+      user: req.user.id,
+      main: mainTemplate.name,
+      volume: volumeTemplate.name,
+      week5s,
+      week3s,
+      week531
+    };
+
+    try {
+      const cycle = new Cycle(newCycle);
+      await cycle.save();
+      return res.json(cycle);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route   Delete api/cycle/:cycle_id
+// @desc    Delete cycle id
+// @access  Private
+
+router.put('/', auth, async (req, res) => {
+  const { cycle_id, week, workout, set_type, set } = req.body;
 
   try {
-    const cycle = new Cycle(newCycle);
+    const cycle = await Cycle.findById({
+      _id: cycle_id,
+      user: req.user.id
+    });
+
+    if (set_type === 'accessoryReps') {
+      cycle[week][workout][set_type].completed = !cycle[week][workout][set_type]
+        .completed;
+    } else {
+      cycle[week][workout][set_type][set].completed = !cycle[week][workout][
+        set_type
+      ][set].completed;
+    }
+
     await cycle.save();
-    return res.json(cycle);
+
+    const cycles = await Cycle.find({
+      user: req.user.id
+    }).sort({ date: 'desc' });
+
+    return res.json(cycles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+module.exports = router;
+
+// @route   GET api/cycle/:cycle_id
+// @desc    Get cycle by user and id
+// @access  Private
+
+router.delete('/:cycle_id', auth, async (req, res) => {
+  try {
+    const cycle = await Cycle.findById({
+      _id: req.params.cycle_id
+    });
+
+    if (!req.params.cycle_id.match(/^[0-9a-fA-F]{24}$/) || !cycle) {
+      return res.status(404).json({ msg: 'Cycle not found' });
+    }
+
+    await cycle.remove();
+
+    res.json({ msg: 'Cycle removed' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

@@ -111,4 +111,27 @@ router.delete('/:max_id', auth, async (req, res) => {
   }
 });
 
+// @route   Delete api/max/:max_id
+// @desc    Delete max id
+// @access  Private
+
+router.delete('/:max_id', auth, async (req, res) => {
+  try {
+    const max = await Max.findById({
+      _id: req.params.max_id
+    });
+
+    if (!req.params.max_id.match(/^[0-9a-fA-F]{24}$/) || !max) {
+      return res.status(404).json({ msg: 'Max not found' });
+    }
+
+    await max.remove();
+
+    res.json({ msg: 'Max removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;

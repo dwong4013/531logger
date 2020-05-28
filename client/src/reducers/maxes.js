@@ -1,4 +1,10 @@
-import { GET_MAXES, NO_MAXES, ADD_VOLUME } from '../actions/types';
+import {
+  GET_MAXES,
+  NO_MAXES,
+  ADD_VOLUME,
+  DELETE_MAX,
+  MAX_ERROR
+} from '../actions/types';
 
 const initialState = {
   maxes: null,
@@ -20,6 +26,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         maxes: null,
+        loading: false
+      };
+    case MAX_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false
+      };
+    case DELETE_MAX:
+      return {
+        ...state,
+        maxes: state.maxes.filter((max) => max._id !== payload),
         loading: false
       };
     default:

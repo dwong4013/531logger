@@ -1,4 +1,10 @@
-import { GET_VOLUME, NO_VOLUME, ADD_VOLUME, VOLUME_ERROR } from './types';
+import {
+  GET_VOLUME,
+  NO_VOLUME,
+  ADD_VOLUME,
+  DELETE_VOLUME,
+  VOLUME_ERROR
+} from './types';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
 import { setAlert } from './alert';
@@ -52,6 +58,26 @@ export const getVolume = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: NO_VOLUME
+    });
+  }
+};
+
+export const deleteVolume = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/templates/${id}`);
+
+    dispatch({
+      type: DELETE_VOLUME,
+      payload: id,
+      loading: true
+    });
+
+    dispatch(setAlert('Volume Template Removed', 'success'));
+  } catch (err) {
+    console.log('err response', err);
+    dispatch({
+      type: VOLUME_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 };

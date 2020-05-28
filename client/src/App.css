@@ -1600,7 +1600,7 @@
   background: #86c7c1;
 }
 .btn:hover {
-  background: #59b5b5;
+  background: #5a7c9f;
   color: #fff;
 }
 .btn.btn-large {
@@ -1617,7 +1617,7 @@
   width: 100%;
 }
 .btn-card:hover {
-  background: #59b5b5;
+  background: #5a7c9f;
   color: #fff;
 }
 .btn-card ul {
@@ -1628,6 +1628,16 @@
 }
 .btn-card ul.hor {
   flex-direction: column;
+}
+
+.card button {
+  margin-left: 90%;
+  border-radius: 10px;
+  padding: 0.2rem 0.7rem;
+}
+.card button:hover {
+  background: #59b5b5;
+  color: #fff;
 }
 
 .alert {

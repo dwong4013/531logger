@@ -1,14 +1,24 @@
 import React, { Fragment } from 'react';
 
 const VolumeCard = ({
-  volume: { name, trainingMax, week5s, week3s, week531, accessoryReps }
+  onClick,
+  volume: { _id, name, trainingMax, week5s, week3s, week531, accessoryReps }
 }) => {
   return (
     <Fragment>
       <div className="row">
         <div className="col-lg my-1">
-          <div className="card btn-card my-2">
+          <div className="card my-2">
             <div className="card-body">
+              <button
+                onClick={(e) => onClick(e, _id)}
+                className="close btn btn-danger"
+                type="button"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+
               <h1 className="card-title lead">{name}</h1>
               <p>Training Max: {trainingMax * 100}%</p>
               <p>Accessory Push Reps: {accessoryReps.push} reps</p>

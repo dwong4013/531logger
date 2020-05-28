@@ -14,6 +14,8 @@ import VolumeTemplates from './components/volume-templates/VolumeTemplates';
 import VolumeForm from './components/volume-templates/VolumeForm';
 import Cycles from './components/cycles/Cycles';
 import CycleForm from './components/cycles/CycleForm';
+import Workouts from './components/workouts/Workouts';
+import Workout from './components/workout/Workout';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -57,6 +59,12 @@ const App = ({ location }) => {
             <PrivateRoute exact path="/create-volume" component={VolumeForm} />
             <PrivateRoute exact path="/cycles" component={Cycles} />
             <PrivateRoute exact path="/create-cycle" component={CycleForm} />
+            <PrivateRoute exact path="/workouts" component={Workouts} />
+            <PrivateRoute
+              exact
+              path="/workout/:week/:index"
+              component={Workout}
+            />
           </Switch>
         </Fragment>
       </Router>
