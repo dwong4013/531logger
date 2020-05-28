@@ -1,21 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Landing from './components/layout/Landing';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
-import Alert from './components/layout/Alert';
 import Navbar from './components/layout/Navbar';
-import Dashboard from './components/dashboard/Dashboard';
-import Maxes from './components/maxes/Maxes';
-import MaxForm from './components/maxes/MaxForm';
-import PrivateRoute from './components/routing/PrivateRoute';
-import MainTemplates from './components/main-templates/MainTemplates';
-import VolumeTemplates from './components/volume-templates/VolumeTemplates';
-import VolumeForm from './components/volume-templates/VolumeForm';
-import Cycles from './components/cycles/Cycles';
-import CycleForm from './components/cycles/CycleForm';
-import Workouts from './components/workouts/Workouts';
-import Workout from './components/workout/Workout';
+import Routes from './components/routing/Routes';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -39,33 +26,7 @@ const App = ({ location }) => {
         <Fragment>
           <Navbar />
           <Route exact path="/" component={Landing} />
-          <Alert />
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            <PrivateRoute exact path="/maxes" component={Maxes} />
-            <PrivateRoute exact path="/create-max" component={MaxForm} />
-            <PrivateRoute
-              exact
-              path="/main-templates"
-              component={MainTemplates}
-            />
-            <PrivateRoute
-              exact
-              path="/volume-templates"
-              component={VolumeTemplates}
-            />
-            <PrivateRoute exact path="/create-volume" component={VolumeForm} />
-            <PrivateRoute exact path="/cycles" component={Cycles} />
-            <PrivateRoute exact path="/create-cycle" component={CycleForm} />
-            <PrivateRoute exact path="/workouts" component={Workouts} />
-            <PrivateRoute
-              exact
-              path="/workout/:week/:index"
-              component={Workout}
-            />
-          </Switch>
+          <Route component={Routes} />
         </Fragment>
       </Router>
     </Provider>
