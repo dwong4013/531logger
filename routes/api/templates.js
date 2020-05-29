@@ -62,6 +62,15 @@ router.post(
     [
       check('trainingMax', 'Please enter a training max').not().isEmpty(),
       check('name', 'Please enter a name for this template').not().isEmpty(),
+      check('week5s', 'Please enter at least one set for 5s Week')
+        .not()
+        .isEmpty(),
+      check('week3s', 'Please enter at least one set for 3s Week')
+        .not()
+        .isEmpty(),
+      check('week531', 'Please enter at least one set for 5/3/1 Week')
+        .not()
+        .isEmpty(),
       check('push', 'Please enter reps for push assistance').not().isEmpty(),
       check('pull', 'Please enter reps for pull assistance').not().isEmpty()
     ]

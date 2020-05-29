@@ -9,7 +9,7 @@ const MaxCard = ({
   return (
     <div className="row">
       <div className="col-lg my-1">
-        <div className="card btn-card">
+        <div className="card">
           <div className="card-body">
             <button
               onClick={(e) => onClick(e, _id)}
@@ -23,7 +23,7 @@ const MaxCard = ({
             <h1 className="card-title lead">
               <Moment format="MM/DD/YY">{date}</Moment>
             </h1>
-            <ul>
+            <ul className="horizontal-list">
               <li className="p-1 lead">Squat: {squat}</li>
               <li className="p-1 lead">Bench: {bench}</li>
               <li className="p-1 lead">Deadlift: {deadlift}</li>

@@ -5,7 +5,11 @@ import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 import DashboardCard from './DashboardCard';
 
-const Dashboard = ({ cycles: { cycles, loading }, getCycles }) => {
+const Dashboard = ({
+  auth: { user },
+  cycles: { cycles, loading },
+  getCycles
+}) => {
   useEffect(() => {
     getCycles();
   }, [getCycles]);
@@ -24,7 +28,7 @@ const Dashboard = ({ cycles: { cycles, loading }, getCycles }) => {
         <Fragment>
           <section className="container-dash">
             <div className="jumbotron">
-              <h1 className="medium text-primary">Hello, Derrick!</h1>
+              <h1 className="medium text-primary">Hello, {user.name}!</h1>
               <p className="lead text-primary">
                 Here's the main sets of your current cycle.
               </p>
@@ -85,11 +89,13 @@ const Dashboard = ({ cycles: { cycles, loading }, getCycles }) => {
 
 Dashboard.propTypes = {
   cycles: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   getCycles: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  cycles: state.cycles
+  cycles: state.cycles,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getCycles })(Dashboard);

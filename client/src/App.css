@@ -1752,13 +1752,13 @@ table tbody {
 }
 
 .list-set {
-  list-style: none;
   display: flex;
   justify-content: space-evenly;
 }
 .list-set ul {
   display: flex;
   flex-direction: column;
+  list-style: none;
 }
 .list-set ul li {
   margin: 0.6rem 0;

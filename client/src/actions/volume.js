@@ -28,7 +28,7 @@ export const createVolume = (formData, history) => async (dispatch) => {
       payload: res.data
     });
 
-    dispatch(setAlert('Max Created', 'success'));
+    dispatch(setAlert('Volume Template Created', 'success'));
     history.push('/volume-templates');
   } catch (err) {
     const errors = err.response.data.errors;
