@@ -20,6 +20,8 @@
     "uuid": "^8.0.0"
   },
   "scripts": {
+    "dev": "npm run start",
+    "css": "sass --watch --poll ./src/scss/style.scss ./src/css/style.css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -41,5 +43,7 @@
     ]
   },
   "proxy": "http://localhost:5000",
-  "devDependencies": {}
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
 }
