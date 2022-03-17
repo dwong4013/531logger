@@ -1,7 +1,387 @@
+.m-1 {
+  margin: 1rem;
+}
+
+.mx-1 {
+  margin: 0 1rem;
+}
+
+.my-1 {
+  margin: 1rem 0;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.px-1 {
+  padding: 0 1rem;
+}
+
+.py-1 {
+  padding: 1rem 0;
+}
+
+.m-2 {
+  margin: 2rem;
+}
+
+.mx-2 {
+  margin: 0 2rem;
+}
+
+.my-2 {
+  margin: 2rem 0;
+}
+
+.p-2 {
+  padding: 2rem;
+}
+
+.px-2 {
+  padding: 0 2rem;
+}
+
+.py-2 {
+  padding: 2rem 0;
+}
+
+.m-3 {
+  margin: 3rem;
+}
+
+.mx-3 {
+  margin: 0 3rem;
+}
+
+.my-3 {
+  margin: 3rem 0;
+}
+
+.p-3 {
+  padding: 3rem;
+}
+
+.px-3 {
+  padding: 0 3rem;
+}
+
+.py-3 {
+  padding: 3rem 0;
+}
+
+.m-4 {
+  margin: 4rem;
+}
+
+.mx-4 {
+  margin: 0 4rem;
+}
+
+.my-4 {
+  margin: 4rem 0;
+}
+
+.p-4 {
+  padding: 4rem;
+}
+
+.px-4 {
+  padding: 0 4rem;
+}
+
+.py-4 {
+  padding: 4rem 0;
+}
+
+.m-5 {
+  margin: 5rem;
+}
+
+.mx-5 {
+  margin: 0 5rem;
+}
+
+.my-5 {
+  margin: 5rem 0;
+}
+
+.p-5 {
+  padding: 5rem;
+}
+
+.px-5 {
+  padding: 0 5rem;
+}
+
+.py-5 {
+  padding: 5rem 0;
+}
+
+.bg-primary {
+  background-color: #EB5550;
+  color: #FFFFFF;
+}
+.bg-light {
+  background-color: #FFFFFF;
+  color: #4F4F4F;
+}
+.bg-dark {
+  background-color: #4F4F4F;
+  color: #FFFFFF;
+}
+.bg-success {
+  background-color: #91CB3E;
+  color: #FFFFFF;
+}
+.bg-danger {
+  background-color: #A13D63;
+  color: #FFFFFF;
+}
+.bg-warning {
+  background-color: #EEE82C;
+  color: #FFFFFF;
+}
+
+.btn {
+  background-color: #4F4F4F;
+  color: #FFFFFF;
+  width: 120px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0.15rem 0;
+  font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease-in;
+}
+.btn.btn-primary {
+  background-color: #EB5550;
+  color: #FFFFFF;
+}
+.btn.btn-primary:hover {
+  background: #f0817e;
+}
+.btn.btn-primary-dark {
+  background-color: #e62922;
+  color: #FFFFFF;
+}
+.btn.btn-primary-dark:hover {
+  background-color: #f0817e;
+  color: #4F4F4F;
+}
+.btn.btn-light {
+  background-color: #f0817e;
+  color: #4F4F4F;
+}
+.btn.btn-light:hover {
+  background-color: #e62922;
+  color: #FFFFFF;
+}
+.btn.btn-dark {
+  background-color: #4F4F4F;
+  color: #FFFFFF;
+}
+.btn.btn-dark:hover {
+  background-color: dimgray;
+  color: #FFFFFF;
+}
+.btn.btn-small {
+  border-radius: 10px;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.4rem;
+  width: 80px;
+}
+.btn.btn-large {
+  border-radius: 10px;
+  font-size: 1.2rem;
+  padding: 0.35rem 0;
+  width: 150px;
+}
+
+.text {
+  margin-bottom: 1rem;
+}
+.text-small {
+  font-size: 0.8rem;
+}
+.text-regular {
+  font-size: 1rem;
+}
+.text-medium {
+  font-size: 2rem;
+}
+.text-large {
+  font-size: 3rem;
+}
+.text-x-large {
+  font-size: 4rem;
+}
+.text-primary {
+  color: #EB5550;
+}
+.text-dark {
+  color: #4F4F4F;
+}
+
+.m-1 {
+  margin: 1rem;
+}
+
+.mx-1 {
+  margin: 0 1rem;
+}
+
+.my-1 {
+  margin: 1rem 0;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.px-1 {
+  padding: 0 1rem;
+}
+
+.py-1 {
+  padding: 1rem 0;
+}
+
+.m-2 {
+  margin: 2rem;
+}
+
+.mx-2 {
+  margin: 0 2rem;
+}
+
+.my-2 {
+  margin: 2rem 0;
+}
+
+.p-2 {
+  padding: 2rem;
+}
+
+.px-2 {
+  padding: 0 2rem;
+}
+
+.py-2 {
+  padding: 2rem 0;
+}
+
+.m-3 {
+  margin: 3rem;
+}
+
+.mx-3 {
+  margin: 0 3rem;
+}
+
+.my-3 {
+  margin: 3rem 0;
+}
+
+.p-3 {
+  padding: 3rem;
+}
+
+.px-3 {
+  padding: 0 3rem;
+}
+
+.py-3 {
+  padding: 3rem 0;
+}
+
+.m-4 {
+  margin: 4rem;
+}
+
+.mx-4 {
+  margin: 0 4rem;
+}
+
+.my-4 {
+  margin: 4rem 0;
+}
+
+.p-4 {
+  padding: 4rem;
+}
+
+.px-4 {
+  padding: 0 4rem;
+}
+
+.py-4 {
+  padding: 4rem 0;
+}
+
+.m-5 {
+  margin: 5rem;
+}
+
+.mx-5 {
+  margin: 0 5rem;
+}
+
+.my-5 {
+  margin: 5rem 0;
+}
+
+.p-5 {
+  padding: 5rem;
+}
+
+.px-5 {
+  padding: 0 5rem;
+}
+
+.py-5 {
+  padding: 5rem 0;
+}
+
 body {
-  font-family: "Open Sans";
-  color: "green";
-  background-color: "red";
+  font-family: "Ubuntu";
+  margin: 0;
+}
+
+.logo {
+  filter: drop-shadow(0 0 4rem white);
+}
+
+.app-name {
+  filter: drop-shadow(0 0 4rem white);
+  font-weight: lighter;
+}
+
+.container-landing {
+  height: 100vh;
+}
+
+.landing-items {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+.landing-items a {
+  margin: 0 0.5rem;
+}
+
+.container-flex {
+  display: flex;
+}
+.container-flex.container-vertical {
+  flex-direction: column;
+}
+.container-flex.container-horizontal {
+  flex-direction: row;
 }
 
 /*# sourceMappingURL=style.css.map */
