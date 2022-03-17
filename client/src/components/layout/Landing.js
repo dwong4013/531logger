@@ -4,19 +4,20 @@ import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <Fragment>
-      <section className="landing">
-        <div className="dark-overlay">
-          <div className="landing-inner">
-            <h1 className="x-large">531</h1>
-            <p className="lead">Track your progress</p>
-            <div className="buttons">
-              <Link className="btn btn-primary" to="/register">
-                Sign Up
-              </Link>
-              <Link className="btn" to="/login">
-                Login
-              </Link>
-            </div>
+      <section className="container-landing">
+        <div className="landing-items container-flex container-vertical bg-primary">
+            <i className="logo fa-solid fa-dumbbell fa-8x">
+            </i>
+            <h1 className="app-name text text-large">
+              More Plates
+            </h1>
+          <div className="buttons container-flex container-horizontal my-2">
+            <Link to="/login" className="btn btn-large btn-primary-dark">
+              Login
+            </Link>
+            <Link to="register" className="btn btn-large btn-light">
+              Register
+            </Link>
           </div>
         </div>
       </section>
