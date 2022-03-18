@@ -4,6 +4,7 @@ $light-color: #FFFFFF;
 $danger-color: #A13D63;
 $success-color: #91CB3E;
 $warning-color: #EEE82C;
+$font-family: 'Ubuntu';
 
 // Set text color based on background
 @function set-text-color($color) {

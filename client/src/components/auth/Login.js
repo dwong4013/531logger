@@ -27,42 +27,39 @@ const Login = ({ loginUser, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Log In</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i> Log Into Your Account
-      </p>
-      <form
-        action="dashboard.html"
-        className="form"
-        onSubmit={(e) => onSubmit(e)}
-      >
-        <div className="form-group">
-          <input
-            onChange={(e) => handleChange(e)}
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            value={email}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <input
-            onChange={(e) => handleChange(e)}
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-          />
-        </div>
-        <input type="submit" value="Login" className="btn btn-primary" />
-      </form>
-      <p className="my-1">
-        Don't have an account?{' '}
-        <Link to="/register" className="text-primary">
-          Register
-        </Link>
-      </p>
+      <div className="container-flex container-vertical container-vertical-center">
+        <h1 className="text-dark text-large">Welcome Back!</h1>
+        <p className="text-primary text-medium">
+          Log into your account
+        </p>
+        <form
+          className="form-center"
+          onSubmit={(e) => onSubmit(e)}
+        >
+            <input
+              onChange={(e) => handleChange(e)}
+              type="email"
+              placeholder="Email Address"
+              name="email"
+              value={email}
+              required
+            />
+            <input
+              onChange={(e) => handleChange(e)}
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+            />
+          <input className="btn btn-primary" type="submit" value="Login"/>
+        </form>
+        <p className="my-1 text-dark text-small">
+          Don't have an account? {' '}
+          <Link to="/register" className="text-primary text-small">
+            Register
+          </Link>
+        </p>
+      </div>
     </Fragment>
   );
 };

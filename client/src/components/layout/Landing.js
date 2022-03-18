@@ -5,7 +5,7 @@ const Landing = () => {
   return (
     <Fragment>
       <section className="container-landing">
-        <div className="landing-items container-flex container-vertical bg-primary">
+        <div className="landing-items container-flex container-vertical container-vertical-center bg-primary">
             <i className="logo fa-solid fa-dumbbell fa-8x">
             </i>
             <h1 className="app-name text text-large">
