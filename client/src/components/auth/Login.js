@@ -27,13 +27,12 @@ const Login = ({ loginUser, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <div className="container-flex container-vertical container-vertical-center">
-        <h1 className="text-dark text-large">Welcome Back!</h1>
-        <p className="text-primary text-medium">
+      <div className="container-flex container-vertical container-vertical-center mx-2">
+        <h1 className="text-primary text-large">Welcome Back!</h1>
+        <p className="text-dark text-medium">
           Log into your account
         </p>
         <form
-          className="form-center"
           onSubmit={(e) => onSubmit(e)}
         >
             <input

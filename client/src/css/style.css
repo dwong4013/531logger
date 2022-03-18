@@ -353,6 +353,7 @@ form input[type=password] {
   margin: 1rem 0;
   width: calc(100% - 1rem);
   padding: 0.4rem 0.5rem;
+  font-family: "Ubuntu";
   font-size: 1.5rem;
   border-top-style: none;
   border-left-style: none;
@@ -377,9 +378,6 @@ form input[type=submit] {
   width: 100%;
   padding: 0.35rem 0;
   font-size: 1.2rem;
-}
-form .form-center {
-  justify-content: center;
 }
 
 body {

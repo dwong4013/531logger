@@ -35,16 +35,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i> Create Your Account
-      </p>
-      <form
-        action="dashboard.html"
-        className="form"
-        onSubmit={(e) => onSubmit(e)}
-      >
-        <div className="form-group">
+      <div className="container-flex container-vertical container-vertical-center mx-2">
+        <h1 className="text-primary text-large">Welcome Aboard!</h1>
+        <p className="text-medium text-dark">
+          Register a new account
+        </p>
+        <form
+          onSubmit={(e) => onSubmit(e)}
+        >
           <input
             onChange={(e) => handleChange(e)}
             type="text"
@@ -52,8 +50,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             name="name"
             value={name}
           />
-        </div>
-        <div className="form-group">
           <input
             onChange={(e) => handleChange(e)}
             type="email"
@@ -61,8 +57,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             name="email"
             value={email}
           />
-        </div>
-        <div className="form-group">
           <input
             onChange={(e) => handleChange(e)}
             type="password"
@@ -70,8 +64,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             name="password"
             value={password}
           />
-        </div>
-        <div className="form-group">
           <input
             onChange={(e) => handleChange(e)}
             type="password"
@@ -79,15 +71,15 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             name="password2"
             value={password2}
           />
-        </div>
-        <input type="submit" value="Register" className="btn btn-primary" />
-      </form>
-      <p className="my-1">
-        Already have an account?{' '}
-        <Link to="/login" className="text-primary">
-          Login
-        </Link>
-      </p>
+          <input type="submit" value="Register" className="btn btn-primary" />
+        </form>
+        <p className="my-1 text-dark text-small">
+          Already have an account?{' '}
+          <Link to="/login" className="text-primary">
+            Login
+          </Link>
+        </p>
+      </div>
     </Fragment>
   );
 };
