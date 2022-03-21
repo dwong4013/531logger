@@ -138,3 +138,22 @@ body {
     }
 }
 
+.big-action {
+    width: 80%;
+    min-width: 480px;
+    max-width: 880px;
+
+        @media (max-width: 414px) {
+        min-width: 300px;
+        max-width: 340px;
+
+    }
+
+    button {
+        float: right;
+    }
+
+    .btn-back {
+        float: left;
+    }
+}

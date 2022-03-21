@@ -1,9 +1,12 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCycles, updateSetCompleted } from '../../actions/cycles';
 import WorkoutCard from '../workout/WorkoutCard';
+import SummaryCard from '../dashboard/SummaryCard';
+import CycleCard from '../dashboard/CycleCard';
+
 
 const Workout = ({
   getCycles,
@@ -13,7 +16,16 @@ const Workout = ({
 }) => {
   useEffect(() => {
     getCycles();
+    window.matchMedia('(max-width: 414px)').addEventListener('change', mediaHandler)
   }, [getCycles]);
+
+  const [desktop, setDesktop] = useState(window.matchMedia('(max-width: 414px)').matches)
+
+  const mediaHandler = e => {
+    console.log(e.matches)
+    setDesktop(e.matches)
+  }
+
 
   const onClick = (e, setType, index = 0) => {
     if (setType === 'accessoryReps') {
@@ -36,95 +48,23 @@ const Workout = ({
 
   return (
     <Fragment>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Fragment>
-          <section className="container-dash">
-            <div>
-              <h2 className="medium">Working Sets</h2>
-              <hr className="my-2" />
-              <div className="container-row">
-                {cycles.length > 0 ? (
-                  cycles[0][match.params.week][
-                    match.params.index
-                  ].workingSets.map((set, index) => (
-                    <WorkoutCard
-                      onClick={onClick}
-                      setType="workingSets"
-                      key={set._id}
-                      set={set}
-                      index={index}
-                    />
-                  ))
-                ) : (
-                  <h4>No working sets found...</h4>
-                )}
-              </div>
-            </div>
-            <div>
-              <h2 className="medium">Volume Sets</h2>
-              <hr className="my-2" />
-              <div className="container-row">
-                {cycles.length > 0 ? (
-                  cycles[0][match.params.week][
-                    match.params.index
-                  ].volumeSets.map((set, index) => (
-                    <WorkoutCard
-                      onClick={onClick}
-                      setType="volumeSets"
-                      key={set._id}
-                      set={set}
-                      index={index}
-                    />
-                  ))
-                ) : (
-                  <h4>No working sets found...</h4>
-                )}
-              </div>
-            </div>
-            <div>
-              <h2 className="medium">AccessoryReps</h2>
-              <hr className="my-2" />
-              <div className="container-row">
-                <div className="col-lg-3 col-md-6 my-1">
-                  <div
-                    onClick={(e) => onClick(e, 'accessoryReps')}
-                    className="card btn"
-                  >
-                    <div className="card-body">
-                      <h1 className="card-title lead"></h1>
-                      <p>
-                        {cycles[0][match.params.week][match.params.index]
-                          .accessoryReps.completed && (
-                          <i
-                            className="fas fa-check"
-                            style={{ color: 'green' }}
-                          ></i>
-                        )}
-                      </p>
-                      <p className="card-text">
-                        Push:{' '}
-                        {
-                          cycles[0][match.params.week][match.params.index]
-                            .accessoryReps.push
-                        }
-                      </p>
-                      <p className="card-text">
-                        Pull:{' '}
-                        {
-                          cycles[0][match.params.week][match.params.index]
-                            .accessoryReps.push
-                        }
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </Fragment>
-      )}
+      <section className="summary-container container-flex container-vertical container-vertical-center px-6">
+        <div className="big-action">
+        <button className="btn btn-back btn-icon-left btn-small btn-dark"><i className="fa-solid fa-caret-left"/> back</button>
+        </div>
+        <div className="summary-cards-container container-grid my-2">
+          <SummaryCard title='cycles completed' value='1'/>
+          <SummaryCard light title='repeated weeks' value='0'/>
+          <SummaryCard light={desktop} title='current cycle' value='4'/>
+          <SummaryCard light={!desktop} title='workouts left' value='8'/>
+        </div>
+        <div className="section-header text-dark text-medium">
+          Cycles
+        </div>
+        <CycleCard/>
+        <CycleCard/>
+        <CycleCard current/>
+      </section>
     </Fragment>
   );
 };

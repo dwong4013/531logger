@@ -35,7 +35,7 @@ const Routes = (props) => {
         <PrivateRoute exact path="/cycles" component={Cycles} />
         <PrivateRoute exact path="/create-cycle" component={CycleForm} />
         <PrivateRoute exact path="/workouts" component={Workouts} />
-        <PrivateRoute exact path="/workout/:week/:index" component={Workout} />
+        <Route exact path="/workout" component={Workout} />
       </Switch>
     </Fragment>
   );
