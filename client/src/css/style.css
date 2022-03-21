@@ -172,6 +172,14 @@
   color: #FFFFFF;
 }
 
+.select {
+  background-color: #f5aeac;
+  border-radius: 5px;
+  border: none;
+  color: #4F4F4F;
+  padding: 0.3rem 0.5rem;
+}
+
 .btn {
   display: inline-block;
   background-color: #4F4F4F;
@@ -239,7 +247,8 @@
 }
 .btn.btn-icon-left i {
   float: left;
-  margin-left: 4px;
+  margin-left: 2px;
+  margin-top: 2px;
   justify-self: center;
 }
 
@@ -501,6 +510,8 @@ body p {
 .summary-cards-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 @media (max-width: 414px) {
   .summary-cards-container {
@@ -564,8 +575,6 @@ body p {
   width: 80%;
   min-width: 480px;
   max-width: 880px;
-  display: flex;
-  flex-direction: row;
 }
 @media (max-width: 414px) {
   .cycle-card-container {
@@ -594,22 +603,109 @@ body p {
   }
 }
 
-.big-action {
+.toolbar {
   width: 80%;
   min-width: 480px;
   max-width: 880px;
 }
 @media (max-width: 414px) {
-  .big-action {
+  .toolbar {
     min-width: 300px;
     max-width: 340px;
   }
 }
-.big-action button {
+.toolbar button, .toolbar select {
   float: right;
 }
-.big-action .btn-back {
+.toolbar .btn-back {
   float: left;
+}
+
+.set-actions {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  min-width: 480px;
+  max-width: 880px;
+  margin-bottom: 2rem;
+}
+@media (max-width: 414px) {
+  .set-actions {
+    flex-direction: column;
+    min-width: 300px;
+    max-width: 340px;
+  }
+}
+.set-actions form {
+  flex: 2;
+}
+.set-actions .buttons {
+  flex: 1;
+  flex-grow: 1;
+  margin-left: 1rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+@media (max-width: 414px) {
+  .set-actions .buttons {
+    margin: 0;
+    justify-content: space-evenly;
+  }
+}
+
+.set-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  min-width: 480px;
+  max-width: 880px;
+  margin-bottom: 1rem;
+}
+@media (max-width: 414px) {
+  .set-card-container {
+    min-width: 300px;
+    max-width: 340px;
+  }
+}
+.set-card-details {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr) 4fr 1fr;
+  grid-column-gap: 0.8rem;
+  align-items: center;
+  margin: auto 0;
+}
+@media (max-width: 414px) {
+  .set-card-details {
+    grid-template-columns: repeat(4, 2fr) 1fr;
+  }
+}
+.set-card-details i {
+  color: #828282;
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+.set-card .notes-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem auto 0 auto;
+  width: 60%;
+  align-items: center;
+}
+.set-card .notes-container-toggled {
+  border-bottom-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  border-top-style: solid;
+  border-width: 0.6px;
+  border-color: #4F4F4F;
+}
+.set-card .notes-container .notes {
+  margin: 0.4rem 0;
+}
+.set-card .notes-container i {
+  color: #828282;
 }
 
 /*# sourceMappingURL=style.css.map */

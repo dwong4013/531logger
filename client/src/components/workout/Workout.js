@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCycles, updateSetCompleted } from '../../actions/cycles';
-import WorkoutCard from '../workout/WorkoutCard';
+import SetCard from './SetCard';
 import SummaryCard from '../dashboard/SummaryCard';
 import CycleCard from '../dashboard/CycleCard';
 
@@ -49,21 +49,38 @@ const Workout = ({
   return (
     <Fragment>
       <section className="summary-container container-flex container-vertical container-vertical-center px-6">
-        <div className="big-action">
+        <div className="toolbar">
         <button className="btn btn-back btn-icon-left btn-small btn-dark"><i className="fa-solid fa-caret-left"/> back</button>
+        <select className="select" name="pets" id="pet-select">
+          <option value="squats">Squats</option>
+          <option value="bench">Bench</option>
+          <option value="deadlift">Deadlift</option>
+          <option value="press">Press</option>
+        </select>
         </div>
-        <div className="summary-cards-container container-grid my-2">
+        <div className="summary-cards-container container-grid">
           <SummaryCard title='cycles completed' value='1'/>
           <SummaryCard light title='repeated weeks' value='0'/>
           <SummaryCard light={desktop} title='current cycle' value='4'/>
           <SummaryCard light={!desktop} title='workouts left' value='8'/>
         </div>
-        <div className="section-header text-dark text-medium">
-          Cycles
+        <div className="set-actions">
+          <form>
+            <input type="text" placeholder="notes for current set"/>
+          </form>
+          <div className="buttons container-flex container-horizontal">
+            <button className="btn btn-regular btn-dark"> missed </button>
+            <button className="btn btn-regular btn-primary"> complete </button>
+          </div>
         </div>
-        <CycleCard/>
-        <CycleCard/>
-        <CycleCard current/>
+        <p className="text-small text-dark text-bold my-1">Main Sets</p>
+        <SetCard displayNotes={!desktop}/>
+        <SetCard displayNotes={!desktop}/>
+        <SetCard displayNotes={!desktop}/>
+        <p className="text-small text-dark text-bold my-1">Volume Sets</p>
+        <SetCard displayNotes={!desktop}/>
+        <SetCard displayNotes={!desktop}/>
+        <SetCard displayNotes={!desktop}/>
       </section>
     </Fragment>
   );

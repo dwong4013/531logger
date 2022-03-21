@@ -25,6 +25,16 @@
     }
 }
 
+// Select Menus
+
+.select {
+    background-color: lighten($primary-color, 20%);
+    border-radius: 5px;
+    border: none;
+    color: $dark-color;
+    padding: 0.3rem 0.5rem;
+}
+
 // Buttons
 .btn {
     display: inline-block;
@@ -93,7 +103,8 @@
     &.btn-icon-left {
         i {
             float: left;
-            margin-left: 4px;
+            margin-left: 2px;
+            margin-top: 2px;
             justify-self: center;
         }
     }

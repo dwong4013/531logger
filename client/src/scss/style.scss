@@ -44,6 +44,8 @@ body {
     &-cards-container {
         display: grid;
         grid-template-columns:repeat(4, 1fr);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
     
         @media (max-width: 414px) {
             grid-template-columns: 1fr 1fr;
@@ -106,8 +108,6 @@ body {
     width: 80%;
     min-width: 480px;
     max-width: 880px;
-    display: flex;
-    flex-direction: row;
 
     @media (max-width: 414px) {
         flex-direction: column;
@@ -138,7 +138,8 @@ body {
     }
 }
 
-.big-action {
+
+.toolbar {
     width: 80%;
     min-width: 480px;
     max-width: 880px;
@@ -146,14 +147,107 @@ body {
         @media (max-width: 414px) {
         min-width: 300px;
         max-width: 340px;
-
     }
 
-    button {
+    button, select {
         float: right;
     }
 
     .btn-back {
         float: left;
+    }
+}
+
+.set-actions {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    min-width: 480px;
+    max-width: 880px;
+    margin-bottom: 2rem;
+
+        @media (max-width: 414px) {
+        flex-direction: column;
+        min-width: 300px;
+        max-width: 340px;
+    }
+    form {
+        flex: 2
+    }
+    .buttons {
+        flex: 1;
+        flex-grow: 1;
+        margin-left: 1rem;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+
+        @media (max-width: 414px) {
+            margin: 0;
+            justify-content: space-evenly;
+        }
+    }
+
+}
+
+.set-card {
+    &-container {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        min-width: 480px;
+        max-width: 880px;
+        margin-bottom: 1rem;
+    
+        @media (max-width: 414px) {
+            min-width: 300px;
+            max-width: 340px;
+        }
+    
+    }
+    
+    &-details {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(4,1fr) 4fr 1fr;
+        grid-column-gap: 0.8rem;
+        align-items: center;
+        margin: auto 0;
+
+        @media (max-width: 414px) {
+            grid-template-columns: repeat(4,2fr) 1fr;
+        }
+        
+        i {
+            color: lighten($dark-color,20%);
+            align-self: flex-end;
+            justify-self: flex-end;
+        }
+    }
+
+    .notes-container {
+        display: flex;
+        flex-direction: column;
+        margin: 0.5rem auto 0 auto;
+        width: 60%;
+        align-items: center;
+        
+        &-toggled {
+            border-bottom-style: none;
+            border-left-style: none;
+            border-right-style: none;
+            border-top-style: solid;
+            border-width: 0.6px;
+            border-color: $dark-color; 
+        }
+
+        .notes {
+            margin: 0.4rem 0;
+        }
+
+        i {
+            color: lighten($dark-color,20%);
+        }
+
     }
 }

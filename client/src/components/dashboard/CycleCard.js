@@ -3,7 +3,7 @@ import CardItem from './CardItem'
 
 export default function CycleCard ({ current }) {
   return (
-    <div className="cycle-card-container my-1">
+    <div className="cycle-card-container container-flex container-horizontal my-1">
       <div className="cycle-details-primary">
         <CardItem weight='200lbs' exercise='squat'/>
         <CardItem weight='200lbs' exercise='bench'/>
