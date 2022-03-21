@@ -5,6 +5,9 @@
     &-primary {
         @include set-background($primary-color);
     }
+    &-primary-light {
+        @include set-background(lighten($primary-color, 20%));
+    }
     &-light {
         @include set-background($light-color)
     }
@@ -24,6 +27,7 @@
 
 // Buttons
 .btn {
+    display: inline-block;
     background-color: $dark-color;
     font-family: $font-family;
     color: $light-color;
@@ -83,24 +87,50 @@
 .text {
     margin-bottom: 1rem;
     &-small {
-        font-size: 0.8rem
+        font-size: 0.8rem;
     }
     &-regular {
-        font-size: 1rem
+        font-size: 1rem;
     }
     &-medium {
-        font-size: 2rem
+        font-size: 1.5rem;
+        font-weight: bold;
     }
     &-large {
-        font-size: 3rem
+        font-size: 3rem;
     }
     &-x-large {
-        font-size: 4rem
+        font-size: 4rem;
     }
     &-primary {
-        color: $primary-color
+        color: $primary-color;
     }
     &-dark {
-        color: $dark-color
+        color: $dark-color;
+    }
+    &-bold {
+        font-weight: bold;
+    }
+    &-center {
+        align-self: center;
     }
 }
+
+// Containers
+.container-flex {
+    display: flex;
+
+    &.container-vertical {
+        flex-direction: column;
+
+        &-center {
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &.container-horizontal {
+        flex-direction: row;
+    }
+}
+

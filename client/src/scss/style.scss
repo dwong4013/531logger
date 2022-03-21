@@ -5,7 +5,14 @@
 body {
     font-family: $font-family;
     margin: 0;
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }
+
+// Landing
 
 .logo {
     filter: drop-shadow(0 0 4rem white);
@@ -21,7 +28,6 @@ body {
 }
 
 .landing-items {
-    width: 100%;
     height: 100%;
     margin: auto;
 
@@ -31,19 +37,104 @@ body {
 
 }
 
-.container-flex {
-    display: flex;
+// Workout Summary
 
-    &.container-vertical {
-        flex-direction: column;
+.summary {
 
-        &-center {
-            justify-content: center;
-            align-items: center;
+    &-cards-container {
+        display: grid;
+        grid-template-columns:repeat(4, 1fr);
+    
+        @media (max-width: 414px) {
+            grid-template-columns: 1fr 1fr;
         }
     }
 
-    &.container-horizontal {
-        flex-direction: row;
+    &-container {
+        position: relative;
+        max-width: 100vw;
+        top: 10vh;
+
+    }
+
+    &-card {
+        width: 20vw;
+        min-width: 120px;
+        max-width: 220px;
+        max-height: 80px;
+        @media (max-width: 414px) {
+            min-width: 150px;
+            max-width: 170px;
+        }
+    
+        .title {
+            margin: 0.8rem 0 0 0.8rem;
+            @media (max-width: 414px) {
+                margin: 0.5rem 0 0 0.5rem;
+            }
+        }
+    
+        .value {
+            margin: 0.5rem 0;
+            @media (max-width: 414px) {
+                margin-bottom: 1.3rem;
+            }
+        }
     }
 }
+
+.section-header {
+    width: 80%;
+    min-width: 480px;
+    max-width: 880px;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: solid;
+    text-align: center;
+
+    @media (max-width: 414px) {
+        min-width: 300px;
+        max-width: 340px;
+
+    }
+}
+
+.cycle-card-container {
+    width: 80%;
+    min-width: 480px;
+    max-width: 880px;
+    display: flex;
+    flex-direction: row;
+
+    @media (max-width: 414px) {
+        flex-direction: column;
+        min-width: 300px;
+        gap: 1rem;
+    }
+    
+}
+
+.cycle-details-primary {
+    flex: 4;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.cycle-details-secondary {
+    flex:2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    
+    .action {
+        @media (max-width: 414px) {
+          justify-self: end;  
+        }
+
+    }
+}
+

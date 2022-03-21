@@ -118,9 +118,38 @@
   padding: 5rem 0;
 }
 
+.container-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.container-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.container-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.container-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.container-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
 .bg-primary {
   background-color: #EB5550;
   color: #FFFFFF;
+}
+.bg-primary-light {
+  background-color: #f5aeac;
+  color: #4F4F4F;
 }
 .bg-light {
   background-color: #FFFFFF;
@@ -144,6 +173,7 @@
 }
 
 .btn {
+  display: inline-block;
   background-color: #4F4F4F;
   font-family: "Ubuntu";
   color: #FFFFFF;
@@ -211,7 +241,8 @@
   font-size: 1rem;
 }
 .text-medium {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 .text-large {
   font-size: 3rem;
@@ -224,6 +255,26 @@
 }
 .text-dark {
   color: #4F4F4F;
+}
+.text-bold {
+  font-weight: bold;
+}
+.text-center {
+  align-self: center;
+}
+
+.container-flex {
+  display: flex;
+}
+.container-flex.container-vertical {
+  flex-direction: column;
+}
+.container-flex.container-vertical-center {
+  justify-content: center;
+  align-items: center;
+}
+.container-flex.container-horizontal {
+  flex-direction: row;
 }
 
 .m-1 {
@@ -346,6 +397,31 @@
   padding: 5rem 0;
 }
 
+.container-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.container-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.container-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.container-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.container-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
 form input[type=text],
 form input[type=email],
 form input[type=password] {
@@ -384,6 +460,10 @@ body {
   font-family: "Ubuntu";
   margin: 0;
 }
+body p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
 .logo {
   filter: drop-shadow(0 0 4rem white);
@@ -399,7 +479,6 @@ body {
 }
 
 .landing-items {
-  width: 100%;
   height: 100%;
   margin: auto;
 }
@@ -407,18 +486,100 @@ body {
   margin: 0 0.5rem;
 }
 
-.container-flex {
+.summary-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 414px) {
+  .summary-cards-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.summary-container {
+  position: relative;
+  max-width: 100vw;
+  top: 10vh;
+}
+.summary-card {
+  width: 20vw;
+  min-width: 120px;
+  max-width: 220px;
+  max-height: 80px;
+}
+@media (max-width: 414px) {
+  .summary-card {
+    min-width: 150px;
+    max-width: 170px;
+  }
+}
+.summary-card .title {
+  margin: 0.8rem 0 0 0.8rem;
+}
+@media (max-width: 414px) {
+  .summary-card .title {
+    margin: 0.5rem 0 0 0.5rem;
+  }
+}
+.summary-card .value {
+  margin: 0.5rem 0;
+}
+@media (max-width: 414px) {
+  .summary-card .value {
+    margin-bottom: 1.3rem;
+  }
+}
+
+.section-header {
+  width: 80%;
+  min-width: 480px;
+  max-width: 880px;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-top-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  border-bottom-style: solid;
+  text-align: center;
+}
+@media (max-width: 414px) {
+  .section-header {
+    min-width: 300px;
+    max-width: 340px;
+  }
+}
+
+.cycle-card-container {
+  width: 80%;
+  min-width: 480px;
+  max-width: 880px;
   display: flex;
-}
-.container-flex.container-vertical {
-  flex-direction: column;
-}
-.container-flex.container-vertical-center {
-  justify-content: center;
-  align-items: center;
-}
-.container-flex.container-horizontal {
   flex-direction: row;
+}
+@media (max-width: 414px) {
+  .cycle-card-container {
+    flex-direction: column;
+    min-width: 300px;
+    gap: 1rem;
+  }
+}
+
+.cycle-details-primary {
+  flex: 4;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.cycle-details-secondary {
+  flex: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+}
+@media (max-width: 414px) {
+  .cycle-details-secondary .action {
+    justify-self: end;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
