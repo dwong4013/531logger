@@ -1,9 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { getCycles } from '../../actions/cycles';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-import DashboardCard from './DashboardCard';
+import SummaryCard from './SummaryCard';
+import CycleCard from './CycleCard';
+import CycleForm from '../modals/CycleForm2';
+import Modal from '../modals/Modal';
 
 const Dashboard = ({
   auth: { user },
@@ -12,77 +16,49 @@ const Dashboard = ({
 }) => {
   useEffect(() => {
     getCycles();
+    window.matchMedia('(max-width: 414px)').addEventListener('change', mediaHandler)
   }, [getCycles]);
 
   const [week, setWeek] = useState('week5s');
+  const [desktop, setDesktop] = useState(window.matchMedia('(max-width: 414px)').matches)
+  const [modal, setModal] = useState(false);
+
+  const mediaHandler = e => {
+    console.log(e.matches)
+    setDesktop(e.matches)
+  }
 
   const onClick = (e) => {
     setWeek([e.target.name]);
   };
 
+  const onModalClick = () => {
+    setModal(!modal)
+  }
+
   return (
     <Fragment>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Fragment>
-          <section className="container-dash">
-            <div className="jumbotron">
-              <h1 className="medium text-primary">Hello, {user.name}!</h1>
-              <p className="lead text-primary">
-                Here's the main sets of your current cycle.
-              </p>
-              <hr className="my-4" />
-              <div
-                className="btn-group my-2"
-                role="group"
-                aria-label="Basic example"
-              >
-                <button
-                  type="button"
-                  onClick={(e) => onClick(e)}
-                  name="week5s"
-                  className="btn btn-large text-primary m-2"
-                >
-                  5's Week
-                </button>
-                <button
-                  type="button"
-                  onClick={(e) => onClick(e)}
-                  name="week3s"
-                  className="btn btn-large text-primary m-2"
-                >
-                  3's Week
-                </button>
-                <button
-                  type="button"
-                  onClick={(e) => onClick(e)}
-                  name="week531"
-                  className="btn btn-large text-primary m-2"
-                >
-                  5/3/1 Week
-                </button>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                {cycles.length > 0 ? (
-                  cycles[0][week].map((workout, index) => (
-                    <DashboardCard
-                      key={workout._id}
-                      index={index}
-                      workout={workout}
-                      week={week}
-                    />
-                  ))
-                ) : (
-                  <h4>No cycles found... Begin by creating your maxes</h4>
-                )}
-              </div>
-            </div>
-          </section>
-        </Fragment>
-      )}
+      <section className="summary-container container-flex container-vertical container-vertical-center">
+      {modal && 
+      <Modal>
+        <CycleForm/>
+      </Modal>}
+        <div className="toolbar">
+          <button className="btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
+        </div>
+        <div className="summary-cards-container my-2">
+          <SummaryCard title='cycles completed' value='1'/>
+          <SummaryCard light title='repeated weeks' value='0'/>
+          <SummaryCard light={desktop} title='current cycle' value='4'/>
+          <SummaryCard light={!desktop} title='workouts left' value='8'/>
+        </div>
+        <div className="section-header text-dark text-medium">
+          Cycles
+        </div>
+        <CycleCard/>
+        <CycleCard/>
+        <CycleCard current/>
+      </section>
     </Fragment>
   );
 };

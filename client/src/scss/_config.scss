@@ -22,7 +22,7 @@ $font-family: 'Ubuntu';
 }
 
 // Margin & Padding
-$spaceamounts: (1, 2, 3, 4, 5);
+$spaceamounts: (1, 2);
 
 @each $space in $spaceamounts {
     .m-#{$space} {

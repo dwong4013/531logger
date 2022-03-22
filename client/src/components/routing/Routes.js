@@ -22,7 +22,7 @@ const Routes = (props) => {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/maxes" component={Maxes} />
         <PrivateRoute exact path="/create-max" component={MaxForm} />
         <PrivateRoute exact path="/main-templates" component={MainTemplates} />
@@ -35,7 +35,7 @@ const Routes = (props) => {
         <PrivateRoute exact path="/cycles" component={Cycles} />
         <PrivateRoute exact path="/create-cycle" component={CycleForm} />
         <PrivateRoute exact path="/workouts" component={Workouts} />
-        <PrivateRoute exact path="/workout/:week/:index" component={Workout} />
+        <Route exact path="/workout" component={Workout} />
       </Switch>
     </Fragment>
   );

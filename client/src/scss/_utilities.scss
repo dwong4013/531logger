@@ -5,6 +5,9 @@
     &-primary {
         @include set-background($primary-color);
     }
+    &-primary-light {
+        @include set-background(lighten($primary-color, 20%));
+    }
     &-light {
         @include set-background($light-color)
     }
@@ -22,17 +25,25 @@
     }
 }
 
+// Select Menus
+
+.select {
+    background-color: lighten($primary-color, 20%);
+    border-radius: 5px;
+    border: none;
+    color: $dark-color;
+    padding: 0.3rem 0.5rem;
+}
+
 // Buttons
 .btn {
+    display: inline-block;
     background-color: $dark-color;
     font-family: $font-family;
     color: $light-color;
-    width: 120px;
-    border: none;
     border-radius: 10px;
+    border: none;
     cursor: pointer;
-    padding: 0.15rem 0;
-    font-size: 1rem;
     text-decoration: none;
     text-align: center;
     transition: all 0.2s ease-in;
@@ -64,11 +75,23 @@
         }
     }
 
+    &.btn-regular {
+        width: 120px;
+        border-radius: 10px;
+        padding: 0.15rem 0;
+        font-size: 1rem;
+    }
+
     &.btn-small {
         border-radius: 10px;
         font-size: 0.8rem;
         padding: 0.25rem 0.4rem;
         width: 80px;
+    }
+
+    &.btn-big-action {
+        padding: 0.8rem 1rem;
+        border-radius: 20px;
     }
 
     &.btn-large {
@@ -77,30 +100,65 @@
         padding: 0.35rem 0;
         width: 150px;
     }
+    &.btn-icon-left {
+        i {
+            float: left;
+            margin-left: 2px;
+            margin-top: 2px;
+            justify-self: center;
+        }
+    }
+
 }
 
 // Text
 .text {
     margin-bottom: 1rem;
     &-small {
-        font-size: 0.8rem
+        font-size: 0.8rem;
     }
     &-regular {
-        font-size: 1rem
+        font-size: 1rem;
     }
     &-medium {
-        font-size: 2rem
+        font-size: 1.5rem;
+        font-weight: bold;
     }
     &-large {
-        font-size: 3rem
+        font-size: 3rem;
     }
     &-x-large {
-        font-size: 4rem
+        font-size: 4rem;
     }
     &-primary {
-        color: $primary-color
+        color: $primary-color;
     }
     &-dark {
-        color: $dark-color
+        color: $dark-color;
+    }
+    &-bold {
+        font-weight: bold;
+    }
+    &-center {
+        align-self: center;
     }
 }
+
+// Containers
+.container-flex {
+    display: flex;
+
+    &.container-vertical {
+        flex-direction: column;
+
+        &-center {
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &.container-horizontal {
+        flex-direction: row;
+    }
+}
+

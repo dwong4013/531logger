@@ -5,7 +5,14 @@
 body {
     font-family: $font-family;
     margin: 0;
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }
+
+// Landing
 
 .logo {
     filter: drop-shadow(0 0 4rem white);
@@ -21,7 +28,6 @@ body {
 }
 
 .landing-items {
-    width: 100%;
     height: 100%;
     margin: auto;
 
@@ -31,19 +37,266 @@ body {
 
 }
 
-.container-flex {
-    display: flex;
+// Workout Summary
 
-    &.container-vertical {
-        flex-direction: column;
+.summary {
 
-        &-center {
-            justify-content: center;
-            align-items: center;
+    &-cards-container {
+        display: grid;
+        grid-template-columns:repeat(4, 1fr);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    
+        @media (max-width: 414px) {
+            grid-template-columns: 1fr 1fr;
         }
     }
 
-    &.container-horizontal {
-        flex-direction: row;
+    &-container {
+        position: relative;
+        max-width: 100vw;
+        top: 10vh;
+
+    }
+
+    &-card {
+        width: 20vw;
+        min-width: 120px;
+        max-width: 220px;
+        max-height: 80px;
+        @media (max-width: 414px) {
+            min-width: 150px;
+            max-width: 170px;
+        }
+    
+        .title {
+            margin: 0.8rem 0 0 0.8rem;
+            @media (max-width: 414px) {
+                margin: 0.5rem 0 0 0.5rem;
+            }
+        }
+    
+        .value {
+            margin: 0.5rem 0;
+            @media (max-width: 414px) {
+                margin-bottom: 1.3rem;
+            }
+        }
+    }
+}
+
+.section-header {
+    width: 80%;
+    min-width: 480px;
+    max-width: 880px;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: solid;
+    text-align: center;
+
+    @media (max-width: 414px) {
+        min-width: 300px;
+        max-width: 340px;
+
+    }
+}
+
+.cycle-card-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    min-width: 480px;
+    max-width: 880px;
+
+    @media (max-width: 414px) {
+        flex-direction: column;
+        min-width: 300px;
+        gap: 1rem;
+    }
+    
+}
+
+.cycle-details-primary {
+    flex: 4;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.cycle-details-secondary {
+    flex:2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    
+    .action {
+        @media (max-width: 414px) {
+          justify-self: end;  
+        }
+
+    }
+}
+
+
+.toolbar {
+    width: 80%;
+    min-width: 480px;
+    max-width: 880px;
+
+        @media (max-width: 414px) {
+        min-width: 300px;
+        max-width: 340px;
+    }
+
+    button, select {
+        float: right;
+    }
+
+    .btn-back {
+        float: left;
+    }
+}
+
+// Workouts
+
+.set-actions {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    min-width: 480px;
+    max-width: 880px;
+    margin-bottom: 2rem;
+
+        @media (max-width: 414px) {
+        flex-direction: column;
+        min-width: 300px;
+        max-width: 340px;
+    }
+    form {
+        flex: 2
+    }
+    .buttons {
+        flex: 1;
+        flex-grow: 1;
+        margin-left: 1rem;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+
+        @media (max-width: 414px) {
+            margin: 0;
+            justify-content: space-evenly;
+        }
+    }
+
+}
+
+.set-card {
+    &-container {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        min-width: 480px;
+        max-width: 880px;
+        margin-bottom: 1rem;
+    
+        @media (max-width: 414px) {
+            min-width: 300px;
+            max-width: 340px;
+        }
+    
+    }
+    
+    &-details {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(4,1fr) 4fr 1fr;
+        grid-column-gap: 0.8rem;
+        align-items: center;
+        margin: auto 0;
+
+        @media (max-width: 414px) {
+            grid-template-columns: repeat(4,2fr) 1fr;
+        }
+        
+        i {
+            color: lighten($dark-color,20%);
+            align-self: flex-end;
+            justify-self: flex-end;
+        }
+    }
+
+    .notes-container {
+        display: flex;
+        flex-direction: column;
+        margin: 0.5rem auto 0 auto;
+        width: 60%;
+        align-items: center;
+        
+        &-toggled {
+            border-bottom-style: none;
+            border-left-style: none;
+            border-right-style: none;
+            border-top-style: solid;
+            border-width: 0.6px;
+            border-color: $dark-color; 
+        }
+
+        .notes {
+            margin: 0.4rem 0;
+        }
+
+        i {
+            color: lighten($dark-color,20%);
+        }
+
+    }
+}
+
+// Modal
+
+.modal {
+    &-background {
+        position: fixed;
+        display: flex;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0,0,0,0.6);
+    }
+    
+    &-form-container {
+        height: 420px;
+        width: 300px;
+        margin: auto;
+        padding: 1rem;
+        background-color: $light-color;
+        border-radius: 10px;
+        justify-content: center;
+
+        .header-text {
+            text-align: center;
+            width: 70%;
+        }
+        .form-summary-container {
+            display: grid;
+            width: 70%;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            justify-items: center;
+            gap: 1rem;
+        }
+
+        form {
+            input[type=text] {
+                margin-top: 0.5rem;
+                margin-bottom: 1rem;
+            }
+        }
+
     }
 }
