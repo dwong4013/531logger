@@ -58,7 +58,7 @@ const Workout = ({
           <option value="press">Press</option>
         </select>
         </div>
-        <div className="summary-cards-container container-grid">
+        <div className="summary-cards-container ">
           <SummaryCard title='cycles completed' value='1'/>
           <SummaryCard light title='repeated weeks' value='0'/>
           <SummaryCard light={desktop} title='current cycle' value='4'/>

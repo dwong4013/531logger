@@ -29,11 +29,11 @@ const Dashboard = ({
   };
 
   return (
-    <section className="summary-container container-flex container-vertical container-vertical-center px-6">
-      <div className="big-action">
+    <section className="summary-container container-flex container-vertical container-vertical-center">
+      <div className="toolbar">
         <button className="btn btn-big-action btn-primary"><i className="fa-solid fa-plus"/></button>
       </div>
-      <div className="summary-cards-container container-grid my-2">
+      <div className="summary-cards-container my-2">
         <SummaryCard title='cycles completed' value='1'/>
         <SummaryCard light title='repeated weeks' value='0'/>
         <SummaryCard light={desktop} title='current cycle' value='4'/>

@@ -105,6 +105,8 @@ body {
 }
 
 .cycle-card-container {
+    display: flex;
+    flex-direction: row;
     width: 80%;
     min-width: 480px;
     max-width: 880px;
