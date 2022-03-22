@@ -516,4 +516,39 @@ body p {
   color: #828282;
 }
 
+.modal-background {
+  position: fixed;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.modal-form-container {
+  height: 420px;
+  width: 300px;
+  margin: auto;
+  padding: 1rem;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  justify-content: center;
+}
+.modal-form-container .header-text {
+  text-align: center;
+  width: 70%;
+}
+.modal-form-container .form-summary-container {
+  display: grid;
+  width: 70%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-items: center;
+  gap: 1rem;
+}
+.modal-form-container form input[type=text] {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 /*# sourceMappingURL=style.css.map */
