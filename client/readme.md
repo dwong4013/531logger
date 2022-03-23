@@ -2,7 +2,7 @@ To build the docker image, use the following command from the client directory:
 
 "docker build -t 531-client ."
 
-To start the developmet server for react, use the following command from the client directory:
+To start the docker container for the client, use the following command from the client directory:
 
 docker run -it -d -p 3000:3000 -p 35729:35729 -v <src-directory>:/usr/src/531logger/client 531-client
 
