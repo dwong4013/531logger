@@ -39,10 +39,10 @@ const Dashboard = ({
   return (
     <Fragment>
       <section className="summary-container container-flex container-vertical container-vertical-center">
-      {modal && 
-      <Modal>
-        <CycleForm/>
-      </Modal>}
+        {modal && 
+        <Modal>
+          <CycleForm/>
+        </Modal>}
         <div className="toolbar">
           <button className="btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
         </div>
