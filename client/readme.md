@@ -6,9 +6,15 @@ To start the developmet server for react, use the following command from the cli
 
 docker run -it -d -p 3000:3000 -p 35729:35729 -v <src-directory>:/usr/src/531logger/client 531-client
 
-To start sass watching, run a new command:
+To run shell commands in the container, use the following command:
 
-docker exec <container-id> npm run css
+docker exec -it <container-id> sh
+
+To start sass watching, run a new command within the container sh:
+sass --watch --poll ./src/scss/style.scss:./src/css/style.css
+
+To run react client, run a new command within the container sh:
+npm start
 
 To follow client logs, open a new terminal and run:
 docker logs --follow <container-id>
