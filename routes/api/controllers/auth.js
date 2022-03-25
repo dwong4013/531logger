@@ -9,7 +9,6 @@ const getUser = async (req, res) => {
       const user = await User.findById(req.user.id).select('-password');
       return res.json(user);
     } catch (err) {
-      console.error(err.message);
       res.status(500).send('Server Error');
     }
   }
@@ -39,18 +38,20 @@ const loginUser = async (req, res) => {
         // Create and send token
         const payload = {user: { id: user.id }};
 
-        jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 36000 },
-        (err, token) => {
-            if (err) throw err;
+        try {
+            let token = jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 36000 })
             return res.json({ token });
-        });
+            
+        } catch (error) {
+            return res.status(500).send('Server Error');
+        }
 
     } catch (err) {
         return res.status(500).send('Server Error');
-}
+    }   
 }
 
 module.exports = {
     getUser,
-    loginUser
+    loginUser,
 }
