@@ -25,8 +25,10 @@ router.post(
   [
     auth,
     [
-      check('mainId', 'Please select a Main Template').not().isEmpty(),
-      check('volumeId', 'Please select a Volume Template').not().isEmpty()
+      check('squat', 'Please select a Main Template').isNumeric(),
+      check('bench', 'Please select a Volume Template').isNumeric(),
+      check('deadlift', 'Please select a Volume Template').isNumeric(),
+      check('press', 'Please select a Volume Template').isNumeric()
     ]
   ],
   createCycle

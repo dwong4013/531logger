@@ -43,89 +43,25 @@ const getCycleById = async (req, res) => {
 }
 
 const createCycle = async (req, res) => {
-    const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { maxId, mainId, volumeId } = req.body;
-
-    const mainTemplate = await WorkingSet.findById(mainId);
-    const volumeTemplate = await Template.findById(volumeId);
-    const maxes = await Max.findById(maxId);
-
-    const round5 = (x) => {
-      return x % 5 >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
-    };
-
-    // Generates the workouts for the week (each exercise has a workout)
-    const generateWeek = (main, volume) => {
-      const exercises = ['squat', 'bench', 'deadlift', 'press'];
-
-      let week = [];
-      for (e = 0; e < exercises.length; e++) {
-        let exerciseMax = maxes[exercises[e]];
-
-        // Build workout object
-        let workout = {
-          exercise: exercises[e],
-          accessoryReps: {
-            push: volumeTemplate.accessoryReps.push,
-            pull: volumeTemplate.accessoryReps.pull
-          }
-        };
-
-        // Build main sets array
-        mainSetsArray = [];
-        main.map((set) =>
-          mainSetsArray.push({
-            weight: round5(
-              exerciseMax * volumeTemplate.trainingMax * set.weight
-            ),
-            reps: set.reps
-          })
-        );
-
-        // Build volume sets array
-        volumeSetsArray = [];
-        volume.map((set) =>
-          volumeSetsArray.push({
-            weight: round5(
-              exerciseMax * volumeTemplate.trainingMax * set.weight
-            ),
-            reps: set.reps
-          })
-        );
-
-        // Put the newly construced arrays into the workout object
-        workout.workingSets = mainSetsArray;
-        workout.volumeSets = volumeSetsArray;
-        week.push(workout);
-      }
-      return week;
-    };
-
-    // Generate each weeks workouts
-    let week5s = generateWeek(mainTemplate.week5s, volumeTemplate.week5s);
-
-    let week3s = generateWeek(mainTemplate.week3s, volumeTemplate.week3s);
-
-    let week531 = generateWeek(mainTemplate.week531, volumeTemplate.week531);
+    const { squat, bench, deadlift, press } = req.body;
 
     const newCycle = {
       user: req.user.id,
-      main: mainTemplate.name,
-      volume: volumeTemplate.name,
-      week5s,
-      week3s,
-      week531
-    };
+      maxes: {
+        squat,
+        bench,
+        deadlift,
+        press
+      }
+    }
 
     try {
       const cycle = new Cycle(newCycle);
       await cycle.save();
-      return res.json(cycle);
+      return res.status(200).json({
+        msg: 'A new cycle has been created!'
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');

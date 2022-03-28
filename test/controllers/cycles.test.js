@@ -1,4 +1,4 @@
-const { getCycles } = require('../../routes/api/controllers/cycles');
+const { getCycles, createCycle } = require('../../routes/api/controllers/cycles');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const Cycle = require('../../models/Cycle');
@@ -93,5 +93,64 @@ describe('API: Cycles Controllers', () => {
             expect(res.status.calledWith(errorCode)).to.be.true;
             expect(res.send.calledOnce).to.be.true
         });
+    })
+    describe('create cycle route controller: createCycle', () => {
+        const mockRequest = () => {
+            const req = {
+                user: {
+                  id: '604f7c8d31c4ab00aaca213d'  
+                },
+                body: {
+                    squat: 200,
+                    bench: 200,
+                    deadlift: 200,
+                    press: 200
+                }
+            };
+
+            return req
+        }
+
+        const mockCycles = () => {
+            return [{
+                id: 'sadfjsa0183',
+                maxes: {
+                    squat: 200,
+                    bench: 200,
+                    deadlift: 200,
+                    press: 200
+                }
+            },
+            {
+                id: 'sadfjsdf183',
+                maxes: {
+                    squat: 200,
+                    bench: 200,
+                    deadlift: 200,
+                    press: 200
+                }
+            }]
+        }
+
+        it('should create and save new cycle to db', async () => {
+            let req = mockRequest();
+            let save = sandbox.stub(Cycle.prototype, 'save').callsFake(() => Promise.resolve(this))
+
+            await createCycle(req, res);
+            expect(save.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(goodCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+        })
+        it('should handle error if save throws an error', async () => {
+            let req = mockRequest();
+            let save = sandbox.stub(Cycle.prototype, 'save').throws()
+
+            await createCycle(req, res);
+            expect(save.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true;
+        })
     })
 })
