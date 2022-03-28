@@ -1,10 +1,4 @@
-const { validationResult } = require('express-validator');
-
-const WorkingSet = require('../../../models/WorkingSet');
-const Template = require('../../../models/Template');
 const Cycle = require('../../../models/Cycle');
-const Max = require('../../../models/Max');
-const User = require('../../../models/User');
 
 const getCycles = async (req, res) => {
     try {
