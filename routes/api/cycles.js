@@ -26,10 +26,10 @@ router.post(
   [
     auth,
     [
-      check('squat', 'Please select a Main Template').isNumeric(),
-      check('bench', 'Please select a Volume Template').isNumeric(),
-      check('deadlift', 'Please select a Volume Template').isNumeric(),
-      check('press', 'Please select a Volume Template').isNumeric()
+      check('squat', 'Please enter a squat max.').isNumeric().not().isEmpty(),
+      check('bench', 'Please enter a bench max.').isNumeric().not().isEmpty(),
+      check('deadlift', 'Please enter a deadlift max.').isNumeric().not().isEmpty(),
+      check('press', 'Please enter a press max.').isNumeric().not().isEmpty()
     ],
     validationHandler
   ],
