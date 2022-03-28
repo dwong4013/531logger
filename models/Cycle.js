@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const CycleSchema = new mongoose.Schema({
+  dateCreated: {
+    type: Date,
+    default: Date.now
+  },
   startDate: Date,
   endDate: Date,
   user: {
