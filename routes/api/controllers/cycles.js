@@ -98,17 +98,23 @@ const deleteCycle = async (req, res) => {
       const cycle = await Cycle.findById({
         _id: req.params.cycle_id
       });
-  
-      if (!req.params.cycle_id.match(/^[0-9a-fA-F]{24}$/) || !cycle) {
-        return res.status(404).json({ msg: 'Cycle not found' });
+
+      if (!cycle) {
+        return res
+        .status(400)
+        .json({msg: 'Invalid cycle.'})
       }
   
       await cycle.remove();
   
-      res.json({ msg: 'Cycle removed' });
+      res.status(200).json({ msg: 'Cycle has been removed' });
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      if (err.kind && err.kind === undefined) {
+        return res.status(400).json({msg: 'Invalid cycle.'})
+      }
+
+      console.error(err);
+      return res.status(500).send('Server Error');
     }
 }
 

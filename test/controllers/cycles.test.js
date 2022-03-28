@@ -1,4 +1,4 @@
-const { getCycles, createCycle, editCycle } = require('../../routes/api/controllers/cycles');
+const { getCycles, createCycle, editCycle, deleteCycle } = require('../../routes/api/controllers/cycles');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const Cycle = require('../../models/Cycle');
@@ -275,6 +275,84 @@ describe('API: Cycles Controllers', () => {
             
             await editCycle(req, res);
             expect(dbFindOne.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true;
+        })
+    })
+        describe('deliete cycle route controller: deleteCycle', () => {
+        const mockRequest = () => {
+            const req = {
+                user: {
+                  id: '604f7c8d31c4ab00aaca213d'  
+                },
+                params: {
+                    cycle_id: '604f7c8d11c4ab00aaca213d'
+                }
+            };
+
+            return req
+        }
+
+
+        const mockCycle = () => {
+            return new Cycle({
+                id: '604f7c8d31c4ab00aaca213d',
+                maxes: {
+                    squat: 200,
+                    bench: 200,
+                    deadlift: 200,
+                    press: 200
+                }
+            })
+        }
+
+        it('should delete the requested cycle', async () => {
+            let req = mockRequest();
+            let fakeCycle = mockCycle();
+            let dbFindById = sandbox.stub(Cycle, 'findById').returns(fakeCycle)
+            let remove = sandbox.stub(Cycle.prototype, 'remove').callsFake(() => Promise.resolve(this))
+
+            await deleteCycle(req, res);
+            expect(dbFindById.calledOnce).to.be.true;
+            expect(remove.calledOnce).to.be.true;
+            expect(remove.calledOn(fakeCycle)).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(goodCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+        })
+
+        it('should handle error when db call returns undefined', async () => {
+            let req = mockRequest();
+            let dbFindById = sandbox.stub(Cycle, 'findById').returns(undefined)
+
+            await deleteCycle(req, res);
+            expect(dbFindById.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(badCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+        })
+
+        it('should handle error if remove throws an error', async () => {
+            let req = mockRequest();
+            let fakeCycle = mockCycle();
+            let remove = sandbox.stub(Cycle.prototype, 'remove').throws()
+            let dbFindById = sandbox.stub(Cycle, 'findById').returns(fakeCycle)
+            
+            await deleteCycle(req, res);
+            expect(dbFindById.calledOnce).to.be.true;
+            expect(remove.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true;
+        })
+
+        it('should handle error if db call throws an error', async () => {
+            let req = mockRequest();
+            let dbFindById = sandbox.stub(Cycle, 'findById').throws()
+            
+            await deleteCycle(req, res);
+            expect(dbFindById.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
             expect(res.send.calledOnce).to.be.true;
