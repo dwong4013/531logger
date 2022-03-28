@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check } = require('express-validator');
-const { getCycles, getCycleById, createCycle, editCycle, deleteCycle } = require('./controllers/cycles');
+const { getCycles, createCycle, editCycle, deleteCycle } = require('./controllers/cycles');
 const validationHandler = require('../../middleware/validationHandler')
 
 // @route   GET api/cycles
@@ -10,12 +10,6 @@ const validationHandler = require('../../middleware/validationHandler')
 // @access  Private
 
 router.get('/', auth, getCycles);
-
-// @route   GET api/cycle/:cycle_id
-// @desc    Get cycle by user and id
-// @access  Private
-
-router.get('/:cycle_id', auth, getCycleById);
 
 // @route   POST api/cycles
 // @desc    Create a cycle

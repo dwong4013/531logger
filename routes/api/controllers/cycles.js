@@ -24,24 +24,6 @@ const getCycles = async (req, res) => {
     }
 }
 
-const getCycleById = async (req, res) => {
-    try {
-        const cycle = await Cycle.findOne({
-        _id: req.params.cycle_id,
-        user: req.user.id
-        });
-        if (!cycle) {
-        return res
-            .status(400)
-            .json({ msg: 'There are no templates, please create one' });
-        }
-        return res.json(cycle);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-}
-
 const createCycle = async (req, res) => {
 
     const { squat, bench, deadlift, press } = req.body;
@@ -121,7 +103,6 @@ const deleteCycle = async (req, res) => {
 
 module.exports = {
     getCycles,
-    getCycleById,
     createCycle,
     editCycle,
     deleteCycle
