@@ -69,34 +69,28 @@ const createCycle = async (req, res) => {
 }
 
 const editCycle = async (req, res) => {
-    const { cycle_id, week, workout, set_type, set } = req.body;
-  
-    try {
-      const cycle = await Cycle.findById({
-        _id: cycle_id,
-        user: req.user.id
-      });
-  
-      if (set_type === 'accessoryReps') {
-        cycle[week][workout][set_type].completed = !cycle[week][workout][set_type]
-          .completed;
-      } else {
-        cycle[week][workout][set_type][set].completed = !cycle[week][workout][
-          set_type
-        ][set].completed;
-      }
-  
-      await cycle.save();
-  
-      const cycles = await Cycle.find({
-        user: req.user.id
-      }).sort({ date: 'desc' });
-  
-      return res.json(cycles);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
+  const { cycle_id } = req.params;
+  const { key, value } = req.body;
+
+  try {
+    const cycle = await Cycle.findById({
+      _id: cycle_id,
+      user: req.user.id
+    });
+
+    cycle[key] = value;
+
+    await cycle.save();
+
+    const cycles = await Cycle.find({
+      user: req.user.id
+    }).sort({ dateCreated: 'desc' });
+
+    return res.json(cycles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 }
 
 const deleteCycle = async (req, res) => {

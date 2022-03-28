@@ -1,4 +1,4 @@
-const { getCycles, createCycle } = require('../../routes/api/controllers/cycles');
+const { getCycles, createCycle, editCycle } = require('../../routes/api/controllers/cycles');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const Cycle = require('../../models/Cycle');
@@ -148,6 +148,133 @@ describe('API: Cycles Controllers', () => {
 
             await createCycle(req, res);
             expect(save.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true;
+        })
+    })
+    describe('edit cycle route controller: editCycle', () => {
+        const mockRequestStartDate = () => {
+            const req = {
+                user: {
+                  id: '604f7c8d31c4ab00aaca213d'  
+                },
+                body: {
+                    key: 'startDate',
+                    value: new Date(),
+                },
+                params: {
+                    cycle_id: '604f7c8d11c4ab00aaca213d'
+                }
+            };
+
+            return req
+        }
+
+        const mockRequestEndDate = () => {
+            const req = {
+                user: {
+                  id: '604f7c8d31c4ab00aaca213d'  
+                },
+                body: {
+                    key: 'endDate',
+                    value: new Date(),
+                },
+                params: {
+                    cycle_id: '604f7c8d11c4ab00aaca213d'
+                }
+            };
+
+            return req
+        }
+
+        const mockCycle = () => {
+            return new Cycle({
+                id: '604f7c8d31c4ab00aaca213d',
+                maxes: {
+                    squat: 200,
+                    bench: 200,
+                    deadlift: 200,
+                    press: 200
+                }
+            })
+        }
+
+        const mockCycles = () => {
+            return [new Cycle({
+                id: '604f7c8d31c4ab00aaca213d',
+                maxes: {
+                    squat: 200,
+                    bench: 200,
+                    deadlift: 200,
+                    press: 200
+                }
+            }),
+            new Cycle({
+                id: '604f7c8d31c4ab00aaca213d',
+                maxes: {
+                    squat: 200,
+                    bench: 200,
+                    deadlift: 200,
+                    press: 200
+                }
+            })]
+        }
+
+        it('should make a change to startDate and save new cycle to db', async () => {
+            let req = mockRequestStartDate();
+            let fakeCycle = mockCycle();
+            let fakeCycles = mockCycles();
+            let dbFindOne = sandbox.stub(Cycle, 'findById').returns(fakeCycle)
+            let dbFind = sandbox.stub(Cycle, 'find').returns({sort: sandbox.stub().returns(fakeCycles)})
+            let save = sandbox.stub(Cycle.prototype, 'save').callsFake(() => Promise.resolve(this))
+
+            await editCycle(req, res);
+            expect(dbFindOne.calledOnce).to.be.true;
+            expect(save.calledOnce).to.be.true;
+            expect(save.calledOn(fakeCycle)).to.be.true;
+            expect(dbFind.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+            expect(res.json.calledWith(fakeCycles))
+        })
+
+        it('should make a change to endtDate and save new cycle to db', async () => {
+            let req = mockRequestEndDate();
+            let fakeCycle = mockCycle();
+            let fakeCycles = mockCycles();
+            let dbFindOne = sandbox.stub(Cycle, 'findById').returns(fakeCycle)
+            let dbFind = sandbox.stub(Cycle, 'find').returns({sort: sandbox.stub().returns(fakeCycles)})
+            let save = sandbox.stub(Cycle.prototype, 'save').callsFake(() => Promise.resolve(this))
+
+            await editCycle(req, res);
+            expect(dbFindOne.calledOnce).to.be.true;
+            expect(save.calledOnce).to.be.true;
+            expect(save.calledOn(fakeCycle)).to.be.true;
+            expect(dbFind.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+            expect(res.json.calledWith(fakeCycles))
+        })
+
+        it('should handle error if save throws an error', async () => {
+            let req = mockRequestStartDate();
+            let fakeCycle = mockCycle();
+            let save = sandbox.stub(Cycle.prototype, 'save').throws()
+            let dbFindOne = sandbox.stub(Cycle, 'findById').returns(fakeCycle)
+            
+            await editCycle(req, res);
+            expect(dbFindOne.calledOnce).to.be.true;
+            expect(save.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true;
+        })
+
+        it('should handle error if db call throws an error', async () => {
+            let req = mockRequestStartDate();
+            let dbFindOne = sandbox.stub(Cycle, 'findById').throws()
+            
+            await editCycle(req, res);
+            expect(dbFindOne.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
             expect(res.send.calledOnce).to.be.true;

@@ -38,7 +38,7 @@ router.post(
 // @desc    Edit cycle id
 // @access  Private
 
-router.put('/', auth, editCycle);
+router.put('/:cycle_id', auth, editCycle);
 
 module.exports = router;
 
