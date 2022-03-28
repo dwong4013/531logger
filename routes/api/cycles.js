@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check } = require('express-validator');
 const { getCycles, getCycleById, createCycle, editCycle, deleteCycle } = require('./controllers/cycles');
+const validationHandler = require('../../middleware/validationHandler')
 
 // @route   GET api/cycles
 // @desc    Get cycles by user
@@ -29,7 +30,8 @@ router.post(
       check('bench', 'Please select a Volume Template').isNumeric(),
       check('deadlift', 'Please select a Volume Template').isNumeric(),
       check('press', 'Please select a Volume Template').isNumeric()
-    ]
+    ],
+    validationHandler
   ],
   createCycle
 );
