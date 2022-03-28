@@ -63,8 +63,7 @@ const createCycle = async (req, res) => {
         msg: 'A new cycle has been created!'
       });
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      return res.status(500).send('Server Error');
     }
 }
 
@@ -88,8 +87,11 @@ const editCycle = async (req, res) => {
 
     return res.json(cycles);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    if (err.kind && err.kind === undefined) {
+      return res.status(400).json({msg: 'Invalid cycle.'})
+    }
+
+    return res.status(500).send('Server Error');
   }
 }
 
@@ -113,7 +115,6 @@ const deleteCycle = async (req, res) => {
         return res.status(400).json({msg: 'Invalid cycle.'})
       }
 
-      console.error(err);
       return res.status(500).send('Server Error');
     }
 }
