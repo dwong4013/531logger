@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const { createWorkout, createSet, calculateWeight } = require('../../lib/generateWorkout');
+const { generateWorkout, createSet, calculateWeight } = require('../../lib/generateWorkout');
 
 describe('generateWorkout module', () => {
     describe('calculateWeight', () => {
@@ -29,15 +29,15 @@ describe('generateWorkout module', () => {
             expect(set).to.have.all.keys('weight', 'reps')
         })
     })
-    describe('createWorkout', () => {
+    describe('generateWorkout', () => {
         const user = '604f7c8d31c4ab00aaca213d';
         const cycle = '604f7c8d31c4ab00aaca222d';
         const exercise = 'squat';
-        const week = 'week1';
+        const week = 1;
         const max = 200;
 
         it('should create a workout document', () => {
-            let workout = createWorkout(user, cycle, exercise, week, max)
+            let workout = generateWorkout(user, cycle, exercise, week, max)
             console.log(workout);
         })
     })

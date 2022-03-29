@@ -1,4 +1,6 @@
 const Workout = require('../../../models/Workout');
+const { generateWorkout } = require('../../../lib/generateWorkout');
+const Cycle = require('../../../models/Cycle');
 
 const getWorkouts = async (req, res) => {
     try {
@@ -20,17 +22,13 @@ const getWorkouts = async (req, res) => {
 }
 
 const createWorkouts = async (req, res) => {
-    // Find the cycle to get the maxes
 
-    // Create the workout based on the following:
-    // Maxes from cycle
-    // 3 exercises
-    // 3 weeks per exercise
-    // Each workout has 3 main sets and 5 volume sets
-
+    const { cycle_id } = req.params;
+    
     try {
-        let cycle = Cycle.findById(cycle_id)
-
+        // Find the cycle to get the maxes
+        let cycle = await Cycle.findById(cycle_id)
+        
         if (!cycle) {
             return res
             .status(400)
@@ -38,14 +36,20 @@ const createWorkouts = async (req, res) => {
         }
 
         let exercises = [ 'squat', 'bench', 'deadlift', 'press']
-        let { maxes: {squatMax, benchMax, deadliftMax, pressMax } } = cycle
+        let { maxes } = cycle
         let newWorkouts = [];
 
+        // Creates a workout for each exercise and week for a total of 12 workouts
+        for (let i = 0; i < exercises.length; i++) {
+            for (let j = 0; j < 3; j++) {
+                newWorkouts.push(generateWorkout(req.user.id, cycle_id, exercises[i], j, maxes[exercises[i]]))
+            }
+        }
         
-        Workout.insertMany()
+        let {result: { n }} = await Workout.insertMany(newWorkouts, {rawResult: true})
 
         return res.status(200).json({
-            msg: 'A new cycle has been created!'
+            msg: `${n} workouts created!`
         });
     } catch (err) {
         return res.status(500).send('Server Error');
@@ -83,4 +87,5 @@ const editWorkout = async (req, res) => {
 
 module.exports = {
     getWorkouts,
+    createWorkouts
 }
