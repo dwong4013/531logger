@@ -1,11 +1,11 @@
-const { createWorkouts } = require('../../routes/api/controllers/workouts');
+const { getWorkouts, createWorkouts } = require('../../routes/api/controllers/workouts');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const Cycle = require('../../models/Cycle');
 const Workout = require('../../models/Workout');
 
 
-describe('API: Cycles Controllers', () => {
+describe('API: Workouts Controllers', () => {
     const mockResponse = () => {
         const res = {};
         res.statusCode = '';
@@ -31,71 +31,61 @@ describe('API: Cycles Controllers', () => {
         sandbox.restore();
     })
 
-    // describe('get cycles route controller: getCycles', () => {
-    //     const mockRequest = () => {
-    //         const req = {
-    //             user: {
-    //               id: '604f7c8d31c4ab00aaca213d'  
-    //             }
-    //         };
+    describe('get workouts route controller: getWorkouts', () => {
+        const mockRequest = () => {
+            const req = {
+                user: {
+                  id: '604f7c8d31c4ab00aaca213d'  
+                },
+                params: {
+                    cycle_id: '604f7c8d31c4ab00aaca222d'
+                }
+            };
 
-    //         return req
-    //     }
+            return req
+        }
 
-    //     const mockCycles = () => {
-    //         return [{
-    //             id: 'sadfjsa0183',
-    //             maxes: {
-    //                 squat: 200,
-    //                 bench: 200,
-    //                 deadlift: 200,
-    //                 press: 200
-    //             }
-    //         },
-    //         {
-    //             id: 'sadfjsdf183',
-    //             maxes: {
-    //                 squat: 200,
-    //                 bench: 200,
-    //                 deadlift: 200,
-    //                 press: 200
-    //             }
-    //         }]
-    //     }
+        const mockWorkouts = () => {
+            return [
+                {name: 'fake workout1'},
+                {name: 'fake workout2'},
+                {name: 'fake workout3'}
+            ]
+        }
 
-    //     it('should get cycles from db and send to client', async () => {
-    //         let req = mockRequest();
-    //         let fakeCycles = mockCycles();
-    //         let dbCallCycle = sandbox.stub(Cycle, "find").returns({sort:sandbox.stub().returns(fakeCycles)});
+        it('should get workouts from db and send to client', async () => {
+            let req = mockRequest();
+            let fakeWorkouts = mockWorkouts();
+            let findWorkouts = sandbox.stub(Workout, "find").returns(fakeWorkouts);
 
-    //         await getCycles(req, res);
-    //         expect(dbCallCycle.calledOnce).to.be.true;
-    //         expect(res.json.calledOnce).to.be.true
-    //         expect(res.json.calledWith(fakeCycles)).to.be.true;
-    //     });
+            await getWorkouts(req, res);
+            expect(findWorkouts.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true
+            expect(res.json.calledWith(fakeWorkouts)).to.be.true;
+        });
 
-    //     it('should handle error if database call throws error', async () => {
-    //         let req = mockRequest();
-    //         let dbCallCycle = sandbox.stub(Cycle, "find").returns({sort:sandbox.stub().returns(undefined)});
+        it('should handle error if database call throws error', async () => {
+            let req = mockRequest();
+            let findWorkouts = sandbox.stub(Workout, "find").throws();
 
-    //         await getCycles(req, res)
-    //         expect(dbCallCycle.calledOnce).to.be.true;
-    //         expect(res.status.calledOnce).to.be.true
-    //         expect(res.status.calledWith(badCode)).to.be.true;
-    //         expect(res.json.calledOnce).to.be.true
-    //     });
-    //     it('should handle error if database call throws error', async () => {
-    //         let req = mockRequest();
-    //         let dbCallCycle = sandbox.stub(Cycle, "find").returns({sort:sandbox.stub().throws()});
+            await getWorkouts(req, res)
+            expect(findWorkouts.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true
+        });
+        it('should handle error if database call returns undefined', async () => {
+            let req = mockRequest();
+            let findWorkouts = sandbox.stub(Workout, "find").returns(undefined);
 
-    //         await getCycles(req, res)
-    //         expect(dbCallCycle.calledOnce).to.be.true;
-    //         expect(res.status.calledOnce).to.be.true
-    //         expect(res.status.calledWith(errorCode)).to.be.true;
-    //         expect(res.send.calledOnce).to.be.true
-    //     });
-    // })
-    describe('create cycle route controller: createCycle', () => {
+            await getWorkouts(req, res)
+            expect(findWorkouts.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true
+            expect(res.status.calledWith(badCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true
+        });
+    })
+    describe('create workouts route controller: createWorkouts', () => {
         const mockRequest = () => {
             const req = {
                 user: {
