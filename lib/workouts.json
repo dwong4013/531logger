@@ -1,0 +1,117 @@
+{
+    "week1": {
+        "main": [
+            {
+                "setPercent": 0.65,
+                "reps": 5
+            },
+            {
+                "setPercent": 0.75,
+                "reps": 5
+            },            
+            {
+                "setPercent": 0.85,
+                "reps": 5
+            } 
+        ]     
+        ,
+        "volume": [
+            {
+                "setPercent": 0.65,
+                "reps": 5
+            },
+            {
+                "setPercent": 0.65,
+                "reps": 5
+            },            
+            {
+                "setPercent": 0.65,
+                "reps": 5
+            },
+            {
+                "setPercent": 0.65,
+                "reps": 5
+            } ,
+            {
+                "setPercent": 0.65,
+                "reps": 5
+            }  
+        ]
+    },
+    "week2": {
+        "main": [
+            {
+                "setPercent": 0.70,
+                "reps": 3
+            },
+            {
+                "setPercent": 0.80,
+                "reps": 3
+            },            
+            {
+                "setPercent": 0.90,
+                "reps": 3
+            }      
+        ],
+        "volume": [
+            {
+                "setPercent": 0.70,
+                "reps": 5
+            },
+            {
+                "setPercent": 0.70,
+                "reps": 5
+            },            
+            {
+                "setPercent": 0.70,
+                "reps": 5
+            },
+            {
+                "setPercent": 0.70,
+                "reps": 5
+            } ,
+            {
+                "setPercent": 0.70,
+                "reps": 5
+            }  
+        ]
+    },
+    "week3": {
+        "main": [
+            {
+                "setPercent": 0.75,
+                "reps": 5
+            },
+            {
+                "setPercent": 0.85,
+                "reps": 3
+            },            
+            {
+                "setPercent": 0.95,
+                "reps": 1
+            }      
+        ],
+        "volume": [
+            {
+                "setPercent": 0.75,
+                "reps": 5
+            },
+            {
+                "setPercent": 0.75,
+                "reps": 5
+            },            
+            {
+                "setPercent": 0.75,
+                "reps": 5
+            },
+            {
+                "setPercent": 0.75,
+                "reps": 5
+            } ,
+            {
+                "setPercent": 0.75,
+                "reps": 5
+            }  
+        ]
+    }
+}
