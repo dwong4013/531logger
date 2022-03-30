@@ -22,10 +22,6 @@ const WorkoutSchema = new mongoose.Schema({
             reps: Number,
             time: String,
             notes: String,
-            inProgress: {
-                type: Boolean,
-                default: false
-            },
             missed: {
                 type: Boolean,
                 default: false
@@ -41,10 +37,6 @@ const WorkoutSchema = new mongoose.Schema({
             reps: Number,
             time: String,
             notes: String,
-            inProgress: {
-                type: Boolean,
-                default: false
-            },
             missed: {
                 type: Boolean,
                 default: false

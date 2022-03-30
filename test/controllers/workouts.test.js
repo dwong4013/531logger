@@ -1,4 +1,4 @@
-const { getWorkouts, createWorkouts } = require('../../routes/api/controllers/workouts');
+const { getWorkouts, createWorkouts, editWorkout } = require('../../routes/api/controllers/workouts');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const Cycle = require('../../models/Cycle');
@@ -146,6 +146,85 @@ describe('API: Workouts Controllers', () => {
             await createWorkouts(req, res);
             expect(findCycle.calledOnce).to.be.true;
             expect(insertMany.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true;
+        })
+
+    })
+    describe('edit workouts route controller: editWorkouts', () => {
+        const mockRequestEdit = () => {
+            const req = {
+                user: {
+                  id: '604f7c8d31c4ab00aaca213d'  
+                },
+                params: {
+                    workout_id: '604f7c8d31c4ab00aaca222d'
+                },
+                body: {
+                    type: 'edit',
+                    values: {
+                        setType: 'mainSets',
+                        id: '62434fdc25825c04bfb50561',
+                        notes: 'it was easy',
+                        time: '10:04am',
+                        completed: true,
+                    }
+                }
+            };
+
+            return req
+        }
+
+        const mockRequestStatus = () => {
+            const req = {
+                user: {
+                  id: '604f7c8d31c4ab00aaca213d'  
+                },
+                params: {
+                    workout_id: '604f7c8d31c4ab00aaca222d'
+                },
+                body: {
+                    type: 'status',
+                    values: {
+                        completed: true,
+                    }
+                }
+            };
+
+            return req
+        }
+
+        it('should edit workout details', async () => {
+            let req = mockRequestEdit();
+            let updateWorkout = sandbox.stub(Workout, 'updateOne').returns({ok: 1})
+
+            await editWorkout(req, res)
+            expect(updateWorkout.calledOnce).to.be.true
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(goodCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+            
+        })
+
+        it('should edit workout status', async () => {
+            let req = mockRequestStatus();
+            let updateWorkout = sandbox.stub(Workout, 'updateOne').returns({ok: 1})
+
+            await editWorkout(req, res)
+            expect(updateWorkout.calledOnce).to.be.true
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(goodCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+
+        })
+
+        it('should handle error if db call throws error', async () => {
+            let req = mockRequestStatus();
+            let updateWorkout = sandbox.stub(Workout, 'updateOne').throws()
+
+            await editWorkout(req, res)
+            expect(updateWorkout.calledOnce).to.be.true
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
             expect(res.send.calledOnce).to.be.true;
