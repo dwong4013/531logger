@@ -28,7 +28,7 @@ const createWorkouts = async (req, res) => {
     try {
         // Find the cycle to get the maxes
         let cycle = await Cycle.findById(cycle_id)
-        
+
         if (!cycle) {
             return res
             .status(400)
@@ -57,25 +57,85 @@ const createWorkouts = async (req, res) => {
 }
 
 const editWorkout = async (req, res) => {
-  const { cycle_id } = req.params;
-  const { key, value } = req.body;
+  const { workout_id } = req.params;
+  const { type, values } = req.body;
 
   try {
-    const cycle = await Cycle.findById({
-      _id: cycle_id,
-      user: req.user.id
-    });
+    //   handle updates that only edits the notes, time, and completed fields
+    if (type === 'edit') {
+        const {setType, id, notes, time, completed} = values;
+        
+        // query by workout id, user id, and either main or volume set field 
+        // where the id of the set within the array matches the requested set id
+        const query = {
+            _id: workout_id,
+            user: req.user.id,
+            [setType]: {
+                $elemMatch: {
+                    _id: id
+                }
+            }
+        }
 
-    cycle[key] = value;
+        // set the fields to the requested values
+        const updateOperator = {
+            "$set": {
+                [`${setType}.$.notes`]:notes,
+                [`${setType}.$.time`]:time,
+                [`${setType}.$.completed`]:completed,
+            }
+        }
 
-    await cycle.save();
+        const result = await Workout.updateOne(
+            query,
+            updateOperator,
+        );
+    
+        // Check if update operation was successful
+        if (result.ok === 1) {
+            return res
+            .status(200)
+            .json({msg: 'Set updated.'})
+            
+        } else {
+            return res
+            .status(400)
+            .json({ msg: 'Failed to make changes.' });
+        }
 
-    const cycles = await Cycle.find({
-      user: req.user.id
-    }).sort({ dateCreated: 'desc' });
+    // handles updates to the status of the workout document
+    } if (type === 'status') {
+        const {completed} = values;
 
-    return res.json(cycles);
-  } catch (err) {
+        const query = {
+            _id: workout_id,
+            user: req.user.id
+        }
+        const updateOperator = {
+            $set: {
+                completed
+            }
+        }
+
+        const result = await Workout.updateOne(
+            query,
+            updateOperator,
+        );
+    
+        if (result.ok === 1) {
+            return res
+            .status(200)
+            .json({msg: 'Workout completed!.'})
+            
+        } else {
+            return res
+            .status(400)
+            .json({ msg: 'Failed to update workout.' });
+        }
+
+    }
+
+} catch (err) {
     if (err.kind && err.kind === undefined) {
       return res.status(400).json({msg: 'Invalid cycle.'})
     }
@@ -87,5 +147,6 @@ const editWorkout = async (req, res) => {
 
 module.exports = {
     getWorkouts,
-    createWorkouts
+    createWorkouts,
+    editWorkout
 }

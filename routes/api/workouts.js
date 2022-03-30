@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check } = require('express-validator');
-const { createWorkouts, getWorkouts } = require('./controllers/workouts');
+const { createWorkouts, getWorkouts, editWorkout } = require('./controllers/workouts');
 const validationHandler = require('../../middleware/validationHandler')
 
 // @route   GET api/cycles
@@ -21,7 +21,7 @@ router.post('/:cycle_id', auth, createWorkouts);
 // @desc    Edit cycle id
 // @access  Private
 
-router.put('/:cycle_id', auth);
+router.put('/:workout_id', auth, editWorkout);
 
 
 module.exports = router;
