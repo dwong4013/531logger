@@ -2,8 +2,6 @@
 
 FROM node:16-alpine
 
-RUN apk update && apk add bash
-
 WORKDIR /usr/src/531logger/client
 
 COPY ["package.json", "package-lock.json*", "./"]
