@@ -7,8 +7,9 @@ services:
     container_name: client
     ports: 
       - "3000:3000"
+      - "35729:35729"
     volumes:
-      - ./client:/user/src/531logger/client
+      - ./client:/usr/src/531logger/client
       - node_modules_frontend:/usr/src/531logger/client/node_modules
     command: npm run start
     networks: 
@@ -26,12 +27,11 @@ services:
     ports: 
       - "5000:5000"
     volumes:
-        - .:/user/src/531logger/api
+        - .:/usr/src/531logger/api
         - node_modules_backend:/usr/src/531logger/api/node_modules
-    command: npm run start
+    command: npm run server
     env_file: .env
     environment:
-      - CHOKIDAR_USEPOLLING=$CHOKIDAR_USEPOLLING
       - PORT=$PORT
     networks:
       - app-network
