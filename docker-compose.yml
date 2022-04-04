@@ -11,7 +11,7 @@ services:
     volumes:
       - ./client:/usr/src/531logger/client
       - node_modules_frontend:/usr/src/531logger/client/node_modules
-    command: npm run start
+    command: ./wait-for.sh mongodb:27017 -- npm run start
     networks: 
       - app-network
     restart: unless-stopped
@@ -29,18 +29,38 @@ services:
     volumes:
         - .:/usr/src/531logger/api
         - node_modules_backend:/usr/src/531logger/api/node_modules
-    command: npm run server
+    command: ./wait-for.sh mongodb:27017 -- npm run server
     env_file: .env
     environment:
-      - PORT=$PORT
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=db
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
     networks:
       - app-network
     restart: unless-stopped
+  db:
+    image: mongo:4.1.8-xenial
+    container_name: mongodb
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - dbdata:/data/db
+    networks:
+      - app-network
+    ports:
+      - '27017:27017'
+
 
 networks:
   app-network:
     driver: bridge
 
 volumes:
+  dbdata:
   node_modules_backend:
   node_modules_frontend:
