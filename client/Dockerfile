@@ -9,8 +9,6 @@ COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install
 RUN npm install -g sass
 
-EXPOSE 3000
-EXPOSE 35729
 
 COPY . .
 

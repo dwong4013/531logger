@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Landing from './components/layout/Landing';
-import Navbar from './components/layout/Navbar';
 import Routes from './components/routing/Routes';
 
 // Redux
@@ -24,7 +23,6 @@ const App = ({ location }) => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Navbar />
           <Route exact path="/" component={Landing} />
           <Route component={Routes} />
         </Fragment>
