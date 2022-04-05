@@ -12,7 +12,7 @@ const getWorkouts = async (req, res) => {
       if (!workouts) {
         return res
           .status(400)
-          .json({ msg: 'There are no workouts available.' });
+          .json({ error: { msg: 'There are no workouts available.' }});
       }
       return res.json(workouts);
     } catch (err) {
@@ -32,7 +32,7 @@ const createWorkouts = async (req, res) => {
         if (!cycle) {
             return res
             .status(400)
-            .json({ msg: 'Failed to generate cycle.' });
+            .json({ error: { msg: 'Failed to generate cycle.' }});
         }
 
         let exercises = [ 'squat', 'bench', 'deadlift', 'press']
@@ -100,7 +100,7 @@ const editWorkout = async (req, res) => {
         } else {
             return res
             .status(400)
-            .json({ msg: 'Failed to make changes.' });
+            .json({ error: { msg: 'Failed to make changes.' }});
         }
 
     // handles updates to the status of the workout document
@@ -130,14 +130,14 @@ const editWorkout = async (req, res) => {
         } else {
             return res
             .status(400)
-            .json({ msg: 'Failed to update workout.' });
+            .json({ error: { msg: 'Failed to update workout.' }});
         }
 
     }
 
 } catch (err) {
     if (err.kind && err.kind === undefined) {
-      return res.status(400).json({msg: 'Invalid cycle.'})
+      return res.status(400).json({error: { msg: 'Invalid cycle.' }})
     }
 
     return res.status(500).send('Server Error');
