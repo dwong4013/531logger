@@ -2,29 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const Alert = ({ alerts }) =>{
-  // alerts !== null &&
-  // alerts.length > 0 &&
-  // alerts.map((alert) => (
-  //   <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-  //     {alert.msg}
-  //   </div>
-    return (
-      <div className="alert-container">
-        <div className="alert-card alert-success">
-          <i className="fa-solid fa-xmark text-dark"/>
-          <p className="title text-small text-bold text-dark mx-1">Success</p>
-          <p className="description text-dark mx-1">A new cycle has been created!</p>
-        </div>
+const Alert = ({ alert }) => {
+  console.log(alert)
+  if (alert.msg === null) {
+    return null
+  }
+
+  return (
+    <div className="alert-container">
+      <div className={`alert-card alert-${alert.type}`}>
+        <i className="fa-solid fa-xmark text-dark"/>
+        <p className="title text-small text-bold text-dark mx-1">{alert.title}</p>
+        <p className="description text-dark mx-1">{alert.msg}</p>
       </div>
-)};
+    </div>
+  )
+};
 
 Alert.propTypes = {
-  alerts: PropTypes.array.isRequired
+  alert: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  alerts: state.alert
+  alert: state.alert
 });
 
 export default connect(mapStateToProps)(Alert);

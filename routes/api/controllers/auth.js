@@ -22,7 +22,7 @@ const loginUser = async (req, res) => {
         if (!user) {
         return res
             .status(400)
-            .json({ errors: [{ msg: 'Invalid Credentials' }] });
+            .json({ error: { msg: 'Invalid Credentials' } });
         }
 
         // Decrypt password
@@ -31,7 +31,7 @@ const loginUser = async (req, res) => {
         if (!isMatch) {
         return res
             .status(400)
-            .json({ errors: [{ msg: 'Invalid Credentials' }] });
+            .json({ error: { msg: 'Invalid Credentials' } });
         }
 
         // Create and send token
