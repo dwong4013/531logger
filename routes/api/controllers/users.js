@@ -7,11 +7,6 @@ const User = require('../../../models/User');
 
 
 const registerUser = async (req, res) => {
-    // Check input fields for errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
 
     const { name, email, password } = req.body;
 
@@ -22,7 +17,7 @@ const registerUser = async (req, res) => {
       if (user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'User already exists' }] });
+          .json({ error: { msg: 'User already exists' } });
       }
 
       user = new User({

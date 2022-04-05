@@ -29,10 +29,11 @@ export const loginUser = (formData) => async (dispatch) => {
 
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response.data.errors;
+    const error = err.response.data.error;
+    console.log('error: ', error);
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    if (error) {
+      dispatch(setAlert('Error', error.msg, 'danger'));
     }
 
     dispatch({
@@ -78,10 +79,10 @@ export const register = (formData) => async (dispatch) => {
 
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response.data.errors;
+    const error = err.response.data.error;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    if (error) {
+      dispatch(setAlert('Error', error.msg, 'danger'));
     }
 
     dispatch({

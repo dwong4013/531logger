@@ -9,7 +9,7 @@ const getCycles = async (req, res) => {
       if (!cycles) {
         return res
           .status(400)
-          .json({ msg: 'There are no templates, please create one' });
+          .json({error: { msg: 'There are no templates, please create one' }});
       }
       return res.json(cycles);
     } catch (err) {
@@ -64,7 +64,7 @@ const editCycle = async (req, res) => {
     return res.json(cycles);
   } catch (err) {
     if (err.kind && err.kind === undefined) {
-      return res.status(400).json({msg: 'Invalid cycle.'})
+      return res.status(400).json({error: { msg: 'Invalid cycle.'}})
     }
 
     return res.status(500).send('Server Error');
@@ -80,7 +80,7 @@ const deleteCycle = async (req, res) => {
       if (!cycle) {
         return res
         .status(400)
-        .json({msg: 'Invalid cycle.'})
+        .json({error: { msg: 'Invalid cycle.'}})
       }
   
       await cycle.remove();
@@ -88,7 +88,7 @@ const deleteCycle = async (req, res) => {
       res.status(200).json({ msg: 'Cycle has been removed' });
     } catch (err) {
       if (err.kind && err.kind === undefined) {
-        return res.status(400).json({msg: 'Invalid cycle.'})
+        return res.status(400).json({error: {msg: 'Invalid cycle.'}})
       }
 
       return res.status(500).send('Server Error');
