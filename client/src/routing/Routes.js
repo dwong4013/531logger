@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Login from '../components/auth/Login';
-import Register from '../components/auth/Register';
+import Login from '../pages/authentication/Login';
+import Register from '../pages/authentication/Register';
 import Alert from '../components/layout/Alert';
 import Dashboard from '../components/dashboard/Dashboard';
 import Workout from '../components/workout/Workout';
