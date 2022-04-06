@@ -37,11 +37,13 @@ const Login = ({ loginUser, isAuthenticated }) => {
         <Input register={register} errors={errors}
           name='email' 
           type='email' 
+          placeholder='Email'
           validation={{required: 'Please enter an email'}}
         />
         <Input register={register} errors={errors}
           name='password'
           type='password'
+          placeholder='Password'
           validation={{required: 'Please enter a password'}}
         />
         <Submit text='Login'/>
