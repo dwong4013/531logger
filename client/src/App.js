@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Landing from './components/layout/Landing';
-import Routes from './components/routing/Routes';
+import Landing from './pages/landing/Landing';
+import Routes from './routing/Routes';
 
 // Redux
 import { Provider } from 'react-redux';
