@@ -1,23 +1,23 @@
-import React, { Fragment, useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { Link, Redirect } from 'react-router-dom';
 import { loginUser } from '../../actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+// Components
+import Input from '../../components/forms/Input';
+import Submit from '../../components/forms/Submit';
+
 const Login = ({ loginUser, isAuthenticated }) => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    mode:"onBlur", 
+    reValidateMode: 'onBlur'
   });
 
-  const { email, password } = formData;
-
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    loginUser(formData);
+  const onSubmit = (data) => {
+    loginUser(data);
   };
 
   // Redirect if logged in
@@ -26,40 +26,33 @@ const Login = ({ loginUser, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
-      <div className="container-flex container-vertical container-vertical-center mx-2">
-        <h1 className="text-primary text-large">Welcome Back!</h1>
-        <p className="text-dark text-medium">
-          Log into your account
-        </p>
-        <form
-          onSubmit={(e) => onSubmit(e)}
-        >
-            <input
-              onChange={(e) => handleChange(e)}
-              type="email"
-              placeholder="Email Address"
-              name="email"
-              value={email}
-              required
-            />
-            <input
-              onChange={(e) => handleChange(e)}
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-            />
-          <input className="btn btn-primary" type="submit" value="Login"/>
-        </form>
-        <p className="my-1 text-dark text-small">
-          Don't have an account? {' '}
-          <Link to="/register" className="text-primary text-small">
-            Register
-          </Link>
-        </p>
-      </div>
-    </Fragment>
+    <div className="container-flex container-vertical container-vertical-center mx-2">
+      <h1 className="text-primary text-large">Welcome Back!</h1>
+      <p className="text-dark text-medium">
+        Log into your account
+      </p>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Input register={register} errors={errors}
+          name='email' 
+          type='email' 
+          validation={{required: 'Please enter an email'}}
+        />
+        <Input register={register} errors={errors}
+          name='password'
+          type='password'
+          validation={{required: 'Please enter a password'}}
+        />
+        <Submit text='Login'/>
+      </form>
+      <p className="my-1 text-dark text-small">
+        Don't have an account? {' '}
+        <Link to="/register" className="text-primary text-small">
+          Register
+        </Link>
+      </p>
+    </div>
   );
 };
 
