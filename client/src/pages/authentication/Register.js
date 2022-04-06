@@ -1,30 +1,25 @@
-import React, { Fragment, useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
-import { register } from '../../actions/auth';
-
+import { registerUser } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: ''
+import Input from '../../components/forms/Input'
+import Submit from '../../components/forms/Submit'
+
+const Register = ({ setAlert, registerUser, isAuthenticated }) => {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    mode:"onBlur", 
+    reValidateMode: 'onBlur'
   });
 
-  const { name, email, password, password2 } = formData;
-
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = ({ name, email, password, password2}) => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      register({ name, email, password });
+      registerUser({ name, email, password });
     }
   };
 
@@ -34,44 +29,49 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
       <div className="container-flex container-vertical container-vertical-center mx-2">
         <h1 className="text-primary text-large">Welcome Aboard!</h1>
         <p className="text-medium text-dark">
           Register a new account
         </p>
-        <form
-          onSubmit={(e) => onSubmit(e)}
-        >
-          <input
-            onChange={(e) => handleChange(e)}
-            type="text"
-            placeholder="Name"
-            name="name"
-            value={name}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input register={register} errors={errors}
+            type='text'
+            name='name'
+            placeholder='Name'
+            validation={{required: 'Please enter a name',
+            maxLength: {
+              value: 50,
+              message: 'Name can\'t exceed 50 characters'
+            }}}
           />
-          <input
-            onChange={(e) => handleChange(e)}
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            value={email}
+          <Input register={register} errors={errors}
+            type='email'
+            name='email'
+            placeholder='Email'
+            validation={{required: 'Please enter an email'}}
           />
-          <input
-            onChange={(e) => handleChange(e)}
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
+          <Input register={register} errors={errors}
+            type='password'
+            name='password'
+            placeholder='Password'
+            validation={{required: 'Please enter a password',
+            minLength: {
+              value :6,
+              message: 'Password should be at least 6 characters'
+            }}}
           />
-          <input
-            onChange={(e) => handleChange(e)}
-            type="password"
-            placeholder="Confirm Password"
-            name="password2"
-            value={password2}
+          <Input register={register} errors={errors}
+            type='password'
+            name='password2'
+            placeholder='Re-enter Password'
+            validation={{required: 'Please re-enter your password',
+            minLength: {
+              value :6,
+              message: 'Password should be at least 6 characters'
+            }}}
           />
-          <input type="submit" value="Register" className="btn btn-primary" />
+          <Submit text="Register"/>
         </form>
         <p className="my-1 text-dark text-small">
           Already have an account?{' '}
@@ -80,13 +80,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           </Link>
         </p>
       </div>
-    </Fragment>
   );
 };
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired,
+  registerUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired
 };
 
@@ -94,4 +93,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, registerUser })(Register);
