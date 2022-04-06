@@ -1,10 +1,6 @@
-import React, { Fragment, useEffect } from 'react';
-import { Router, Route, Switch} from 'react-router-dom';
+import React from 'react';
 import '@testing-library/jest-dom/extend-expect'
 import { render, fireEvent, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
-import { createBrowserHistory } from 'history';
-import { Provider } from 'react-redux';
-import store from '../../store';
 import axios from 'axios';
 
 // Components
