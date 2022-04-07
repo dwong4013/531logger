@@ -80,8 +80,8 @@ describe('API: Cycles Controllers', () => {
             await getCycles(req, res)
             expect(dbCallCycle.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true
-            expect(res.status.calledWith(badCode)).to.be.true;
-            expect(res.json.calledOnce).to.be.true
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true
         });
         it('should handle error if database call throws error', async () => {
             let req = mockRequest();

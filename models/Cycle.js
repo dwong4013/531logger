@@ -9,6 +9,7 @@ const CycleSchema = new mongoose.Schema({
   endDate: Date,
   user: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: true
   },
   maxes: {

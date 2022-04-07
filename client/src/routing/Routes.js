@@ -3,8 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../pages/authentication/Login';
 import Register from '../pages/authentication/Register';
 import Alert from '../components/layout/Alert';
-import Dashboard from '../components/dashboard/Dashboard';
+import Dashboard from '../pages/dashboard/Dashboard';
 import Workout from '../components/workout/Workout';
+import PrivateRoute from './PrivateRoute';
 
 const Routes = (props) => {
   return (
@@ -13,8 +14,8 @@ const Routes = (props) => {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/workout" component={Workout} />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <PrivateRoute exact path="/workout" component={Workout} />
       </Switch>
     </Fragment>
   );

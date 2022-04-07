@@ -4,12 +4,12 @@ const getCycles = async (req, res) => {
     try {
       const cycles = await Cycle.find({
         user: req.user.id
-      }).sort({ date: 'desc' });
+      }).sort({ dateCreated: 'desc' });
   
-      if (!cycles) {
+      if (cycles.length === 0) {
         return res
           .status(400)
-          .json({error: { msg: 'There are no templates, please create one' }});
+          .json({error: { msg: 'Please create a cycle to begin' }});
       }
       return res.json(cycles);
     } catch (err) {
