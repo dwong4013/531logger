@@ -14,7 +14,7 @@ import UtilityButton from '../../components/buttons/UtilityButton';
 
 const Dashboard = ({
   auth: { user },
-  cycles: { cycles, loading },
+  cycles: { cycles: cyclesData, loading },
   getCycles,
   logout
 }) => {
@@ -23,18 +23,12 @@ const Dashboard = ({
     window.matchMedia('(max-width: 414px)').addEventListener('change', mediaHandler)
   }, [getCycles]);
 
-  const [week, setWeek] = useState('week5s');
   const [desktop, setDesktop] = useState(window.matchMedia('(max-width: 414px)').matches)
   const [modal, setModal] = useState(false);
 
   const mediaHandler = e => {
-    console.log(e.matches)
     setDesktop(e.matches)
   }
-
-  const onClick = (e) => {
-    setWeek([e.target.name]);
-  };
 
   const onModalClick = () => {
     setModal(!modal)
@@ -42,30 +36,39 @@ const Dashboard = ({
 
   return (
     <Fragment>
-      <section className="summary-container container-flex container-vertical container-vertical-center">
-        {modal && 
-        <Modal>
-          <CycleForm/>
-        </Modal>}
-        <div className="toolbar">
-          <UtilityButton onClick={()=> logout()}>
-            <i className="fa-solid fa-right-from-bracket"/> logout
-          </UtilityButton>
-          <button className="btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
-        </div>
-        <div className="summary-cards-container my-2">
-          <SummaryCard title='cycles completed' value='1'/>
-          <SummaryCard light title='repeated weeks' value='0'/>
-          <SummaryCard light={desktop} title='current cycle' value='4'/>
-          <SummaryCard light={!desktop} title='workouts left' value='8'/>
-        </div>
-        <div className="section-header text-dark text-medium">
-          Cycles
-        </div>
-        <CycleCard/>
-        <CycleCard/>
-        <CycleCard current/>
-      </section>
+      {loading ? (
+      <Spinner/>
+      ):(
+      <Fragment>
+        <section className="summary-container container-flex container-vertical container-vertical-center">
+          {modal && 
+          <Modal>
+            <CycleForm/>
+          </Modal>}
+          <div className="toolbar">
+            <UtilityButton onClick={()=> logout()}>
+              <i className="fa-solid fa-right-from-bracket"/> logout
+            </UtilityButton>
+            <button className="btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
+          </div>
+          <div className="summary-cards-container my-2">
+            <SummaryCard title='cycles completed' value='1'/>
+            <SummaryCard light title='repeated weeks' value='0'/>
+            <SummaryCard light={desktop} title='current cycle' value='4'/>
+            <SummaryCard light={!desktop} title='workouts left' value='8'/>
+          </div>
+          <div className="section-header text-dark text-medium">
+            Cycles
+          </div>
+          {/* CycleCards */}
+            {!loading && cyclesData !== null ? (
+              cyclesData.map((cycle, key) => (<CycleCard cycle={cycle} key={key} current={key===0}/>)) 
+            ):( 
+              <p className="text-primary text-regular">No cycles available, create one to get started</p>
+            )}
+        </section>
+      </Fragment>
+      )}
     </Fragment>
   );
 };
