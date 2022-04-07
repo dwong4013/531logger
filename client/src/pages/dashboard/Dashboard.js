@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import { logout } from '../../actions/auth';
 import { getCycles } from '../../actions/cycles';
 import PropTypes from 'prop-types';
 import Spinner from '../../components/layout/Spinner';
@@ -12,7 +13,8 @@ import Modal from '../../components/modals/Modal';
 const Dashboard = ({
   auth: { user },
   cycles: { cycles, loading },
-  getCycles
+  getCycles,
+  logout
 }) => {
   useEffect(() => {
     getCycles();
@@ -44,6 +46,7 @@ const Dashboard = ({
           <CycleForm/>
         </Modal>}
         <div className="toolbar">
+          <button className="btn btn-back btn-icon-left btn-small btn-dark" onClick={() => logout()}><i className="fa-solid fa-right-from-bracket"/> logout</button>
           <button className="btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
         </div>
         <div className="summary-cards-container my-2">
@@ -66,7 +69,8 @@ const Dashboard = ({
 Dashboard.propTypes = {
   cycles: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  getCycles: PropTypes.func.isRequired
+  getCycles: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -74,4 +78,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCycles })(Dashboard);
+export default connect(mapStateToProps, { getCycles, logout })(Dashboard);
