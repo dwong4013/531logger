@@ -10,6 +10,8 @@ import CycleCard from './CycleCard';
 import CycleForm from '../../components/modals/CycleForm2';
 import Modal from '../../components/modals/Modal';
 
+import UtilityButton from '../../components/buttons/UtilityButton';
+
 const Dashboard = ({
   auth: { user },
   cycles: { cycles, loading },
@@ -46,7 +48,9 @@ const Dashboard = ({
           <CycleForm/>
         </Modal>}
         <div className="toolbar">
-          <button className="btn btn-back btn-icon-left btn-small btn-dark" onClick={() => logout()}><i className="fa-solid fa-right-from-bracket"/> logout</button>
+          <UtilityButton onClick={()=> logout()}>
+            <i className="fa-solid fa-right-from-bracket"/> logout
+          </UtilityButton>
           <button className="btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
         </div>
         <div className="summary-cards-container my-2">
