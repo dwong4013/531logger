@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCycles, updateSetCompleted } from '../../actions/cycles';
 import SetCard from './SetCard';
-import SummaryCard from '../dashboard/SummaryCard';
-import CycleCard from '../dashboard/CycleCard';
+import SummaryCard from '../../pages/dashboard/SummaryCard';
+import CycleCard from '../../pages/dashboard/CycleCard';
 
 
 const Workout = ({
