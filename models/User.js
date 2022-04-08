@@ -17,7 +17,11 @@ const UserSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  cyclesCompleted: {
+    type: Number,
+    default: 0
+  },
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

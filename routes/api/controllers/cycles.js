@@ -4,7 +4,9 @@ const getCycles = async (req, res) => {
     try {
       const cycles = await Cycle.find({
         user: req.user.id
-      }).sort({ dateCreated: 'desc' });
+      })
+      .populate('workoutsToDo', 'exercise week')
+      .sort({ dateCreated: 'desc' });
   
       if (cycles.length === 0) {
         return res

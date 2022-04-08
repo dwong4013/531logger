@@ -18,6 +18,19 @@ const CycleSchema = new mongoose.Schema({
     deadlift: Number,
     press: Number
   },
+  workoutsToDo: [{
+    ref: 'workout',
+    type: mongoose.Schema.Types.ObjectId
+  }],
+  workoutsCompleted: [{
+    ref: 'workout',
+    type: mongoose.Schema.Types.ObjectId
+  }],
+  completed: {
+    type: Boolean,
+    default: false,
+    required: true
+  }
 });
 
 module.exports = Cycle = new mongoose.model('cycle', CycleSchema);

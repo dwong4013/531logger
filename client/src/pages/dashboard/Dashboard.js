@@ -52,10 +52,10 @@ const Dashboard = ({
             <button className="btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
           </div>
           <div className="summary-cards-container my-2">
-            <SummaryCard title='cycles completed' value='1'/>
-            <SummaryCard light title='repeated weeks' value='0'/>
-            <SummaryCard light={desktop} title='current cycle' value='4'/>
-            <SummaryCard light={!desktop} title='workouts left' value='8'/>
+            <SummaryCard title='cycles completed' value={user.cyclesCompleted}/>
+            <SummaryCard light title='workouts left' value={cyclesData[0].workoutsToDo.length}/>
+            <SummaryCard light={desktop} title='current workout' value={cyclesData[0].workoutsToDo[0].exercise}/>
+            <SummaryCard light={!desktop} title='current week' value={cyclesData[0].workoutsToDo[0].week}/>
           </div>
           <div className="section-header text-dark text-medium">
             Cycles

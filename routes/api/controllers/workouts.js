@@ -39,19 +39,28 @@ const createWorkouts = async (req, res) => {
         let { maxes } = cycle
         let newWorkouts = [];
 
+
         // Creates a workout for each exercise and week for a total of 12 workouts
-        for (let i = 0; i < exercises.length; i++) {
-            for (let j = 0; j < 3; j++) {
-                newWorkouts.push(generateWorkout(req.user.id, cycle_id, exercises[i], j, maxes[exercises[i]]))
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < exercises.length; j++) {
+                // Create new workouts
+                newWorkouts.push(generateWorkout(req.user.id, cycle_id, exercises[j], i, maxes[exercises[j]]))
             }
         }
-        
-        let {result: { n }} = await Workout.insertMany(newWorkouts, {rawResult: true})
 
+        // Get workout IDs
+        let workoutIds = newWorkouts.map(workout => workout._id)
+        console.log(workoutIds);
+        let {result: { n }} = await Workout.insertMany(newWorkouts, {rawResult: true})
+ 
         return res.status(200).json({
+            workouts: workoutIds,
             msg: `${n} workouts created!`
         });
+
+        
     } catch (err) {
+        console.log('err: ', err);
         return res.status(500).send('Server Error');
     }
 }
@@ -144,9 +153,35 @@ const editWorkout = async (req, res) => {
   }
 }
 
+const deleteWorkouts = async (req, res) => {
+    try {
+      const result = await Workout.deleteMany({
+        user: req.user.id,
+        cycle: req.params.cycle_id
+      });
+      console.log(result);
+
+      if (result.ok !== 1) {
+        return res
+        .status(400)
+        .json({error: { msg: 'Removing workouts failed.'}})
+      }
+  
+      res.status(200).json({ msg: 'Workouts have been removed' });
+    } catch (err) {
+      if (err.kind && err.kind === undefined) {
+        return res.status(400).json({error: {msg: 'Invalid cycle.'}})
+      }
+
+      return res.status(500).send('Server Error');
+    }
+}
+
+
 
 module.exports = {
     getWorkouts,
     createWorkouts,
-    editWorkout
+    editWorkout,
+    deleteWorkouts
 }
