@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const { registerUser } = require('./controllers/users');
+const { registerUser, editUser } = require('./controllers/users');
+const auth = require('../../middleware/auth')
 const validationHandler = require('../../middleware/validationHandler')
 
 
@@ -20,6 +21,16 @@ router.post(
     ).isLength({ min: 6 })
   ], validationHandler],
   registerUser
+);
+
+// @route   Put api/users
+// @desc    Edit User's cyclesCompleted field
+// @access  public
+
+router.put(
+  '/',
+  auth,
+  editUser
 );
 
 module.exports = router;
