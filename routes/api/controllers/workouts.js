@@ -171,11 +171,35 @@ const editWorkout = async (req, res) => {
   }
 }
 
+const deleteWorkouts = async (req, res) => {
+    try {
+      const result = await Workout.deleteMany({
+        user: req.user.id,
+        cycle: req.params.cycle_id
+      });
+      console.log(result);
+
+      if (result.ok !== 1) {
+        return res
+        .status(400)
+        .json({error: { msg: 'Removing workouts failed.'}})
+      }
+  
+      res.status(200).json({ msg: 'Workouts have been removed' });
+    } catch (err) {
+      if (err.kind && err.kind === undefined) {
+        return res.status(400).json({error: {msg: 'Invalid cycle.'}})
+      }
+
+      return res.status(500).send('Server Error');
+    }
+}
 
 
 
 module.exports = {
     getWorkouts,
     createWorkouts,
-    editWorkout
+    editWorkout,
+    deleteWorkouts
 }

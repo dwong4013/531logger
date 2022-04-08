@@ -1,4 +1,4 @@
-const { getWorkouts, createWorkouts, editWorkout } = require('../../routes/api/controllers/workouts');
+const { getWorkouts, createWorkouts, editWorkout, deleteWorkouts } = require('../../routes/api/controllers/workouts');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const Cycle = require('../../models/Cycle');
@@ -232,5 +232,42 @@ describe('API: Workouts Controllers', () => {
             expect(res.send.calledOnce).to.be.true;
         })
 
+    })
+    describe('delete workouts route controller: deleteWorkouts', () => {
+        const mockRequest = () => {
+            const req = {
+                user: {
+                  id: '604f7c8d31c4ab00aaca213d'  
+                },
+                params: {
+                    cycle_id: '604f7c8d31c4ab00aaca222d'
+                },
+            };
+
+            return req
+        }
+
+        it('should delete workouts details', async () => {
+            let req = mockRequest();
+            let deleteMany = sandbox.stub(Workout, 'deleteMany').returns({ok: 1})
+
+            await deleteWorkouts(req, res)
+            expect(deleteMany.calledOnce).to.be.true
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(goodCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+            
+        })
+
+        it('should handle error if db call throws error', async () => {
+            let req = mockRequest();
+            let deleteMany = sandbox.stub(Workout, 'deleteMany').throws()
+
+            await deleteWorkouts(req, res)
+            expect(deleteMany.calledOnce).to.be.true
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.send.calledOnce).to.be.true;
+        })
     })
 })
