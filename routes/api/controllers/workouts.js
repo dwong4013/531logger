@@ -52,30 +52,12 @@ const createWorkouts = async (req, res) => {
         let workoutIds = newWorkouts.map(workout => workout._id)
         console.log(workoutIds);
         let {result: { n }} = await Workout.insertMany(newWorkouts, {rawResult: true})
-        // query by workout id, user id, and either main or volume set field 
-        // where the id of the set within the array matches the requested set id
-        const query = {
-            _id: cycle_id,
-            user: req.user.id,
-        }
+ 
+        return res.status(200).json({
+            workouts: workoutIds,
+            msg: `${n} workouts created!`
+        });
 
-        // set the fields to the requested values
-        const updateOperator = {
-            "$set": {
-                "workouts.todo": workoutIds
-            }
-        }
-        const result = await Cycle.updateOne(query, updateOperator);
-        console.log('result: ', result);
-        if (result.ok === 1) {
-            return res.status(200).json({
-                msg: `${n} workouts created!`
-            });
-        } else {
-            return res.status(400).json({
-                msg: 'Error creating workouts'
-            });
-        }
         
     } catch (err) {
         console.log('err: ', err);

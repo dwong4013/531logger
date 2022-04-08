@@ -18,15 +18,18 @@ const CycleSchema = new mongoose.Schema({
     deadlift: Number,
     press: Number
   },
-  workouts: {
-    todo: [{
-      ref: 'workout',
-      type: mongoose.Schema.Types.ObjectId
-    }],
-    completed: [{
-      ref: 'workout',
-      type: mongoose.Schema.Types.ObjectId
-    }]
+  workoutsToDo: [{
+    ref: 'workout',
+    type: mongoose.Schema.Types.ObjectId
+  }],
+  workoutsCompleted: [{
+    ref: 'workout',
+    type: mongoose.Schema.Types.ObjectId
+  }],
+  completed: {
+    type: Boolean,
+    default: false,
+    required: true
   }
 });
 

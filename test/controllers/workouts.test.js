@@ -116,12 +116,10 @@ describe('API: Workouts Controllers', () => {
             let fakeCycle = mockCycle();
             let findCycle = sandbox.stub(Cycle, 'findById').returns(fakeCycle)
             let insertMany = sandbox.stub(Workout, 'insertMany').callsFake(() => Promise.resolve({result: {n: 12}}))
-            let updateOne = sandbox.stub(Cycle, 'updateOne').returns({ok: 1})
 
             await createWorkouts(req, res);
             expect(findCycle.calledOnce).to.be.true;
             expect(insertMany.calledOnce).to.be.true;
-            expect(updateOne.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(goodCode)).to.be.true;
             expect(res.json.calledOnce).to.be.true;
