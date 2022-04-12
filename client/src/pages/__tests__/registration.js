@@ -41,17 +41,27 @@ describe('Landing', () => {
           email: 'fake@mail.com',
         }
       },
+      getCycles: [
+        {
+          maxes: {
+            squat: 200,
+            bench: 200,
+            deadlift: 200,
+            press: 200
+          },
+          workoutsToDo: [
+            {
+              _id: '62505f4bf14dba02d8e5d47f',
+              exercise: 'squat',
+              week : 1
+            }
+          ],
+          workoutsCompleted: [],
+
+        }
+      ]
     }
 
-    // Mock registration post request
-    axios.post = jest.fn()
-    .mockImplementationOnce(() => Promise.resolve(res.postUsersSuccess))
-
-    axios.get = jest.fn()
-    .mockImplementationOnce(() => Promise.reject())
-    .mockImplementationOnce(() => Promise.resolve(res.getAuth))
-
-  
     test('register and redirect to dashboard', async () => {
 
         // Render Landing and Register Routes, start at Landing
@@ -91,10 +101,15 @@ describe('Landing', () => {
         fireEvent.change(getByPlaceholderText('Re-enter Password'), {target: {value: 'test123'}})
 
         // Click sign up
+        axios.post = jest.fn()
+        .mockImplementationOnce(() => Promise.resolve(res.postUsersSuccess))
+        axios.get = jest.fn()
+        .mockImplementationOnce(() => Promise.resolve(res.getAuth))
+        .mockImplementationOnce(() => Promise.resolve(res.getCycles))    
         fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
 
         // Redirected to company setup
-        await waitForElement(() => getByText(/cycles completed/i));
+        await waitForElement(() => getByText(/logout/i));
         expect(window.location.href).toContain('http://localhost/dashboard');
 
     })

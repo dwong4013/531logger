@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { logout } from '../../actions/auth';
+import { logout, loadUser } from '../../actions/auth';
 import { getCycles } from '../../actions/cycles';
 import PropTypes from 'prop-types';
 import Spinner from '../../components/layout/Spinner';
@@ -13,15 +13,17 @@ import Modal from '../../components/modals/Modal';
 import UtilityButton from '../../components/buttons/UtilityButton';
 
 const Dashboard = ({
-  auth: { user },
-  cycles: { cycles: cyclesData, loading },
+  auth: { loading: authLoading, user },
+  cycles: { cycles: cyclesData, loading: cyclesLoading },
   getCycles,
+  loadUser,
   logout
 }) => {
   useEffect(() => {
+    loadUser();
     getCycles();
     window.matchMedia('(max-width: 414px)').addEventListener('change', mediaHandler)
-  }, [getCycles]);
+  }, []);
 
   const [desktop, setDesktop] = useState(window.matchMedia('(max-width: 414px)').matches)
   const [modal, setModal] = useState(false);
@@ -36,7 +38,10 @@ const Dashboard = ({
 
   return (
     <Fragment>
-      {loading ? (
+      {authLoading && 
+      cyclesLoading && 
+      cyclesData === null &&
+      user === null ? (
       <Spinner/>
       ):(
       <Fragment>
@@ -52,16 +57,16 @@ const Dashboard = ({
             <button className="btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
           </div>
           <div className="summary-cards-container my-2">
-            <SummaryCard title='cycles completed' value={user.cyclesCompleted}/>
-            <SummaryCard light title='workouts left' value={cyclesData[0].workoutsToDo.length}/>
-            <SummaryCard light={desktop} title='current workout' value={cyclesData[0].workoutsToDo[0].exercise}/>
-            <SummaryCard light={!desktop} title='current week' value={cyclesData[0].workoutsToDo[0].week}/>
+            <SummaryCard title='cycles completed' value={user && user.cyclesCompleted}/>
+            <SummaryCard light title='workouts left' value={cyclesData && cyclesData[0].workoutsToDo.length}/>
+            <SummaryCard light={desktop} title='current workout' value={cyclesData && cyclesData[0].workoutsToDo[0].exercise}/>
+            <SummaryCard light={!desktop} title='current week' value={cyclesData && cyclesData[0].workoutsToDo[0].week}/>
           </div>
           <div className="section-header text-dark text-medium">
             Cycles
           </div>
           {/* CycleCards */}
-            {!loading && cyclesData !== null ? (
+            {!cyclesLoading && cyclesData !== null ? (
               cyclesData.map((cycle, key) => (<CycleCard cycle={cycle} key={key} current={key===0}/>)) 
             ):( 
               <p className="text-primary text-regular">No cycles available, create one to get started</p>
@@ -77,7 +82,8 @@ Dashboard.propTypes = {
   cycles: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   getCycles: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -85,4 +91,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getCycles, logout })(Dashboard);
+export default connect(mapStateToProps, { getCycles, logout, loadUser })(Dashboard);

@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect'
-import { render, fireEvent, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, fireEvent, waitForElement, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import axios from 'axios';
 
 // Components
@@ -50,17 +50,26 @@ describe('Landing', () => {
           email: 'fake@mail.com',
         }
       },
+      getCycles: [
+        {
+          maxes: {
+            squat: 200,
+            bench: 200,
+            deadlift: 200,
+            press: 200
+          },
+          workoutsToDo: [
+            {
+              _id: '62505f4bf14dba02d8e5d47f',
+              exercise: 'squat',
+              week : 1
+            }
+          ],
+          workoutsCompleted: [],
+
+        }
+      ]
     }
-
-    // Mock registration post request
-    axios.post = jest.fn()
-    .mockImplementationOnce(() => Promise.reject(res.postAuthError))
-    .mockImplementationOnce(() => Promise.resolve(res.postAuthSuccess))
-
-    axios.get = jest.fn()
-    .mockImplementationOnce(() => Promise.reject())
-    .mockImplementationOnce(() => Promise.resolve(res.getAuth))
-
   
     test('login and redirect to dashboard', async () => {
 
@@ -68,6 +77,7 @@ describe('Landing', () => {
         const { getByText, getByTestId, getByPlaceholderText, getAllByPlaceholderText, getByRole, history } = renderApp();
 
         // See buttons to login or register
+        // axios.get = jest.fn().mockImplementationOnce(() => Promise.reject())
         expect(getByText(/login/i)).toBeTruthy();
         expect(getByText(/register/i)).toBeTruthy();
 
@@ -89,6 +99,7 @@ describe('Landing', () => {
         fireEvent.change(getByPlaceholderText(/password/i), {target: {value: 'wrongpassword'}})
         
         // Click sign up
+        axios.post = jest.fn().mockImplementationOnce(() => Promise.reject(res.postAuthError))
         fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
         
         // Password error alert appears
@@ -97,11 +108,15 @@ describe('Landing', () => {
         // Fill form with matching password
         fireEvent.change(getByPlaceholderText(/password/i), {target: {value: 'correctpassword'}})
 
-        // Click sign up
+        // Click log in
+        axios.get = jest.fn()
+        .mockImplementationOnce(() => Promise.resolve(res.getAuth))
+        .mockImplementationOnce(() => Promise.resolve(res.getCycles))
+        axios.post = jest.fn().mockImplementationOnce(() => Promise.resolve(res.postAuthSuccess))
         fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
 
         // Redirected to company setup
-        await waitForElement(() => getByText(/cycles completed/i));
+        await waitForElement(() => getByText(/logout/i));
         expect(window.location.href).toContain('http://localhost/dashboard');
 
     })
