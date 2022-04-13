@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect'
 import { render, fireEvent, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { screen } from '@testing-library/dom'
 import axios from 'axios';
 
 // Components
@@ -41,26 +42,30 @@ describe('Landing', () => {
           email: 'fake@mail.com',
         }
       },
-      getCycles: [
-        {
-          maxes: {
-            squat: 200,
-            bench: 200,
-            deadlift: 200,
-            press: 200
-          },
-          workoutsToDo: [
-            {
-              _id: '62505f4bf14dba02d8e5d47f',
-              exercise: 'squat',
-              week : 1
-            }
-          ],
-          workoutsCompleted: [],
+      getCycles: {
+        data: [
+          {
+            maxes: {
+              squat: 200,
+              bench: 200,
+              deadlift: 200,
+              press: 200
+            },
+            workoutsToDo: [
+              {
+                _id: '62505f4bf14dba02d8e5d47f',
+                exercise: 'squat',
+                week : 1
+              }
+            ],
+            workoutsCompleted: [],
 
-        }
-      ]
+          }
+        ]
+      }
     }
+
+    afterEach(() => jest.clearAllMocks())
 
     test('register and redirect to dashboard', async () => {
 
@@ -76,7 +81,6 @@ describe('Landing', () => {
         fireEvent.click(getByText(/register/i), leftClick)
 
         // Arrived at Register page
-        console.log('url: ', window.location.href)
         expect(window.location.href).toContain('http://localhost/register');
         expect(getByText(/new account/i)).toBeTruthy();
         // See registration form
@@ -101,14 +105,14 @@ describe('Landing', () => {
         fireEvent.change(getByPlaceholderText('Re-enter Password'), {target: {value: 'test123'}})
 
         // Click sign up
-        axios.post = jest.fn()
-        .mockImplementationOnce(() => Promise.resolve(res.postUsersSuccess))
         axios.get = jest.fn()
         .mockImplementationOnce(() => Promise.resolve(res.getAuth))
         .mockImplementationOnce(() => Promise.resolve(res.getCycles))    
+        axios.post = jest.fn()
+        .mockImplementationOnce(() => Promise.resolve(res.postUsersSuccess))
         fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
 
-        // Redirected to company setup
+        // Redirected to dashboard
         await waitForElement(() => getByText(/logout/i));
         expect(window.location.href).toContain('http://localhost/dashboard');
 
