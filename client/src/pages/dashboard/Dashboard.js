@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { logout, loadUser } from '../../actions/auth';
 import { getCycles } from '../../actions/cycles';
@@ -7,8 +6,7 @@ import PropTypes from 'prop-types';
 import Spinner from '../../components/layout/Spinner';
 import SummaryCard from './SummaryCard';
 import CycleCard from './CycleCard';
-import FormStep2 from '../cycles/FormStep2';
-import Modal from '../../components/modals/Modal';
+import CycleForm from '../cycles/CycleForm';
 
 import UtilityButton from '../../components/buttons/UtilityButton';
 
@@ -46,10 +44,7 @@ const Dashboard = ({
       ):(
       <Fragment>
         <section className="summary-container container-flex container-vertical container-vertical-center">
-          {modal && 
-          <Modal>
-            <FormStep2/>
-          </Modal>}
+          {modal && <CycleForm/>}
           <div className="toolbar">
             <UtilityButton onClick={()=> logout()}>
               <i className="fa-solid fa-right-from-bracket"/> logout

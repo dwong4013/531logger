@@ -41,7 +41,7 @@ const createCycle = async (req, res) => {
         msg: 'A new cycle has been created!'
       });
     } catch (err) {
-      return res.status(500).send('Server Error');
+      return res.status(500).json({error: {msg:'Server Error'}});
     }
 }
 
