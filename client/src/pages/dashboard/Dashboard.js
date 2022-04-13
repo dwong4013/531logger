@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Spinner from '../../components/layout/Spinner';
 import SummaryCard from './SummaryCard';
 import CycleCard from './CycleCard';
-import CycleForm from '../../components/modals/CycleForm2';
+import FormStep2 from '../cycles/FormStep2';
 import Modal from '../../components/modals/Modal';
 
 import UtilityButton from '../../components/buttons/UtilityButton';
@@ -48,7 +48,7 @@ const Dashboard = ({
         <section className="summary-container container-flex container-vertical container-vertical-center">
           {modal && 
           <Modal>
-            <CycleForm/>
+            <FormStep2/>
           </Modal>}
           <div className="toolbar">
             <UtilityButton onClick={()=> logout()}>
