@@ -27,7 +27,7 @@ export const loginUser = (formData) => async (dispatch) => {
       payload: res.data
     });
 
-    dispatch(loadUser());
+
   } catch (err) {
     const error = err.response.data.error;
     console.log('error: ', error);
@@ -77,7 +77,6 @@ export const registerUser = (formData) => async (dispatch) => {
       payload: res.data
     });
 
-    dispatch(loadUser());
   } catch (err) {
     const error = err.response.data.error;
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect'
+import { screen } from '@testing-library/dom'
 import { render, fireEvent, waitForElement, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import axios from 'axios';
 
@@ -30,9 +31,7 @@ describe('Landing', () => {
 
     const res = {
       postAuthSuccess: {
-        data: {
-          token: 'asdofj1091jjksladf01asdf'
-        }
+        data: 'asdofj1091jjksladf01asdf'
       },
       postAuthError: {
           response: {
@@ -48,28 +47,32 @@ describe('Landing', () => {
           _id: '0s9adf808sadfa0sdf8',
           name: 'fake',
           email: 'fake@mail.com',
+          cyclesCompleted: 0,
         }
       },
-      getCycles: [
-        {
-          maxes: {
-            squat: 200,
-            bench: 200,
-            deadlift: 200,
-            press: 200
-          },
-          workoutsToDo: [
-            {
-              _id: '62505f4bf14dba02d8e5d47f',
-              exercise: 'squat',
-              week : 1
-            }
-          ],
-          workoutsCompleted: [],
-
-        }
-      ]
+      getCycles: {
+        data: [
+          {
+            maxes: {
+              squat: 200,
+              bench: 200,
+              deadlift: 200,
+              press: 200
+            },
+            workoutsToDo: [
+              {
+                _id: '62505f4bf14dba02d8e5d47f',
+                exercise: 'squat',
+                week : 1
+              }
+            ],
+            workoutsCompleted: [],
+          }
+        ]
+      }
     }
+
+    afterEach(() => jest.clearAllMocks())
   
     test('login and redirect to dashboard', async () => {
 
