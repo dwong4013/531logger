@@ -22,13 +22,14 @@ export const getCycles = () => async (dispatch) => {
       payload: res.data
     });
   } catch (err) {
+    console.log(err);
     dispatch({
       type: NO_CYCLES
     });
   }
 };
 
-export const createCycle = (formData, history) => async (dispatch) => {
+export const createCycle = (formData) => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -48,13 +49,12 @@ export const createCycle = (formData, history) => async (dispatch) => {
       loading: true
     });
 
-    dispatch(setAlert('Max Created', 'success'));
-    history.push('/cycles');
+    dispatch(setAlert('Success', res.data.msg, 'success'));
   } catch (err) {
-    const errors = err.response.data.errors;
+    const error = err.response.data.error;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    if (error) {
+      dispatch(setAlert('Error', error.msg, 'danger'))
     }
   }
 };
