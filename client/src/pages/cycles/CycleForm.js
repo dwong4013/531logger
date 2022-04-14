@@ -10,17 +10,25 @@ export default function CycleForm(props) {
 
   const initialState = {
     currentStepIndex: 0,
+    formData: {}
   }
 
   const [formState, setFormState] = useState(initialState)
   const { currentStepIndex } = formState
   const Component = forms[currentStepIndex]
 
+  const handleBack = () => {
+    setFormState({
+        ...formState,
+        currentStepIndex: formState.currentStepIndex - 1,
+    })
+}
+
   console.log(formState);
 
   return (
     <Modal>
-        <Component formState={formState} setFormState={setFormState} {...props}/>
+        <Component formState={formState} setFormState={setFormState} handleBack={handleBack} {...props}/>
     </Modal>
   )
 }

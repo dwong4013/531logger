@@ -7,15 +7,18 @@ import PropTypes from 'prop-types';
 // Components
 import Input from '../../components/forms/Input';
 
-function FormStep2({ createCycle, modal, setModal }) {
+function FormStep2({ createCycle, formState, setFormState, modal, setModal, handleBack }) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm({
         mode:"onBlur", 
         reValidateMode: 'onBlur'
         });
 
     const onSubmit = (data) => {
-        console.log(data);
-        createCycle(data)
+        setFormState({
+            ...formState,
+            currentStepIndex: formState.currentStepIndex + 1,
+            formData: {...formState.formData, ...data}
+        })
         };
 
     return (
@@ -59,7 +62,7 @@ function FormStep2({ createCycle, modal, setModal }) {
                         <button onClick={handleSubmit(onSubmit)}className="btn btn-primary btn-regular my-1">
                             submit
                         </button>
-                        <button className="btn btn-dark btn-regular">
+                        <button onClick={() => handleBack()} className="btn btn-dark btn-regular">
                             back
                         </button>
                     </div>
