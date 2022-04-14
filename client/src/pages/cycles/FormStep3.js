@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function FormStep3({ formUtils, modal, setModal, handleBack }) {
+export default function FormStep3({ formUtils, modal, setModal, stepDecrement }) {
 
     const { getValues } = formUtils;
     let { squat, bench, deadlift, press } = getValues();
@@ -37,7 +37,7 @@ export default function FormStep3({ formUtils, modal, setModal, handleBack }) {
                         <button className="btn btn-primary btn-regular">
                             create
                         </button>
-                        <button onClick={() => handleBack()} className="btn btn-dark btn-regular my-1">
+                        <button onClick={() => stepDecrement()} className="btn btn-dark btn-regular my-1">
                             back
                         </button>
                     </div>

@@ -7,15 +7,8 @@ import PropTypes from 'prop-types';
 // Components
 import Input from '../../components/forms/Input';
 
-function FormStep2({ formUtils, createCycle, formState, setFormState, modal, setModal, handleBack }) {
+function FormStep2({ formUtils, stepIncrement, stepDecrement, modal, setModal }) {
     const { register, handleSubmit, formState: { errors } } = formUtils
-
-    const onSubmit = (data) => {
-        setFormState({
-            ...formState,
-            currentStepIndex: formState.currentStepIndex + 1,
-        })
-        };
 
     return (
         <div className="modal-background">
@@ -55,10 +48,10 @@ function FormStep2({ formUtils, createCycle, formState, setFormState, modal, set
                         />                
                     </form>
                     <div className="buttons container-flex container-vertical container-vetical-center">
-                        <button onClick={handleSubmit(onSubmit)}className="btn btn-primary btn-regular my-1">
+                        <button onClick={()=> stepIncrement()}className="btn btn-primary btn-regular my-1">
                             submit
                         </button>
-                        <button onClick={() => handleBack()} className="btn btn-dark btn-regular">
+                        <button onClick={() => stepDecrement()} className="btn btn-dark btn-regular">
                             back
                         </button>
                     </div>

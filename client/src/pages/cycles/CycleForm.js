@@ -10,8 +10,8 @@ export default function CycleForm(props) {
   const forms = [FormStep1, FormStep2, FormStep3]
 
   const formUtils = useForm({
-    mode:"onBlur", 
-    reValidateMode: 'onBlur'
+      mode:"onBlur", 
+      reValidateMode: 'onBlur'
     });
 
   const initialState = {
@@ -22,7 +22,14 @@ export default function CycleForm(props) {
   const { currentStepIndex } = formState
   const Component = forms[currentStepIndex]
 
-  const handleBack = () => {
+  const stepIncrement = () => {
+    setFormState({
+      ...formState,
+      currentStepIndex: formState.currentStepIndex + 1,
+  })
+}
+
+  const stepDecrement = () => {
     setFormState({
         ...formState,
         currentStepIndex: formState.currentStepIndex - 1,
@@ -33,7 +40,7 @@ export default function CycleForm(props) {
 
   return (
     <Modal>
-        <Component formUtils={formUtils} formState={formState} setFormState={setFormState} handleBack={handleBack} {...props}/>
+        <Component formUtils={formUtils} stepIncrement={stepIncrement} stepDecrement={stepDecrement} {...props}/>
     </Modal>
   )
 }
