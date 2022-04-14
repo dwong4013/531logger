@@ -30,7 +30,7 @@ const Dashboard = ({
     setDesktop(e.matches)
   }
 
-  const onModalClick = () => {
+  const toggleModal = () => {
     setModal(!modal)
   }
 
@@ -44,12 +44,12 @@ const Dashboard = ({
       ):(
       <Fragment>
         <section className="summary-container container-flex container-vertical container-vertical-center">
-          {modal && <CycleForm modal={modal} setModal={setModal}/>}
+          {modal && <CycleForm toggleModal={toggleModal}/>}
           <div className="toolbar">
             <UtilityButton classes={'toolbar-left'} onClick={()=> logout()}>
               <i className="fa-solid fa-right-from-bracket"/> logout
             </UtilityButton>
-            <button className="toolbar-right btn btn-big-action btn-primary" onClick={()=> onModalClick()}><i className="fa-solid fa-plus"/></button>
+            <button className="toolbar-right btn btn-big-action btn-primary" onClick={()=> toggleModal()}><i className="fa-solid fa-plus"/></button>
           </div>
           <div className="summary-cards-container my-2">
             <SummaryCard title='cycles completed' value={user && user.cyclesCompleted}/>

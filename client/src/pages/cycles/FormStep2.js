@@ -7,14 +7,14 @@ import PropTypes from 'prop-types';
 // Components
 import Input from '../../components/forms/Input';
 
-function FormStep2({ formUtils, stepIncrement, stepDecrement, modal, setModal }) {
+function FormStep2({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
     const { register, handleSubmit, formState: { errors } } = formUtils
 
     return (
         <div className="modal-background">
             <div className="modal-form-container container-flex container-vertical">
                 <div className='toolbar'>
-                    <button onClick={()=> setModal(!modal)} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
+                    <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
                 </div>
                 <div className='modal-form-items container-flex container-vertical container-vertical-center'>
                     <form>

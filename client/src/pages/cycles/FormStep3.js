@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function FormStep3({ formUtils, modal, setModal, stepDecrement }) {
+export default function FormStep3({ formUtils, stepDecrement, toggleModal }) {
 
     const { getValues } = formUtils;
     let { squat, bench, deadlift, press } = getValues();
@@ -9,7 +9,7 @@ export default function FormStep3({ formUtils, modal, setModal, stepDecrement })
         <div className="modal-background">
             <div className="modal-form-container container-flex container-vertical">
                 <div className='toolbar'>
-                    <button onClick={()=> setModal(!modal)} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
+                    <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
                 </div>
                 <div className='modal-form-items container-flex container-vertical container-vertical-center'>
                     <p className="header-text text-primary text-bold text-medium">
