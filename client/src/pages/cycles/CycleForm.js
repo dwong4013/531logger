@@ -5,7 +5,7 @@ import FormStep2 from './FormStep2';
 import FormStep3 from './FormStep3';
 
 
-export default function CycleForm() {
+export default function CycleForm(props) {
   const forms = [FormStep1, FormStep2, FormStep3]
 
   const initialState = {
@@ -20,7 +20,7 @@ export default function CycleForm() {
 
   return (
     <Modal>
-        <Component formState={formState} setFormState={setFormState}/>
+        <Component formState={formState} setFormState={setFormState} {...props}/>
     </Modal>
   )
 }

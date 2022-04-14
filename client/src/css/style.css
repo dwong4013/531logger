@@ -142,6 +142,10 @@
   padding: 0.6rem 0.7rem;
   border-radius: 20px;
 }
+.btn.btn-small-action {
+  padding: 0.3rem 0.55rem;
+  border-radius: 20px;
+}
 .btn.btn-large {
   border-radius: 10px;
   font-size: 1.2rem;
@@ -450,11 +454,12 @@ body p {
 
 .toolbar {
   width: 100%;
+  margin-top: 0.5rem;
 }
-.toolbar button, .toolbar select {
+.toolbar-right {
   float: right;
 }
-.toolbar .btn-back {
+.toolbar-left {
   float: left;
 }
 
@@ -542,14 +547,16 @@ body p {
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
 }
+.modal-form-items {
+  height: 100%;
+}
 .modal-form-container {
-  height: 420px;
+  height: 512px;
   width: 300px;
   margin: auto;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   background-color: #FFFFFF;
   border-radius: 10px;
-  justify-content: center;
 }
 .modal-form-container .header-text {
   text-align: center;
