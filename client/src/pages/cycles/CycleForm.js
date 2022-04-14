@@ -7,36 +7,32 @@ import FormStep3 from './FormStep3';
 
 
 export default function CycleForm(props) {
-  const forms = [FormStep1, FormStep2, FormStep3]
-
   const formUtils = useForm({
-      mode:"onBlur", 
-      reValidateMode: 'onBlur'
-    });
+    mode:"onBlur", 
+    reValidateMode: 'onBlur'
+  });
 
-  const initialState = {
-    currentStepIndex: 0,
-  }
+  const [formState, setFormState] = useState({currentStepIndex: 0})
 
-  const [formState, setFormState] = useState(initialState)
-  const { currentStepIndex } = formState
-  const Component = forms[currentStepIndex]
+  // Dynamic component based on step index
+  const forms = [FormStep1, FormStep2, FormStep3]
+  const Component = forms[formState.currentStepIndex]
 
+  // Increment step index
   const stepIncrement = () => {
     setFormState({
       ...formState,
       currentStepIndex: formState.currentStepIndex + 1,
   })
-}
+  }
 
+  // Decrement step index
   const stepDecrement = () => {
     setFormState({
         ...formState,
         currentStepIndex: formState.currentStepIndex - 1,
     })
 }
-
-  console.log(formState);
 
   return (
     <Modal>

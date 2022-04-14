@@ -20,16 +20,13 @@ const Dashboard = ({
   useEffect(() => {
     loadUser();
     getCycles();
-    window.matchMedia('(max-width: 414px)').addEventListener('change', mediaHandler)
+    window.matchMedia('(max-width: 414px)').addEventListener('change', (e) => setDesktop(e.matches))
   }, []);
 
   const [desktop, setDesktop] = useState(window.matchMedia('(max-width: 414px)').matches)
   const [modal, setModal] = useState(false);
 
-  const mediaHandler = e => {
-    setDesktop(e.matches)
-  }
-
+  // Toggle modal open/close
   const toggleModal = () => {
     setModal(!modal)
   }
@@ -44,13 +41,16 @@ const Dashboard = ({
       ):(
       <Fragment>
         <section className="summary-container container-flex container-vertical container-vertical-center">
+          {/* Render modal*/}
           {modal && <CycleForm toggleModal={toggleModal}/>}
+          {/* Logout and Create Cycle Buttons */}
           <div className="toolbar">
             <UtilityButton classes={'toolbar-left'} onClick={()=> logout()}>
               <i className="fa-solid fa-right-from-bracket"/> logout
             </UtilityButton>
             <button className="toolbar-right btn btn-big-action btn-primary" onClick={()=> toggleModal()}><i className="fa-solid fa-plus"/></button>
           </div>
+          {/* Summary Info */}
           <div className="summary-cards-container my-2">
             <SummaryCard title='cycles completed' value={user && user.cyclesCompleted}/>
             <SummaryCard light title='workouts left' value={cyclesData && cyclesData[0].workoutsToDo.length}/>
@@ -60,7 +60,7 @@ const Dashboard = ({
           <div className="section-header text-dark text-medium">
             Cycles
           </div>
-          {/* CycleCards */}
+          {/* Cycles Data */}
             {!cyclesLoading && cyclesData !== null ? (
               cyclesData.map((cycle, key) => (<CycleCard cycle={cycle} key={key} current={key===0}/>)) 
             ):( 

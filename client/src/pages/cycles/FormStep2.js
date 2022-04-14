@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Input from '../../components/forms/Input';
 
 function FormStep2({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
-    const { register, handleSubmit, formState: { errors } } = formUtils
+    const { register, formState: { errors } } = formUtils
 
     return (
         <div className="modal-background">

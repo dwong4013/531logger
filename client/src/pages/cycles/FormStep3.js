@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function FormStep3({ formUtils, stepDecrement, toggleModal }) {
+export default function FormStep3({ formUtils: { getValues }, stepDecrement, toggleModal }) {
 
-    const { getValues } = formUtils;
+     // Get form values
     let { squat, bench, deadlift, press } = getValues();
 
     return (
