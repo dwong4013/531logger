@@ -142,12 +142,13 @@ body {
 
 .toolbar {
     width: 100%;
+    margin-top: 0.5rem;
 
-    button, select {
+    &-right {
         float: right;
     }
 
-    .btn-back {
+    &-left {
         float: left;
     }
 }
@@ -249,15 +250,18 @@ body {
         right: 0;
         background-color: rgba(0,0,0,0.6);
     }
+
+    &-form-items {
+        height: 100%;
+    }
     
     &-form-container {
-        height: 420px;
+        height: 512px;
         width: 300px;
         margin: auto;
-        padding: 1rem;
+        padding: 0.5rem 1rem;
         background-color: $light-color;
         border-radius: 10px;
-        justify-content: center;
 
         .header-text {
             text-align: center;
@@ -269,7 +273,9 @@ body {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             justify-items: center;
+            text-align: center;
             gap: 1rem;
+
         }
 
         form {
@@ -280,4 +286,5 @@ body {
         }
 
     }
+
 }
