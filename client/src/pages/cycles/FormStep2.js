@@ -7,17 +7,13 @@ import PropTypes from 'prop-types';
 // Components
 import Input from '../../components/forms/Input';
 
-function FormStep2({ createCycle, formState, setFormState, modal, setModal, handleBack }) {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
-        mode:"onBlur", 
-        reValidateMode: 'onBlur'
-        });
+function FormStep2({ formUtils, createCycle, formState, setFormState, modal, setModal, handleBack }) {
+    const { register, handleSubmit, formState: { errors } } = formUtils
 
     const onSubmit = (data) => {
         setFormState({
             ...formState,
             currentStepIndex: formState.currentStepIndex + 1,
-            formData: {...formState.formData, ...data}
         })
         };
 

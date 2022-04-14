@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useForm } from 'react-hook-form';
 import Modal from '../../components/modals/Modal';
 import FormStep1 from './FormStep1';
 import FormStep2 from './FormStep2';
@@ -8,9 +9,13 @@ import FormStep3 from './FormStep3';
 export default function CycleForm(props) {
   const forms = [FormStep1, FormStep2, FormStep3]
 
+  const formUtils = useForm({
+    mode:"onBlur", 
+    reValidateMode: 'onBlur'
+    });
+
   const initialState = {
     currentStepIndex: 0,
-    formData: {}
   }
 
   const [formState, setFormState] = useState(initialState)
@@ -28,7 +33,7 @@ export default function CycleForm(props) {
 
   return (
     <Modal>
-        <Component formState={formState} setFormState={setFormState} handleBack={handleBack} {...props}/>
+        <Component formUtils={formUtils} formState={formState} setFormState={setFormState} handleBack={handleBack} {...props}/>
     </Modal>
   )
 }

@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function FormStep3({ formState, setFormState, modal, setModal, handleBack }) {
-    const { formData: { squat, bench, deadlift, press} } = formState;
+export default function FormStep3({ formUtils, modal, setModal, handleBack }) {
+
+    const { getValues } = formUtils;
+    let { squat, bench, deadlift, press } = getValues();
 
     return (
         <div className="modal-background">
@@ -32,7 +34,7 @@ export default function FormStep3({ formState, setFormState, modal, setModal, ha
                         </div>
                     </div>
                     <div className="buttons container-flex container-vertical container-vetical-center">
-                        <button onClick={() => setFormState(formState.currentStepIndex -1)}className="btn btn-primary btn-regular">
+                        <button className="btn btn-primary btn-regular">
                             create
                         </button>
                         <button onClick={() => handleBack()} className="btn btn-dark btn-regular my-1">
