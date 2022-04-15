@@ -7,20 +7,18 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
-export const GET_MAIN = 'GET_MAIN';
-export const MAIN_ERROR = 'MAIN_ERROR';
-export const GET_MAXES = 'GET_MAXES';
-export const NO_MAXES = 'NO_MAXES';
-export const MAX_ERROR = 'MAX_ERROR';
 export const DELETE_MAX = 'DELETE_MAX';
-export const GET_VOLUME = 'GET_VOLUME';
-export const NO_VOLUME = 'NO_VOLUME';
-export const ADD_VOLUME = 'ADD_VOLUME';
-export const DELETE_VOLUME = 'DELETE_VOLUME';
-export const VOLUME_ERROR = 'VOLUME_ERROR';
 export const GET_CYCLES = 'GET_CYCLES';
 export const ADD_CYCLE = 'ADD_CYCLE';
 export const NO_CYCLES = 'NO_CYCLES';
 export const UPDATE_CYCLE = 'UPDATE_CYCLE';
 export const DELETE_CYCLE = 'DELETE_CYCLE';
 export const CYCLE_ERROR = 'CYCLE_ERROR';
+export const GET_WORKOUT = 'GET_WORKOUT'
+export const NO_WORKOUT = 'NO_WORKOUT';
+export const UPDATE_WORKOUT = 'UPDATE_WORKOUT';
+export const WORKOUT_ERROR = 'WORKOUT_ERROR';
+
+
+
+
