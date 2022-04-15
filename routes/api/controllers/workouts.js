@@ -95,22 +95,22 @@ const editWorkout = async (req, res) => {
             }
         }
 
-        const result = await Workout.updateOne(
+        const workout = await Workout.findOneAndUpdate(
             query,
             updateOperator,
         );
+        
     
         // Check if update operation was successful
-        if (result.ok === 1) {
-            return res
-            .status(200)
-            .json({msg: 'Set updated.'})
-            
-        } else {
+        if (!workout) {
             return res
             .status(400)
             .json({ error: { msg: 'Failed to make changes.' }});
+            
         }
+            return res
+            .status(200)
+            .json({workout})
 
     // handles updates to the status of the workout document
     } if (type === 'status') {
@@ -126,21 +126,20 @@ const editWorkout = async (req, res) => {
             }
         }
 
-        const result = await Workout.updateOne(
+        const workout = await Workout.updateOne(
             query,
             updateOperator,
         );
     
-        if (result.ok === 1) {
-            return res
-            .status(200)
-            .json({msg: 'Workout completed!.'})
-            
-        } else {
+        if (!workout) {
             return res
             .status(400)
             .json({ error: { msg: 'Failed to update workout.' }});
+            
         }
+            return res
+            .status(200)
+            .json(workout)
 
     }
 
