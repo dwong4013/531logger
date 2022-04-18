@@ -128,7 +128,7 @@ describe('Workouts Action Creators', () => {
     })
   })
     describe('createWorkouts', () => {
-    test('dispatches SET_ALERT on successful post request', async () => {
+    test('calls updateCycle on successful post request', async () => {
         const cycleId = 'aslfjl1j2312'
         const res = {
             createWorkout: {
@@ -139,25 +139,13 @@ describe('Workouts Action Creators', () => {
           }
         axios.post = jest.fn()
         .mockImplementationOnce(() => Promise.resolve(res.createWorkout))
-
         
         const store = mockStore({})
         await store.dispatch(createWorkouts(cycleId))
         
         let actions = store.getActions();
-        const expectedActions = {
-            setAlert: {
-                type: SET_ALERT,
-                payload: {
-                    title: 'Success',
-                    msg: res.createWorkout.data.msg,
-                    type: 'success',
-                },
-            }   
-        }
         
         expect(axios.post).toHaveBeenCalledTimes(1);
-        expect(actions[0]).toEqual(expectedActions.setAlert)
     })
     test('dispatches SET_ALERT on when cycle isn\'t found', async () => {
         const cycleId = 'aslfjl1j2312'
