@@ -17,10 +17,15 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case GET_CYCLES:
-    case ADD_CYCLE:
       return {
         ...state,
         cycles: payload,
+        loading: false
+      };
+    case ADD_CYCLE:
+      return {
+        ...state,
+        cycles: state.cycles !== null ? [payload, ...state.cycles] : [payload],
         loading: false
       };
     case UPDATE_CYCLE:

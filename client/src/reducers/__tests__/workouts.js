@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import reducer from '../workouts';
 import { 
     GET_WORKOUTS,
-    NO_WORKOUTS,
+    NO_WORKOUT,
     UPDATE_WORKOUT,
     WORKOUT_ERROR }
     from '../../actions/types';
@@ -11,7 +11,7 @@ import {
 
         const actions = {
             noWorkouts: {
-                type: NO_WORKOUTS,
+                type: NO_WORKOUT,
             },
             getWorkoutError: {
                 type: WORKOUT_ERROR,

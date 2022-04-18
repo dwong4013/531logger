@@ -1,6 +1,6 @@
 import { 
     GET_WORKOUTS,
-    NO_WORKOUTS,
+    NO_WORKOUT,
     UPDATE_WORKOUT,
     WORKOUT_ERROR }
     from '../actions/types';
@@ -26,7 +26,7 @@ export default function (state = initialState, action) {
                 workouts: payload,
                 loading: false
             }
-        case NO_WORKOUTS:
+        case NO_WORKOUT:
         case WORKOUT_ERROR:
             return {
                 ...state,
