@@ -5,6 +5,7 @@ import {
     WORKOUT_ERROR,
     SET_ALERT
   } from './types';
+import { updateCycle } from './cycles';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
@@ -53,13 +54,19 @@ export const createWorkouts = (cycleId) => async dispatch => {
         };
     
         const res = await axios.post(`/api/workouts/${cycleId}`, config);
+        console.log(new Date(), res.data);
 
         if (res.statusCode === 400) {
             dispatch(setAlert('Error', res.data.error.msg, 'danger'))
         }
-    
-        dispatch(setAlert('Success', res.data.msg, 'success'));
 
+        let cycleData = {
+            key: 'workoutsToDo',
+            values: res.workouts
+        }
+
+        await updateCycle(cycleId, cycleData);
+    
       } catch (err) {
           console.log(err)
         const error = err.response.data.error;

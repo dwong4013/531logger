@@ -6,6 +6,7 @@ import {
   DELETE_CYCLE,
   CYCLE_ERROR
 } from './types';
+import { createWorkouts } from './workouts';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
@@ -17,16 +18,24 @@ export const getCycles = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/cycles');
 
+    if (res.statusCode === 400) {
+      dispatch(setAlert('Error', res.data.error.msg, 'danger'))
+      dispatch({type: NO_CYCLES})
+  }
+
     dispatch({
       type: GET_CYCLES,
       payload: res.data
     });
   } catch (err) {
     console.log(err);
-    dispatch({
-      type: NO_CYCLES
-    });
-  }
+    const error = err.response.data.error
+
+if (error) {
+    dispatch(setAlert('Error', error.msg, 'danger'))
+}
+    dispatch({ type: CYCLE_ERROR });
+}
 };
 
 export const createCycle = (formData) => async (dispatch) => {
@@ -43,10 +52,11 @@ export const createCycle = (formData) => async (dispatch) => {
 
     const res = await axios.post('/api/cycles', formData, config);
 
+    createWorkouts(res.data.cycle._id)
+
     dispatch({
       type: ADD_CYCLE,
-      payload: res.data,
-      loading: true
+      payload: res.data.cycle
     });
 
     dispatch(setAlert('Success', res.data.msg, 'success'));
@@ -59,7 +69,7 @@ export const createCycle = (formData) => async (dispatch) => {
   }
 };
 
-export const updateSetCompleted = (cycleData) => async (dispatch) => {
+export const updateCycle = (cycleId, cycleData) => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -71,25 +81,24 @@ export const updateSetCompleted = (cycleData) => async (dispatch) => {
       }
     };
 
-    const res = await axios.put('/api/cycles', cycleData, config);
+    const res = await axios.put(`/api/cycles/:${cycleId}`, cycleData, config);
 
     dispatch({
       type: UPDATE_CYCLE,
       payload: res.data,
-      loading: true
     });
   } catch (err) {
-    const errors = err.response.data.errors;
+    const error = err.response.data.error;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    if (error) {
+      dispatch(setAlert('Error', error.msg, 'danger'));
     }
   }
 };
 
 export const deleteCycle = (id) => async (dispatch) => {
   try {
-    await axios.delete(`/api/cycles/${id}`);
+    const res = await axios.delete(`/api/cycles/${id}`);
 
     dispatch({
       type: DELETE_CYCLE,
@@ -97,7 +106,7 @@ export const deleteCycle = (id) => async (dispatch) => {
       loading: true
     });
 
-    dispatch(setAlert('Cycle Removed', 'success'));
+    dispatch(setAlert('Success', res.data.msg, 'success'));
   } catch (err) {
     dispatch({
       type: CYCLE_ERROR,

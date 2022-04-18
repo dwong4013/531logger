@@ -16,7 +16,7 @@ const getCycles = async (req, res) => {
       return res.json(cycles);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      return res.status(500).json({error: {msg:'Server Error'}});
     }
 }
 
@@ -38,7 +38,8 @@ const createCycle = async (req, res) => {
       const cycle = new Cycle(newCycle);
       await cycle.save();
       return res.status(200).json({
-        msg: 'A new cycle has been created!'
+        msg: 'A new cycle has been created!',
+        cycle
       });
     } catch (err) {
       return res.status(500).json({error: {msg:'Server Error'}});
@@ -59,17 +60,13 @@ const editCycle = async (req, res) => {
 
     await cycle.save();
 
-    const cycles = await Cycle.find({
-      user: req.user.id
-    }).sort({ dateCreated: 'desc' });
-
-    return res.json(cycles);
+    return res.json(cycle);
   } catch (err) {
     if (err.kind && err.kind === undefined) {
       return res.status(400).json({error: { msg: 'Invalid cycle.'}})
     }
 
-    return res.status(500).send('Server Error');
+    return res.status(500).json({error: { msg:'Server Error'}});
   }
 }
 

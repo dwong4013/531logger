@@ -18,12 +18,17 @@ export default function (state = initialState, action) {
   switch (type) {
     case GET_CYCLES:
     case ADD_CYCLE:
-    case UPDATE_CYCLE:
       return {
         ...state,
         cycles: payload,
         loading: false
       };
+    case UPDATE_CYCLE:
+      let removedCycles = state.cycles.filter(cycle => cycle._id !== payload._id)
+      return {
+        ...state,
+        cycles: [payload, ...removedCycles]
+      }
     case NO_CYCLES:
       return {
         ...state,
