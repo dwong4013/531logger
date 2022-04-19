@@ -48,7 +48,7 @@ const createCycle = async (req, res) => {
 
 const editCycle = async (req, res) => {
   const { cycle_id } = req.params;
-  const { key, value } = req.body;
+  const { key, values } = req.body;
 
   try {
     const cycle = await Cycle.findById({
@@ -56,7 +56,7 @@ const editCycle = async (req, res) => {
       user: req.user.id
     });
 
-    cycle[key] = value;
+    cycle[key] = values;
 
     await cycle.save();
 
