@@ -4,9 +4,10 @@ import {
   ADD_CYCLE,
   UPDATE_CYCLE,
   DELETE_CYCLE,
-  CYCLE_ERROR
+  CYCLE_ERROR,
+  CYCLE_ACTION_COMPLETE,
+  CYCLE_ACTION_READY
 } from './types';
-import { createWorkouts } from './workouts';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
@@ -31,11 +32,11 @@ export const getCycles = () => async (dispatch) => {
     console.log(err);
     const error = err.response.data.error
 
-if (error) {
-    dispatch(setAlert('Error', error.msg, 'danger'))
-}
-    dispatch({ type: CYCLE_ERROR });
-}
+  if (error) {
+      dispatch(setAlert('Error', error.msg, 'danger'))
+  }
+      dispatch({ type: CYCLE_ERROR });
+  }
 };
 
 export const createCycle = (formData) => async (dispatch) => {
@@ -50,17 +51,30 @@ export const createCycle = (formData) => async (dispatch) => {
       }
     };
 
-    const res = await axios.post('/api/cycles', formData, config);
+    const createCycleRes = await axios.post('/api/cycles', formData, config);
 
-    createWorkouts(res.data.cycle._id)
+    const cycleId = createCycleRes.data.cycle._id
+
+    const createWorkoutsRes = await axios.post(`/api/workouts/${cycleId}`, config);
+
+    let cycleData = {
+      key: 'workoutsToDo',
+      values: createWorkoutsRes.data.workouts
+    }
+
+    const editCycleRes = await axios.put(`/api/cycles/${cycleId}`, cycleData, config)
 
     dispatch({
       type: ADD_CYCLE,
-      payload: res.data.cycle
+      payload: editCycleRes.data
     });
 
-    dispatch(setAlert('Success', res.data.msg, 'success'));
+    dispatch({type: CYCLE_ACTION_COMPLETE})
+    setTimeout(() => dispatch({type: CYCLE_ACTION_READY}), 1000)
+
+    dispatch(setAlert('Success', createCycleRes.data.msg, 'success'));
   } catch (err) {
+    console.log(err);
     const error = err.response.data.error;
 
     if (error) {
@@ -70,6 +84,7 @@ export const createCycle = (formData) => async (dispatch) => {
 };
 
 export const updateCycle = (cycleId, cycleData) => async (dispatch) => {
+  console.log('updateCycle called')
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -81,13 +96,14 @@ export const updateCycle = (cycleId, cycleData) => async (dispatch) => {
       }
     };
 
-    const res = await axios.put(`/api/cycles/:${cycleId}`, cycleData, config);
-
+    const res = await axios.put(`/api/cycles/${cycleId}`, cycleData, config);
+    console.log(new Date(), 'updateCycle res: ', res)
     dispatch({
       type: UPDATE_CYCLE,
       payload: res.data,
     });
   } catch (err) {
+    console.log('updateCycle err: ', err);
     const error = err.response.data.error;
 
     if (error) {

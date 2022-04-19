@@ -140,13 +140,37 @@ describe('Cycles Action Creators', () => {
                         workoutsToDo: []
                     }
                 }
+            },
+            createWorkouts : {
+                data: {
+                    workouts: ['1','2','3','4','5']
+                }
+            },
+            editCycle: {
+                data: {
+                    _id: 'saf098dfsa0',
+                    user: 'asjfsdf89098',
+                    workoutsToDo: ['1','2','3','4','5']
+                }
             }
           }
+        const formData = {
+            squat: 200,
+            bench: 150,
+            deadlift: 200,
+            press: 100
+        }
+
         axios.post = jest.fn()
         .mockImplementationOnce(() => Promise.resolve(res.createCycle))
+        .mockImplementationOnce(() => Promise.resolve(res.createWorkouts))
+
+        axios.put = jest.fn()
+        .mockImplementationOnce(() => Promise.resolve(res.editCycle))
+
     
         const store = mockStore({})
-        await store.dispatch(createCycle())
+        await store.dispatch(createCycle(formData))
         
         let actions = store.getActions();
         console.log(actions)
@@ -162,11 +186,12 @@ describe('Cycles Action Creators', () => {
             },
             createCycle: {
                 type: ADD_CYCLE,
-                payload: res.createCycle.data.cycle
+                payload: res.editCycle.data
             }
         }
         
-        expect(axios.post).toHaveBeenCalledTimes(1);
+        expect(axios.post).toHaveBeenCalledTimes(2);
+        expect(axios.put).toHaveBeenCalledTimes(1)
         expect(firstAction).toEqual(expectedActions.createCycle)
         expect(secondAction).toEqual(expectedActions.setAlert)
     })

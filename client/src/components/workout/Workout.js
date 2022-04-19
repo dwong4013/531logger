@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import { getCycles, updateSetCompleted } from '../../actions/cycles';
+import { getCycles, updateCycle } from '../../actions/cycles';
 import SetCard from './SetCard';
 import SummaryCard from '../../pages/dashboard/SummaryCard';
 import CycleCard from '../../pages/dashboard/CycleCard';
@@ -10,7 +10,7 @@ import CycleCard from '../../pages/dashboard/CycleCard';
 
 const Workout = ({
   getCycles,
-  updateSetCompleted,
+  updateCycle,
   cycles: { cycles, loading },
   match
 }) => {
@@ -29,14 +29,14 @@ const Workout = ({
 
   const onClick = (e, setType, index = 0) => {
     if (setType === 'accessoryReps') {
-      updateSetCompleted({
+      updateCycle({
         cycle_id: cycles[0]._id,
         week: match.params.week,
         workout: match.params.index,
         set_type: setType
       });
     } else {
-      updateSetCompleted({
+      updateCycle({
         cycle_id: cycles[0]._id,
         week: match.params.week,
         workout: match.params.index,
@@ -89,13 +89,13 @@ const Workout = ({
 Workout.propTypes = {
   cycles: PropTypes.object.isRequired,
   getCycles: PropTypes.func.isRequired,
-  updateSetCompleted: PropTypes.func.isRequired
+  updateCycle: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   cycles: state.cycles
 });
 
-export default connect(mapStateToProps, { getCycles, updateSetCompleted })(
+export default connect(mapStateToProps, { getCycles, updateCycle })(
   Workout
 );

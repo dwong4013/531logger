@@ -1,13 +1,9 @@
 import React from 'react'
-import { useForm } from 'react-hook-form';
-import { createCycle } from '../../actions/cycles';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 // Components
 import Input from '../../components/forms/Input';
 
-function FormStep2({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
+export default function FormStep2({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
     const { register, formState: { errors } } = formUtils
 
     return (
@@ -60,10 +56,3 @@ function FormStep2({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
         </div>
     )
 }
-FormStep2.propTypes = {
-    createCycle: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state) => ({})
-
-export default connect(mapStateToProps, { createCycle })(FormStep2);

@@ -49,37 +49,36 @@ describe('Auth Reducer', () => {
     },
   }
 
-  const initialState = {
-    token: localStorage.getItem('token'),
-    isAuthenticated: null,
-    loading: true,
-    user: null
-  }
+//   initialState = {
+//     isAuthenticated: null,
+//     loading: true,
+//     user: null
+//   }
 
   afterEach(() => {
       jest.clearAllMocks();
   })
   
-  test('sets token and isAuthenticated values in state', () => {
+  test('sets isAuthenticated and user values in state', () => {
     // Fail auth action
     localStorage.getItem = jest.fn().mockReturnValueOnce(null);
     let state = reducer(undefined, actions.authError);
 
-    expect(state.token).toEqual(null)
+
     expect(state.isAuthenticated).toEqual(false)
 
     // Fail login action
     localStorage.getItem = jest.fn().mockReturnValueOnce(null);
     state = reducer(state, actions.loginFail);
 
-    expect(state.token).toEqual(null)
+
     expect(state.isAuthenticated).toEqual(false)
 
     // Fail register action
     localStorage.getItem = jest.fn().mockReturnValueOnce(null);
     state = reducer(state, actions.registerFail);
 
-    expect(state.token).toEqual(null)
+
     expect(state.isAuthenticated).toEqual(false)
 
     // Register action
@@ -88,21 +87,18 @@ describe('Auth Reducer', () => {
     .mockReturnValueOnce(token)
     state = reducer(state, actions.registerSuccess);
 
-    expect(state.token).toEqual(token);
     expect(state.isAuthenticated).toEqual(true);
 
     // Log in action
     localStorage.getItem = jest.fn().mockReturnValueOnce(token)
     state = reducer(state, actions.loginSuccess);
 
-    expect(state.token).toEqual(token);
     expect(state.isAuthenticated).toEqual(true);
 
     // Load user action
     localStorage.getItem = jest.fn().mockReturnValueOnce(token)
     state = reducer(state, actions.loadUser);
 
-    expect(state.token).toEqual(token);
     expect(state.isAuthenticated).toEqual(true);
     expect(state.user).toEqual(actions.loadUser.payload);
     
@@ -110,7 +106,6 @@ describe('Auth Reducer', () => {
     localStorage.getItem = jest.fn().mockReturnValueOnce(null);
     state = reducer(state, actions.logout);
 
-    expect(state.token).toEqual(null)
     expect(state.isAuthenticated).toEqual(false)
   })
 })

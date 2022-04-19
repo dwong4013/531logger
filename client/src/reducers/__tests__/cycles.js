@@ -16,39 +16,27 @@ describe('Cycles Reducer', () => {
         payload: [
             {
                 _id: '624de9fa6926a5051d0cf9b0',
-                date: '2022-04-06T19:28:58.504Z',
+                user: '624de9fa6926a5051b1cf9b0',
+                workoutsToDo: []
             },
-            {
-                _id: '624de9fa6926a5051d0cf9b1',
-                date: '2022-04-06T19:28:58.504Z',
-            }
         ]
     },
     addCycle: {
         type: ADD_CYCLE, 
-        payload: [
+        payload: 
             {
                 _id: '624de9fa6926a5051d0cf9b0',
-                date: '2022-04-06T19:28:58.504Z',
+                user: '624de9fa6926a5051b1cf9b0',
+                workoutsToDo: []
             },
-            {
-                _id: '624de9fa6926a5051d0cf9b1',
-                date: '2022-04-06T19:28:58.504Z',
-            }
-        ]
     },
     updateCycle: {
         type: UPDATE_CYCLE, 
-        payload: [
-            {
-                _id: '624de9fa6926a5051d0cf9b0',
-                date: '2022-04-06T19:28:58.504Z',
-            },
-            {
-                _id: '624de9fa6926a5051d0cf9b1',
-                date: '2022-04-06T19:28:58.504Z',
-            }
-        ]
+        payload: {
+            _id: '624de9fa6926a5051d0cf9b0',
+            user: '624de9fa6926a5051b1cf9b0',
+            workoutsToDo: ['a','b','c','d']
+        },
     },
     noCycles: {
         type: NO_CYCLES, 
@@ -58,7 +46,7 @@ describe('Cycles Reducer', () => {
     },
     deleteCycle: {
         type: DELETE_CYCLE, 
-        payload: '624de9fa6926a5051d0cf9b1'
+        payload: '624de9fa6926a5051d0cf9b0'
     },
   }
 
@@ -81,7 +69,7 @@ describe('Cycles Reducer', () => {
     // Add cycle action
     state = reducer(state, actions.addCycle);
 
-    expect(state.cycles).toEqual(actions.addCycle.payload)
+    expect(state.cycles).toEqual([actions.addCycle.payload])
 
     // Get cycles action
     state = reducer(state, actions.getCycle);
@@ -91,12 +79,12 @@ describe('Cycles Reducer', () => {
     // Update cycle action 
     state = reducer(state, actions.updateCycle);
 
-    expect(state.cycles).toEqual(actions.updateCycle.payload)
+    expect(state.cycles).toEqual([actions.updateCycle.payload])
 
     // Delete cycle action
-    state = reducer(state, {type: DELETE_CYCLE, payload: actions.getCycle.payload[1]._id});
+    state = reducer(state, actions.deleteCycle);
 
-    expect(state.cycles).toEqual([actions.getCycle.payload[0]])
+    expect(state.cycles).toEqual([])
     
   })
 })
