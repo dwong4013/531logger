@@ -1,15 +1,22 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { createCycle } from '../../actions/cycles';
 
-export default function FormStep3({ formUtils: { getValues }, stepDecrement, toggleModal }) {
+function FormStep3({ formUtils: { getValues, handleSubmit }, stepDecrement, toggleModal, createCycle }) {
 
      // Get form values
     let { squat, bench, deadlift, press } = getValues();
+
+    const submitData = (data, e) => {
+        createCycle(data);
+    }
 
     return (
         <div className="modal-background">
             <div className="modal-form-container container-flex container-vertical">
                 <div className='toolbar'>
-                    <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
+                    <button onClick={() => toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
                 </div>
                 <div className='modal-form-items container-flex container-vertical container-vertical-center'>
                     <p className="header-text text-primary text-bold text-medium">
@@ -34,7 +41,7 @@ export default function FormStep3({ formUtils: { getValues }, stepDecrement, tog
                         </div>
                     </div>
                     <div className="buttons container-flex container-vertical container-vetical-center">
-                        <button className="btn btn-primary btn-regular">
+                        <button onClick={handleSubmit(submitData)} className="btn btn-primary btn-regular">
                             create
                         </button>
                         <button onClick={() => stepDecrement()} className="btn btn-dark btn-regular my-1">
@@ -46,3 +53,13 @@ export default function FormStep3({ formUtils: { getValues }, stepDecrement, tog
         </div>
     )
 }
+
+FormStep3.propTypes = {
+    createCycle: PropTypes.func.isRequired 
+}
+
+const mapStateToProps = state => ({
+
+})
+
+export default connect(mapStateToProps, { createCycle })(FormStep3)

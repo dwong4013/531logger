@@ -42,6 +42,7 @@ export const getWorkout = (cycleId) => async dispatch => {
 }
 
 export const createWorkouts = (cycleId) => async dispatch => {
+  console.log('called createWorkouts');
     if (localStorage.token) {
         setAuthToken(localStorage.token)
     }
@@ -54,7 +55,7 @@ export const createWorkouts = (cycleId) => async dispatch => {
         };
     
         const res = await axios.post(`/api/workouts/${cycleId}`, config);
-        console.log(new Date(), res.data);
+        console.log(new Date(), 'createWorkouts res: ', res.data);
 
         if (res.statusCode === 400) {
             dispatch(setAlert('Error', res.data.error.msg, 'danger'))
@@ -62,13 +63,13 @@ export const createWorkouts = (cycleId) => async dispatch => {
 
         let cycleData = {
             key: 'workoutsToDo',
-            values: res.workouts
+            values: res.data.workouts
         }
 
-        await updateCycle(cycleId, cycleData);
+        dispatch(updateCycle(cycleId, cycleData))
     
       } catch (err) {
-          console.log(err)
+        console.log(new Date(), 'createWorkouts err: ', err)
         const error = err.response.data.error;
     
         if (error) {
