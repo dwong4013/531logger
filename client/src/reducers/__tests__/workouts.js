@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import reducer from '../workouts';
 import { 
-    GET_WORKOUTS,
+    GET_WORKOUT,
     NO_WORKOUT,
     UPDATE_WORKOUT,
     WORKOUT_ERROR }
@@ -17,7 +17,7 @@ import {
                 type: WORKOUT_ERROR,
             },
             loadOneWorkout: {
-                type: GET_WORKOUTS,
+                type: GET_WORKOUT,
                 payload: {
                     _id: 'ajslk1122', exercise: 'squat', week: 2
                 }

@@ -1,5 +1,5 @@
 import { 
-    GET_WORKOUTS,
+    GET_WORKOUT,
     NO_WORKOUT,
     UPDATE_WORKOUT,
     WORKOUT_ERROR }
@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
     const { type, payload } = action
 
     switch(type) {
-        case GET_WORKOUTS:
+        case GET_WORKOUT:
             return {
                 ...state,
                 workouts: payload,
