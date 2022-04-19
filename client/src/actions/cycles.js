@@ -4,9 +4,10 @@ import {
   ADD_CYCLE,
   UPDATE_CYCLE,
   DELETE_CYCLE,
-  CYCLE_ERROR
+  CYCLE_ERROR,
+  CYCLE_ACTION_COMPLETE,
+  CYCLE_ACTION_READY
 } from './types';
-import { createWorkouts } from './workouts';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
@@ -67,6 +68,9 @@ export const createCycle = (formData) => async (dispatch) => {
       type: ADD_CYCLE,
       payload: editCycleRes.data
     });
+
+    dispatch({type: CYCLE_ACTION_COMPLETE})
+    setTimeout(() => dispatch({type: CYCLE_ACTION_READY}), 1000)
 
     dispatch(setAlert('Success', createCycleRes.data.msg, 'success'));
   } catch (err) {

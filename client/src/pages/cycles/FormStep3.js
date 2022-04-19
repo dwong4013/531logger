@@ -3,13 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createCycle } from '../../actions/cycles';
 
-function FormStep3({ formUtils: { getValues, handleSubmit }, stepDecrement, toggleModal, createCycle }) {
+function FormStep3({ formUtils: { getValues, handleSubmit }, stepDecrement, toggleModal, createCycle, actionCompleted }) {
 
      // Get form values
     let { squat, bench, deadlift, press } = getValues();
 
     const submitData = (data, e) => {
         createCycle(data);
+    }
+
+    // Close modal after successfully creating cycle
+    if (actionCompleted) {
+        toggleModal();
     }
 
     return (
@@ -55,11 +60,12 @@ function FormStep3({ formUtils: { getValues, handleSubmit }, stepDecrement, togg
 }
 
 FormStep3.propTypes = {
-    createCycle: PropTypes.func.isRequired 
+    createCycle: PropTypes.func.isRequired,
+    actionCompleted: PropTypes.bool.isRequired 
 }
 
 const mapStateToProps = state => ({
-
+    actionCompleted: state.cycles.actionCompleted
 })
 
 export default connect(mapStateToProps, { createCycle })(FormStep3)

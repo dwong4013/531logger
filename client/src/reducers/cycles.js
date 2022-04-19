@@ -4,12 +4,15 @@ import {
   ADD_CYCLE,
   UPDATE_CYCLE,
   DELETE_CYCLE,
-  CYCLE_ERROR
+  CYCLE_ERROR,
+  CYCLE_ACTION_COMPLETE,
+  CYCLE_ACTION_READY
 } from '../actions/types';
 
 const initialState = {
   cycles: null,
-  loading: true
+  loading: true,
+  created: false
 };
 
 export default function (state = initialState, action) {
@@ -26,13 +29,23 @@ export default function (state = initialState, action) {
       return {
         ...state,
         cycles: state.cycles !== null ? [payload, ...state.cycles] : [payload],
-        loading: false
+        loading: false,
       };
     case UPDATE_CYCLE:
       let removedCycles = state.cycles.filter(cycle => cycle._id !== payload._id)
       return {
         ...state,
         cycles: [payload, ...removedCycles]
+      }
+    case CYCLE_ACTION_COMPLETE:
+      return {
+        ...state,
+        actionCompleted: true
+      }
+    case CYCLE_ACTION_READY:
+      return {
+        ...state,
+        actionCompleted: false
       }
     case NO_CYCLES:
       return {
