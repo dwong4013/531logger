@@ -6,16 +6,6 @@ import Input from '../../components/forms/Input';
 export default function FormStep1({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
     const { register, formState: { errors }, handleSubmit } = formUtils
     const exercises = ['squat', 'bench', 'deadlift', 'press']
-    const validation = {
-        validate: {
-            required: value => value !== '',
-            isNumber: value => value === '' || Number.isInteger(parseInt(value))
-        },
-        messages: {
-            required: 'Enter a max',
-            isNumber: 'Enter a number'
-        }
-    }
 
     return (
         <div className="modal-background">
@@ -28,12 +18,12 @@ export default function FormStep1({ formUtils, stepIncrement, stepDecrement, tog
                     {/* Form inputs for each exercise */}
                         {exercises.map((exercise, i) => (
                             <Fragment>
-                                <label className="text-dark text-bold text-regular">{`${exercise[0].toUpperCase()}${exercise.slice(1)}`}</label>
+                                <label for={exercise} className="text-dark text-bold text-regular">{`${exercise[0].toUpperCase()}${exercise.slice(1)}`}</label>
                                 <Input register={register} errors={errors}
                                     name={exercise} 
                                     type='text' 
                                     placeholder='Enter Max'
-                                    validation={validation}
+                                    validation={{required: 'Enter your max'}}
                                 />
                             </Fragment>
                         ))}

@@ -19,23 +19,22 @@ export const getCycles = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/cycles');
 
-    if (res.statusCode === 400) {
-      dispatch(setAlert('Error', res.data.error.msg, 'danger'))
-      dispatch({type: NO_CYCLES})
-  }
-
     dispatch({
       type: GET_CYCLES,
       payload: res.data
     });
-  } catch (err) {
-    console.log(err);
+  } catch (err) { 
+    const statusCode = err.response.status
     const error = err.response.data.error
 
-  if (error) {
-      dispatch(setAlert('Error', error.msg, 'danger'))
-  }
-      dispatch({ type: CYCLE_ERROR });
+    switch(statusCode) {
+      case 400:
+        dispatch(setAlert('Error', error.msg, 'danger'));
+        dispatch({type: NO_CYCLES});
+      case 500:
+        dispatch(setAlert('Error', error.msg, 'danger'))
+        dispatch({ type: CYCLE_ERROR });
+    }
   }
 };
 
