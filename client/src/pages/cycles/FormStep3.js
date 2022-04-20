@@ -1,14 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createCycle } from '../../actions/cycles';
 
-function FormStep3({ formUtils: { getValues, handleSubmit }, stepDecrement, toggleModal, createCycle, actionCompleted }) {
+function FormStep3({ formUtils: { getValues, handleSubmit }, formState, stepDecrement, toggleModal, createCycle, actionCompleted }) {
 
-     // Get form values
-    let { squat, bench, deadlift, press } = getValues();
+    let initialState = {}
+
+    if (formState.repeat) {
+        initialState = {
+            ...formState.formData
+        }
+    } else {
+        initialState = {
+            ...getValues()
+        }
+    }
+
+    const [summaryData, setSummaryData] = useState(initialState)
+    const { squat, bench, deadlift, press } = summaryData;
 
     const submitData = (data, e) => {
+        if (formState.repeat) {
+            createCycle(formState.formData);
+        }
         createCycle(data);
     }
 

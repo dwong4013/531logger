@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function FormStep1({ stepIncrement, toggleModal }) {
+export default function FormStep1({ repeatCycle, stepIncrement, toggleModal }) {
 
   return (
       <div className="modal-background">
@@ -16,7 +16,7 @@ export default function FormStep1({ stepIncrement, toggleModal }) {
                 <button onClick={() => stepIncrement()}className="btn btn-primary btn-regular">
                     increase
                 </button>
-                <button className="btn btn-dark btn-regular my-1">
+                <button onClick={() => repeatCycle()} className="btn btn-dark btn-regular my-1">
                     repeat
                 </button>
             </div>
