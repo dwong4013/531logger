@@ -1,28 +1,58 @@
 import React from 'react'
 
-export default function FormStep1({ stepIncrement, toggleModal }) {
+// Components
+import Input from '../../components/forms/Input';
 
-  return (
-      <div className="modal-background">
-        <div className="modal-form-container container-flex container-vertical">
-            <div className='toolbar modal-toolbar'>
-                <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
-            </div>
-            <div className='modal-form-items container-flex container-vertical container-vertical-center'>
-            <p className="header-text text-primary text-bold text-medium my-2">
-                What maxes do you want to use?
-            </p>
-            <div className="buttons container-flex container-vertical container-vetical-center">
-                <button onClick={() => stepIncrement()}className="btn btn-primary btn-regular">
-                    increase
-                </button>
-                <button className="btn btn-dark btn-regular my-1">
-                    repeat
-                </button>
-            </div>
+export default function FormStep1({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
+    const { register, formState: { errors }, handleSubmit } = formUtils
 
+    return (
+        <div className="modal-background">
+            <div className="modal-form-container container-flex container-vertical">
+                <div className='toolbar'>
+                    <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
+                </div>
+                <div className='modal-form-items container-flex container-vertical container-vertical-center'>
+                    <form>
+                        <p className="text-dark text-bold text-regular">Squat</p>
+                        <Input register={register} errors={errors}
+                            name='squat' 
+                            type='text' 
+                            placeholder='Enter Max'
+                            validation={{required: 'Enter your squat max'}}
+                        />
+                        <p className="text-dark text-bold text-regular">Bench</p>
+                        <Input register={register} errors={errors}
+                            name='bench' 
+                            type='text' 
+                            placeholder='Enter Max'
+                            validation={{required: 'Enter your bench max'}}
+                        />                    
+                        <p className="text-dark text-bold text-regular">Deadlift</p>
+                        <Input register={register} errors={errors}
+                            name='deadlift' 
+                            type='text' 
+                            placeholder='Enter Max'
+                            validation={{required: 'Enter your deadlift max'}}
+                        />                    
+                        <p className="text-dark text-bold text-regular">Press</p>
+                        <Input register={register} errors={errors}
+                            name='press' 
+                            type='text' 
+                            placeholder='Enter Max'
+                            validation={{required: 'Please enter your press max'}}
+                        />                
+                    </form>
+                    <div className="buttons container-flex container-vertical container-vetical-center">
+                        <button onClick={handleSubmit(stepIncrement)}className="btn btn-primary btn-regular my-1">
+                            submit
+                        </button>
+                        <button onClick={() => stepDecrement()} className="btn btn-dark btn-regular">
+                            back
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
-  )
+    )
 }

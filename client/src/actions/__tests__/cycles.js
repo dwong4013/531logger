@@ -10,7 +10,9 @@ import {
     UPDATE_CYCLE,
     DELETE_CYCLE,
     CYCLE_ERROR,
-    SET_ALERT
+    SET_ALERT,
+    CYCLE_ACTION_COMPLETE,
+    CYCLE_ACTION_READY
  }
     from '../types';
 
@@ -130,6 +132,7 @@ describe('Cycles Action Creators', () => {
   })
     describe('createCycle', () => {
     test('dispatches ADD_CYCLE on successful post request', async () => {
+        jest.useFakeTimers();
         const res = {
             createCycle: {
                 data: {
@@ -160,21 +163,20 @@ describe('Cycles Action Creators', () => {
             deadlift: 200,
             press: 100
         }
-
         axios.post = jest.fn()
         .mockImplementationOnce(() => Promise.resolve(res.createCycle))
         .mockImplementationOnce(() => Promise.resolve(res.createWorkouts))
 
         axios.put = jest.fn()
         .mockImplementationOnce(() => Promise.resolve(res.editCycle))
-
-    
+        
         const store = mockStore({})
         await store.dispatch(createCycle(formData))
+        jest.runAllTimers();
         
         let actions = store.getActions();
+        const [firstAction, secondAction, thirdAction, fourthAction ] = actions
         console.log(actions)
-        const [firstAction, secondAction ] = actions
         const expectedActions = {
             setAlert: {
                 type: SET_ALERT,
@@ -187,13 +189,21 @@ describe('Cycles Action Creators', () => {
             createCycle: {
                 type: ADD_CYCLE,
                 payload: res.editCycle.data
+            },
+            actionComplete: {
+                type: CYCLE_ACTION_COMPLETE
+            },
+            actionReady: {
+                type: CYCLE_ACTION_READY
             }
         }
         
         expect(axios.post).toHaveBeenCalledTimes(2);
         expect(axios.put).toHaveBeenCalledTimes(1)
         expect(firstAction).toEqual(expectedActions.createCycle)
-        expect(secondAction).toEqual(expectedActions.setAlert)
+        expect(secondAction).toEqual(expectedActions.actionComplete)
+        expect(thirdAction).toEqual(expectedActions.setAlert)
+        expect(fourthAction).toEqual(expectedActions.actionReady)
     })
     test('dispatches SET_ALERT on when post request fails', async () => {
         const res = {

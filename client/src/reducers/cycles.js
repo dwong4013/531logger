@@ -11,6 +11,7 @@ import {
 
 const initialState = {
   cycles: null,
+  currentCycle: null,
   loading: true,
   created: false
 };
@@ -23,19 +24,23 @@ export default function (state = initialState, action) {
       return {
         ...state,
         cycles: payload,
+        currentCycle: payload[0],
         loading: false
       };
     case ADD_CYCLE:
       return {
         ...state,
         cycles: state.cycles !== null ? [payload, ...state.cycles] : [payload],
+        currentCycle: payload,
         loading: false,
       };
     case UPDATE_CYCLE:
       let removedCycles = state.cycles.filter(cycle => cycle._id !== payload._id)
       return {
         ...state,
-        cycles: [payload, ...removedCycles]
+        cycles: [payload, ...removedCycles],
+        currentCycle: payload,
+        loading: false
       }
     case CYCLE_ACTION_COMPLETE:
       return {
