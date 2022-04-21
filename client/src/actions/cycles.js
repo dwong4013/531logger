@@ -51,6 +51,7 @@ export const createCycle = (formData) => async (dispatch) => {
     };
 
     const createCycleRes = await axios.post('/api/cycles', formData, config);
+    console.log('res: ', createCycleRes);
 
     const cycleId = createCycleRes.data.cycle._id
 

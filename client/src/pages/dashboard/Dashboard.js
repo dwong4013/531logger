@@ -48,7 +48,7 @@ const Dashboard = ({
             <UtilityButton classes={'toolbar-left'} onClick={()=> logout()}>
               <i className="fa-solid fa-right-from-bracket"/> logout
             </UtilityButton>
-            <button className="toolbar-right btn btn-big-action btn-primary" onClick={()=> toggleModal()}><i className="fa-solid fa-plus"/></button>
+            <button data-testid='create-cycle-button' className="toolbar-right btn btn-big-action btn-primary" onClick={()=> toggleModal()}><i className="fa-solid fa-plus"/></button>
           </div>
           {/* Summary Info */}
           <div className="summary-cards-container my-2">
