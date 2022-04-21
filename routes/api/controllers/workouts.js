@@ -99,7 +99,6 @@ const editWorkout = async (req, res) => {
             query,
             updateOperator,
         );
-        
     
         // Check if update operation was successful
         if (!workout) {
