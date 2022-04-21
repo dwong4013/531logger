@@ -1,11 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Spinner from '../layout/Spinner';
+import Spinner from '../../components/layout/Spinner';
 import { getCycles, updateCycle } from '../../actions/cycles';
 import SetCard from './SetCard';
 import SummaryCard from '../../pages/dashboard/SummaryCard';
-import CycleCard from '../../pages/dashboard/CycleCard';
 
 
 const Workout = ({

@@ -4,7 +4,7 @@ import Login from '../pages/authentication/Login';
 import Register from '../pages/authentication/Register';
 import Alert from '../components/layout/Alert';
 import Dashboard from '../pages/dashboard/Dashboard';
-import Workout from '../components/workout/Workout';
+import Workout from '../pages/workouts/Workout';
 import PrivateRoute from './PrivateRoute';
 
 const Routes = (props) => {
