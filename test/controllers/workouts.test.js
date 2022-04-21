@@ -195,15 +195,28 @@ describe('API: Workouts Controllers', () => {
             return req
         }
 
+        const mockWorkout = () => {
+            return {
+                id: '604f7c8d31c4ab00aaca222d',
+                completed: false,
+                exercise: 'squat',
+                week: 1,
+                mainSets: ['1','2','3'],
+                volumeSets: ['1','2','3','4','5']
+            }
+        }
+
         it('should edit workout details', async () => {
             let req = mockRequestEdit();
-            let updateWorkout = sandbox.stub(Workout, 'updateOne').returns({ok: 1})
+            const fakeWorkout = mockWorkout();
+            let updateWorkout = sandbox.stub(Workout, 'findOneAndUpdate').returns(fakeWorkout)
 
             await editWorkout(req, res)
             expect(updateWorkout.calledOnce).to.be.true
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(goodCode)).to.be.true;
             expect(res.json.calledOnce).to.be.true;
+            expect(res.json.calledWith({workout: fakeWorkout})).to.be.true;
             
         })
 

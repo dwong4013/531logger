@@ -58,6 +58,7 @@ describe('Cycles Action Creators', () => {
         const res = {
             getCycles: {
                 response: {
+                    status: 500,
                     data: {
                         error: {
                             msg: 'Server Error'
@@ -95,16 +96,18 @@ describe('Cycles Action Creators', () => {
     test('dispatches NO_CYCLES on get request fail', async () => {
         const res = {
             getCycles: {
-                statusCode: 400,
-                data: {
-                    error: {
-                        msg: 'No cycles found'
+                response: {
+                    status: 400,
+                    data: {
+                        error: {
+                            msg: 'No cycles found'
+                        }
                     }
                 }
             }
           }
         axios.get = jest.fn()
-        .mockImplementationOnce(() => Promise.resolve(res.getCycles))
+        .mockImplementationOnce(() => Promise.reject(res.getCycles))
 
         
         const store = mockStore({})
@@ -120,7 +123,7 @@ describe('Cycles Action Creators', () => {
                 type: SET_ALERT,
                 payload: {
                     title: 'Error',
-                    msg: res.getCycles.data.error.msg,
+                    msg: res.getCycles.response.data.error.msg,
                     type: 'danger',
                 }
             }

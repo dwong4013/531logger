@@ -65,7 +65,7 @@ describe('API: Cycles Controllers', () => {
         it('should get cycles from db and send to client', async () => {
             let req = mockRequest();
             let fakeCycles = mockCycles();
-            let dbCallCycle = sandbox.stub(Cycle, "find").returns({sort:sandbox.stub().returns(fakeCycles)});
+            let dbCallCycle = sandbox.stub(Cycle, "find").returns({populate: sandbox.stub().returns({sort:sandbox.stub().returns(fakeCycles)})});
 
             await getCycles(req, res);
             expect(dbCallCycle.calledOnce).to.be.true;
@@ -81,7 +81,7 @@ describe('API: Cycles Controllers', () => {
             expect(dbCallCycle.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true
+            expect(res.json.calledOnce).to.be.true
         });
         it('should handle error if database call throws error', async () => {
             let req = mockRequest();
@@ -91,7 +91,7 @@ describe('API: Cycles Controllers', () => {
             expect(dbCallCycle.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true
+            expect(res.json.calledOnce).to.be.true
         });
     })
     describe('create cycle route controller: createCycle', () => {
@@ -150,7 +150,7 @@ describe('API: Cycles Controllers', () => {
             expect(save.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
     })
     describe('edit cycle route controller: editCycle', () => {
@@ -226,14 +226,12 @@ describe('API: Cycles Controllers', () => {
             let fakeCycle = mockCycle();
             let fakeCycles = mockCycles();
             let dbFindOne = sandbox.stub(Cycle, 'findById').returns(fakeCycle)
-            let dbFind = sandbox.stub(Cycle, 'find').returns({sort: sandbox.stub().returns(fakeCycles)})
             let save = sandbox.stub(Cycle.prototype, 'save').callsFake(() => Promise.resolve(this))
 
             await editCycle(req, res);
             expect(dbFindOne.calledOnce).to.be.true;
             expect(save.calledOnce).to.be.true;
             expect(save.calledOn(fakeCycle)).to.be.true;
-            expect(dbFind.calledOnce).to.be.true;
             expect(res.json.calledOnce).to.be.true;
             expect(res.json.calledWith(fakeCycles))
         })
@@ -241,18 +239,15 @@ describe('API: Cycles Controllers', () => {
         it('should make a change to endtDate and save new cycle to db', async () => {
             let req = mockRequestEndDate();
             let fakeCycle = mockCycle();
-            let fakeCycles = mockCycles();
             let dbFindOne = sandbox.stub(Cycle, 'findById').returns(fakeCycle)
-            let dbFind = sandbox.stub(Cycle, 'find').returns({sort: sandbox.stub().returns(fakeCycles)})
             let save = sandbox.stub(Cycle.prototype, 'save').callsFake(() => Promise.resolve(this))
 
             await editCycle(req, res);
             expect(dbFindOne.calledOnce).to.be.true;
             expect(save.calledOnce).to.be.true;
             expect(save.calledOn(fakeCycle)).to.be.true;
-            expect(dbFind.calledOnce).to.be.true;
             expect(res.json.calledOnce).to.be.true;
-            expect(res.json.calledWith(fakeCycles))
+            expect(res.json.calledWith(fakeCycle))
         })
 
         it('should handle error if save throws an error', async () => {
@@ -266,7 +261,7 @@ describe('API: Cycles Controllers', () => {
             expect(save.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
 
         it('should handle error if db call throws an error', async () => {
@@ -277,7 +272,7 @@ describe('API: Cycles Controllers', () => {
             expect(dbFindOne.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
     })
         describe('deliete cycle route controller: deleteCycle', () => {
@@ -344,7 +339,7 @@ describe('API: Cycles Controllers', () => {
             expect(remove.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
 
         it('should handle error if db call throws an error', async () => {
@@ -355,7 +350,7 @@ describe('API: Cycles Controllers', () => {
             expect(dbFindById.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
     })
 })
