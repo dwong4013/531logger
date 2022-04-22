@@ -21,18 +21,18 @@ describe('Workouts Action Creators', () => {
   })
   
   describe('getWorkout', () => {
-    test('dispatches GET_WORKOUT on successful get request', async () => {
-        const cycleId = 'aslfjl1j2312'
+    test('dispatches GET_WORKOUT with latest workout on successful get request', async () => {
         const res = {
             getWorkout: {
                 data: [
                     {_id: '1l2j3l1231', cycle: ' aslfjl1j2312',exercise: 'squat', week: 1},
                     {_id: '1l2j3l1641', cycle: ' aslfjl1j2312',exercise: 'squat', week: 2},
-                    {_id: '1l2j3l1241', cycle: ' aslfjl1j2312',exercise: 'squat', week: 31},
+                    {_id: '1l2j3l1241', cycle: ' aslfjl1j2312',exercise: 'squat', week: 3},
                     {_id: '1l2j3l1271', cycle: ' aslfjl1j2312',exercise: 'bench', week: 1},
                 ]
             }
-          }
+        }
+        const cycleId = 'aslfjl1j2312'
         axios.get = jest.fn()
         .mockImplementationOnce(() => Promise.resolve(res.getWorkout))
 
@@ -42,19 +42,51 @@ describe('Workouts Action Creators', () => {
         
         let actions = store.getActions();
         const expectedActions = {
-            loginSuccess: {
+            getWorkout: {
                 type: GET_WORKOUT,
-                payload: res.getWorkout.data
+                payload: res.getWorkout.data[0]
             },
         }
         
         expect(axios.get).toHaveBeenCalledTimes(1);
-        expect(actions[0]).toEqual(expectedActions.loginSuccess)
+        expect(actions[0]).toEqual(expectedActions.getWorkout)
+    })
+    test('dispatches GET_WORKOUT with targeted workout Id on successful get request', async () => {
+        const res = {
+            getWorkout: {
+                data: [
+                    {_id: '1l2j3l1231', cycle: ' aslfjl1j2312',exercise: 'squat', week: 1},
+                    {_id: '1l2j3l1641', cycle: ' aslfjl1j2312',exercise: 'squat', week: 2},
+                    {_id: '1l2j3l1241', cycle: ' aslfjl1j2312',exercise: 'squat', week: 3},
+                    {_id: '1l2j3l1271', cycle: ' aslfjl1j2312',exercise: 'bench', week: 1},
+                ]
+            }
+        }
+        const cycleId = 'aslfjl1j2312'
+        const target = res.getWorkout.data[3]._id
+        axios.get = jest.fn()
+        .mockImplementationOnce(() => Promise.resolve(res.getWorkout))
+
+        
+        const store = mockStore({})
+        await store.dispatch(getWorkout(cycleId, target))
+        
+        let actions = store.getActions();
+        const expectedActions = {
+            getWorkout: {
+                type: GET_WORKOUT,
+                payload: res.getWorkout.data[3]
+            },
+        }
+        
+        expect(axios.get).toHaveBeenCalledTimes(1);
+        expect(actions[0]).toEqual(expectedActions.getWorkout)
     })
     test('dispatches WORKOUT_ERROR on get request fail', async () => {
         const res = {
             getWorkout: {
                 response: {
+                    status: 500,
                     data: {
                         error: {
                             msg: 'Server Error'
@@ -92,16 +124,18 @@ describe('Workouts Action Creators', () => {
     test('dispatches NO_WORKOUT on get request fail', async () => {
         const res = {
             getWorkout: {
-                statusCode: 400,
-                data: {
-                    error: {
-                        msg: 'No workouts found'
+                response: {
+                    status: 400,
+                    data: {
+                        error: {
+                            msg: 'No workouts found'
+                        }
                     }
                 }
             }
           }
         axios.get = jest.fn()
-        .mockImplementationOnce(() => Promise.resolve(res.getWorkout))
+        .mockImplementationOnce(() => Promise.reject(res.getWorkout))
 
         
         const store = mockStore({})
@@ -117,7 +151,7 @@ describe('Workouts Action Creators', () => {
                 type: SET_ALERT,
                 payload: {
                     title: 'Error',
-                    msg: res.getWorkout.data.error.msg,
+                    msg: res.getWorkout.response.data.error.msg,
                     type: 'danger',
                 }
             }

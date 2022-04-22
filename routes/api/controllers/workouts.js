@@ -68,6 +68,8 @@ const createWorkouts = async (req, res) => {
 const editWorkout = async (req, res) => {
   const { workout_id } = req.params;
   const { type, values } = req.body;
+  console.log('type: ', type)
+  console.log('values: ', values)
 
   try {
     //   handle updates that only edits the notes, time, and completed fields

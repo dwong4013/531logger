@@ -6,7 +6,7 @@ import {
     from '../actions/types';
 
 const initialState = {
-    workouts: null,
+    workout: null,
     loading: true,
 }
 
@@ -17,20 +17,20 @@ export default function (state = initialState, action) {
         case GET_WORKOUT:
             return {
                 ...state,
-                workouts: payload,
+                workout: payload,
                 loading: false
             }
         case UPDATE_WORKOUT: 
             return {
                 ...state,
-                workouts: payload,
+                workout: payload,
                 loading: false
             }
         case NO_WORKOUT:
         case WORKOUT_ERROR:
             return {
                 ...state,
-                workouts: null,
+                workout: null,
                 loading: false
             }
         default:
