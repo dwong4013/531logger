@@ -10,33 +10,41 @@ import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import axios from 'axios';
 
-export const getWorkout = (cycleId) => async dispatch => {
+export const getWorkout = (cycleId, workoutId = null) => async dispatch => {
+  // always returns latest workout unless workoutId is specified
     if (localStorage.token) {
         setAuthToken(localStorage.token)
     }
 
     try {
         let res = await axios.get(`/api/workouts/${cycleId}`)
+        let targetWorkout
 
-        if (res.statusCode === 400) {
-            dispatch(setAlert('Error', res.data.error.msg, 'danger'))
-            dispatch({type: NO_WORKOUT})
+        if (workoutId) {
+          targetWorkout = res.data.find(exercise => exercise._id === workoutId)
+        } else {
+          // latest workout
+          targetWorkout = res.data[0]
         }
-
+        
         dispatch({
         type: GET_WORKOUT,
-        payload: res.data
-        })
-        
-
+        payload: targetWorkout
+      })
+      
+      
     } catch (err) {
-        console.log(err);
-        const error = err.response.data.error
-
-    if (error) {
-        dispatch(setAlert('Error', error.msg, 'danger'))
-    }
-        dispatch({ type: WORKOUT_ERROR });
+      const statusCode = err.response.status
+      const error = err.response.data.error
+  
+      switch(statusCode) {
+        case 400:
+          dispatch(setAlert('Error', error.msg, 'danger'));
+          dispatch({type: NO_WORKOUT});
+        case 500:
+          dispatch(setAlert('Error', error.msg, 'danger'))
+          dispatch({ type: WORKOUT_ERROR });
+      }
     }
 
 }
@@ -83,7 +91,7 @@ export const editWorkout = (workoutId, formData) => async dispatch => {
     if (localStorage.token) {
         setAuthToken(localStorage.token)
     }
-
+    console.log(workoutId, formData)
     try {
         const config = {
           headers: {
@@ -92,22 +100,24 @@ export const editWorkout = (workoutId, formData) => async dispatch => {
         };
     
         const res = await axios.put(`/api/workouts/${workoutId}`, formData, config);
-
-        if (res.statusCode === 400) {
-            dispatch(setAlert('Error', res.data.error.msg, 'danger'))
-        }
+        console.log(res)
     
         dispatch({
             type: UPDATE_WORKOUT,
-            payload: res.data
+            payload: res.data.workout
         });
 
       } catch (err) {
-
-        const error = err.response.data.error;
+        const statusCode = err.response.status
+        const error = err.response.data.error
     
-        if (error) {
-          dispatch(setAlert('Error', error.msg, 'danger'))
+        switch(statusCode) {
+          case 400:
+            dispatch(setAlert('Error', error.msg, 'danger'));
+            dispatch({type: NO_WORKOUT});
+          case 500:
+            dispatch(setAlert('Error', error.msg, 'danger'))
+            dispatch({ type: WORKOUT_ERROR });
         }
       }
 
