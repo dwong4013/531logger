@@ -74,7 +74,7 @@ const editWorkout = async (req, res) => {
   try {
     //   handle updates that only edits the notes, time, and completed fields
     if (type === 'edit') {
-        const {setType, id, notes, time, completed} = values;
+        const {setType, id, notes, time, completed, workoutCompleted} = values;
         
         // query by workout id, user id, and either main or volume set field 
         // where the id of the set within the array matches the requested set id
@@ -90,17 +90,25 @@ const editWorkout = async (req, res) => {
 
         // set the fields to the requested values
         const updateOperator = {
-            "$set": {
-                [`${setType}.$.notes`]:notes,
-                [`${setType}.$.time`]:time,
-                [`${setType}.$.completed`]:completed,
+            $set: {
+                completed: workoutCompleted,
+                [`${setType}.$[elem].notes`]:notes,
+                [`${setType}.$[elem].time`]:time,
+                [`${setType}.$[elem].completed`]:completed,
             }
+        }
+
+        const arrayFilters = {
+            arrayFilters: [{"elem._id": id}],
+            new: true
         }
 
         const workout = await Workout.findOneAndUpdate(
             query,
             updateOperator,
+            arrayFilters
         );
+        console.log(workout);
     
         // Check if update operation was successful
         if (!workout) {
@@ -127,9 +135,10 @@ const editWorkout = async (req, res) => {
             }
         }
 
-        const workout = await Workout.updateOne(
+        const workout = await Workout.findOneAndUpdate(
             query,
             updateOperator,
+            {new: true}
         );
     
         if (!workout) {
@@ -140,11 +149,12 @@ const editWorkout = async (req, res) => {
         }
             return res
             .status(200)
-            .json(workout)
+            .json({workout})
 
     }
 
 } catch (err) {
+    console.log(err);
     if (err.kind && err.kind === undefined) {
       return res.status(400).json({error: { msg: 'Invalid cycle.' }})
     }
