@@ -24,7 +24,8 @@ export const getWorkout = (cycleId, workoutId = null) => async dispatch => {
           targetWorkout = res.data.find(exercise => exercise._id === workoutId)
         } else {
           // latest workout
-          targetWorkout = res.data[0]
+          targetWorkout = res.data.find(exercise => !exercise.completed )
+          console.log(targetWorkout);
         }
         
         dispatch({

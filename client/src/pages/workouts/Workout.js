@@ -47,14 +47,13 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
   const [ targetWorkout, setTargetWorkout ] = useState(null)
   const [ remainingSets, setRemainingSets ] = useState(null)
   const [ currentSet, setCurrentSet ] = useState(initialCurrentSetState)
+  const [ notes, setNotes ] = useState('')
   
   // Load workout with or without targetWorkout id
   useEffect(() => {
     if(targetWorkout) {
-      console.log('1')
       getWorkout(cycleId, targetWorkout)
     } else{ 
-      console.log('2')
       getWorkout(cycleId)
     }
   }, [targetWorkout]);
@@ -68,31 +67,39 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
     }
   },[workout])
 
-  // Set currentSet setType state when remainingSets state is updated
+  // Set currentSet state when remainingSets state is updated
   useEffect(() => {
     if (remainingSets) {
-      setCurrentSet({...currentSet,
-        setType: remainingSets.mainSets.length > 0 ? 'mainSets' : 'volumeSets' 
-      })
-    }
-  },[remainingSets])
-
-  // Set currentSet setData when remainingSets state is updated
-  useEffect(() => {
-    if (remainingSets) {
-      setCurrentSet({...currentSet, 
-      setData: {
-        id: remainingSets[currentSet.setType][currentSet.setIndex]._id,
-        weight: remainingSets[currentSet.setType][currentSet.setIndex].weight,
-        reps: remainingSets[currentSet.setType][currentSet.setIndex].reps,
-      }})
+      console.log(remainingSets);
+      if (remainingSets.mainSets.length > 0 || remainingSets.volumeSets.length > 0) {
+        // Determine setIndex based on setType
+        let setType = remainingSets.mainSets.length > 0 ? 'mainSets': 'volumeSets'
+        let expectedSetLength = setType === 'mainSets' ? 3 : 5
+        let setIndex = expectedSetLength - remainingSets[setType].length
+  
+        setCurrentSet({...currentSet,
+          setIndex, 
+          setType,
+          setData: {
+            id: remainingSets[setType][currentSet.setIndex]._id,
+            weight: remainingSets[setType][currentSet.setIndex].weight,
+            reps: remainingSets[setType][currentSet.setIndex].reps,
+        }})
+      } else {
+        setCurrentSet(initialCurrentSetState);
+      }
     }
   },[remainingSets])
 
   console.log(remainingSets)
   console.log(currentSet);
+
   const onWorkoutSelect = (e) => {
     setTargetWorkout(e.target.value)
+  }
+
+  const onNotesChange = (e) => {
+    setNotes(e.target.value)
   }
 
   const updateSet = (outcome) => {
@@ -103,41 +110,16 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
         id: currentSet.setData.id,
         setType: currentSet.setType,
         [outcome]: true,
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
+        notes
       }
     }
-    console.log(formData);
+    if (currentSet.setType === 'volumeSets' && currentSet.setIndex === 4) {
+      formData.values.workoutCompleted = true;
+    }
     editWorkout(workout._id,formData)
+    setNotes('')
   }
-
-  // Select different workout ✅
-  // Render all sets from redux store ✅
-  // Put all workout sets that aren't completed in a todo in reverse order (local state) ✅
-  // Create a state hook to handle current set ✅
-  // User updates set
-  // Set gets marked as complete, remainingSet, and currentSet is updated
-  // Global state is updated with new workout set, and everything is re-rendered.
-  // Handle toggled notes for each set
-
-
-  // const onClick = (e, setType, index = 0) => {
-  //   if (setType === 'accessoryReps') {
-  //     updateCycle({
-  //       cycle_id: cycles[0]._id,
-  //       week: match.params.week,
-  //       workout: match.params.index,
-  //       set_type: setType
-  //     });
-  //   } else {
-  //     updateCycle({
-  //       cycle_id: cycles[0]._id,
-  //       week: match.params.week,
-  //       workout: match.params.index,
-  //       set_type: setType,
-  //       set: index
-  //     });
-  //   }
-  // };
 
   return (
     <Fragment>
@@ -147,28 +129,32 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
     ) : (
       <section className="summary-container container-flex container-vertical container-vertical-center px-6">
         <div className="toolbar">
-        <button className="btn btn-back btn-icon-left btn-small btn-dark"><i className="fa-solid fa-caret-left"/> back</button>
-        <select onChange={e=> onWorkoutSelect(e)} className="select" name="pets" id="pet-select">
-          {currentCycle.workoutsToDo.map((workout, i) => (
-            <option key={i} value={`${workout._id}`}>{`Week ${workout.week}: ${capitalize(workout.exercise)}`}</option>
+        <button className="btn btn-back btn-icon-left btn-small btn-dark toolbar-left"><i className="fa-solid fa-caret-left"/> back</button>
+        <select onChange={e=> onWorkoutSelect(e)} className="select toolbar-right" name="pets" id="pet-select">
+          {workout && currentCycle && currentCycle.workoutsToDo.map((workoutOption, i) => (
+            <option key={i} value={`${workoutOption._id}`} selected={workoutOption._id === workout._id }>{`Week ${workoutOption.week}: ${capitalize(workoutOption.exercise)}`}</option>
           ))}
         </select>
         </div>
-        <div className="summary-cards-container ">
+        {/* Summary Cards */}
+        {workout && !workout.completed ? (<div className="summary-cards-container ">
           <SummaryCard title={workout && `${workout.exercise} max`} value={`${currentCycle && workout && currentCycle.maxes[workout.exercise]}`}/>
           <SummaryCard light title='set' value={currentSet.setIndex + 1}/>
           <SummaryCard light={desktop} title='weight' value={currentSet.setData.weight}/>
           <SummaryCard light={!desktop} title='reps' value={currentSet.setData.reps}/>
-        </div>
-        <div className="set-actions">
+        </div>) :(
+          <p className="text-primary text-regular my-1">Workout Completed!</p>
+        )}
+        {/* Actions */}
+        {workout && !workout.completed && <div className="set-actions">
           <form>
-            <input type="text" placeholder="notes for current set"/>
+            <input onChange={e=>onNotesChange(e)} name='notes' value={notes} type="text" placeholder="notes for current set"/>
           </form>
           <div className="buttons container-flex container-horizontal">
             <button onClick={() => updateSet('missed')} className="btn btn-regular btn-dark"> missed </button>
             <button onClick={() => updateSet('completed')}className="btn btn-regular btn-primary"> complete </button>
           </div>
-        </div>
+        </div>}
         <p className="text-small text-dark text-bold my-1">Main Sets</p>
         {/* Main Sets */}
         {workout && workout.mainSets.map((set, id) => (
