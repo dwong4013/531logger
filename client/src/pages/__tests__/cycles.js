@@ -7,8 +7,8 @@ import axios from 'axios';
 // Components
 import App from '../../App';
 
-describe('Landing', () => {
-  describe('login to an account', () => {
+describe('Dashboard', () => {
+  describe('login and createa a cycle', () => {
 
     Object.defineProperty(window, 'matchMedia', {
         writable: true,
@@ -94,6 +94,16 @@ describe('Landing', () => {
     afterEach(() => jest.clearAllMocks())
   
     test('login and create a new cycle', async () => {
+        // Mock loaduser, getCycles
+        axios.get = jest.fn()
+        .mockImplementation((url) => {
+            switch(url) {
+                case '/api/auth':
+                    return Promise.resolve(res.getAuth)
+                case '/api/cycles':
+                    return Promise.reject(res.getCycles);
+            }
+        });
 
         // Render Landing and Register Routes, start at Landing
         const { getByText, getByTestId, getByPlaceholderText, getAllByPlaceholderText, getByRole, history } = renderApp();
@@ -106,30 +116,7 @@ describe('Landing', () => {
         const leftClick = { button: 0 }
         fireEvent.click(getByText(/login/i), leftClick)
 
-        // Arrived at Login page
-        expect(window.location.href).toContain('http://localhost/login');
-        expect(getByText(/log into/i)).toBeTruthy();
-        
-        // See login form
-        expect(getByPlaceholderText(/email/i)).toBeTruthy();
-        expect(getAllByPlaceholderText(/password/i)).toBeTruthy();
-        expect(getByRole('button', {name: /submit/i} )).toBeTruthy();
-        
-        // Fill form with credentials
-        fireEvent.change(getByPlaceholderText(/email/i), {target: {value: 'fake@mail.com'}})
-        fireEvent.change(getByPlaceholderText(/password/i), {target: {value: 'password123'}})
-        
-        // mock get user
-        axios.get = jest.fn()
-        .mockImplementationOnce(() => Promise.resolve(res.getAuth))
-        // mock get cycles
-        .mockImplementationOnce(() => Promise.reject(res.getCycles))
-        // mock login user
-        axios.post = jest.fn().mockImplementationOnce(() => Promise.resolve(res.postAuthSuccess))
-        // Click sign up
-        fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
-        
-        // Redirected to company setup
+        // Redirected to dashboard
         await waitForElement(() => getByText(/logout/i));
         expect(window.location.href).toContain('http://localhost/dashboard');
 

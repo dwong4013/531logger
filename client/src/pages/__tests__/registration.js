@@ -31,9 +31,7 @@ describe('Landing', () => {
 
     const res = {
       postUsersSuccess: {
-        data: {
-          token: 'asdofj1091jjksladf01asdf'
-        }
+        data:  'asdofj1091jjksladf01asdf'
       },
       getAuth: {
         data: {
@@ -43,78 +41,75 @@ describe('Landing', () => {
         }
       },
       getCycles: {
-        data: [
-          {
-            maxes: {
-              squat: 200,
-              bench: 200,
-              deadlift: 200,
-              press: 200
-            },
-            workoutsToDo: [
-              {
-                _id: '62505f4bf14dba02d8e5d47f',
-                exercise: 'squat',
-                week : 1
-              }
-            ],
-            workoutsCompleted: [],
-
-          }
-        ]
-      }
+        response: {
+            data: {
+                status: 400,
+                error: {
+                    msg: 'No cycles found'
+                }
+            }
+        }
+      },
     }
 
     afterEach(() => jest.clearAllMocks())
 
     test('register and redirect to dashboard', async () => {
+      axios.get = jest.fn().mockImplementationOnce(() => Promise.reject())
 
-        // Render Landing and Register Routes, start at Landing
-        const { getByText, getByTestId, getByPlaceholderText, getAllByPlaceholderText, getByRole, history } = renderApp();
+      // Render Landing and Register Routes, start at Landing
+      const { getByText, getByTestId, getByPlaceholderText, getAllByPlaceholderText, getByRole, history } = renderApp();
 
-        // See buttons to login or register
-        expect(getByText(/login/i)).toBeTruthy();
-        expect(getByText(/register/i)).toBeTruthy();
+      // See buttons to login or register
+      expect(getByRole('link', {name: /login/i})).toBeTruthy();
+      expect(getByRole('link', {name: /register/i})).toBeTruthy();
 
-        // Navigate to Register
-        const leftClick = { button: 0 }
-        fireEvent.click(getByText(/register/i), leftClick)
+      // Navigate to Register
+      const leftClick = { button: 0 }
+      fireEvent.click(getByRole('link', {name: /register/i}), leftClick)
 
-        // Arrived at Register page
-        expect(window.location.href).toContain('http://localhost/register');
-        expect(getByText(/new account/i)).toBeTruthy();
-        // See registration form
-        expect(getByPlaceholderText(/name/i)).toBeTruthy();
-        expect(getByPlaceholderText(/email/i)).toBeTruthy();
-        expect(getAllByPlaceholderText(/password/i)).toBeTruthy();
-        expect(getByRole('button', {name: /submit/i} )).toBeTruthy();
-        
-        // Fill form with not matching passwords
-        fireEvent.change(getByPlaceholderText(/name/i), {target: {value: 'fake'}})
-        fireEvent.change(getByPlaceholderText(/email/i), {target: {value: 'fake@mail.com'}})
-        fireEvent.change(getByPlaceholderText('Password'), {target: {value: 'test123'}})
-        fireEvent.change(getByPlaceholderText('Re-enter Password'), {target: {value: 'different'}})
-        
-        // Click sign up
-        fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
-        
-        // Password error alert appears
-        await waitForElement(()=>getByText(/passwords do not match/i));
+      // Arrived at Register page
+      expect(window.location.href).toContain('http://localhost/register');
+      expect(getByText(/new account/i)).toBeTruthy();
+      // See registration form
+      expect(getByPlaceholderText(/name/i)).toBeTruthy();
+      expect(getByPlaceholderText(/email/i)).toBeTruthy();
+      expect(getAllByPlaceholderText(/password/i)).toBeTruthy();
+      expect(getByRole('button', {name: /submit/i} )).toBeTruthy();
+      
+      // Fill form with not matching passwords
+      fireEvent.change(getByPlaceholderText(/name/i), {target: {value: 'fake'}})
+      fireEvent.change(getByPlaceholderText(/email/i), {target: {value: 'fake@mail.com'}})
+      fireEvent.change(getByPlaceholderText('Password'), {target: {value: 'test123'}})
+      fireEvent.change(getByPlaceholderText('Re-enter Password'), {target: {value: 'different'}})
+      
+      // Click sign up
+      fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
+      
+      // Password error alert appears
+      await waitForElement(()=>getByText(/passwords do not match/i));
 
-        // Fill form with matching password
-        fireEvent.change(getByPlaceholderText('Re-enter Password'), {target: {value: 'test123'}})
+      // Fill form with matching password
+      fireEvent.change(getByPlaceholderText('Re-enter Password'), {target: {value: 'test123'}})
 
-        // Click sign up
-        axios.get = jest.fn()
-        .mockImplementationOnce(() => Promise.resolve(res.getAuth))
-        .mockImplementationOnce(() => Promise.resolve(res.getCycles))    
-        axios.post = jest.fn()
-        .mockImplementationOnce(() => Promise.resolve(res.postUsersSuccess))
-        fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
+      // Mock loaduser, getCycles
+      axios.get = jest.fn()
+      .mockImplementation((url) => {
+          switch(url) {
+              case '/api/auth':
+                  return Promise.resolve(res.getAuth)
+              case '/api/cycles':
+                  return Promise.reject(res.getCycles);
+          }
+      });
+      axios.post = jest.fn()
+      .mockImplementationOnce(() => Promise.resolve(res.postUsersSuccess))
+      // Click sign up
+      fireEvent.click(getByRole('button', {name: /submit/i} ), leftClick);
 
-        // Redirected to dashboard
-        await waitForElement(() => getByText(/logout/i));
-        expect(window.location.href).toContain('http://localhost/dashboard');
+      // Redirected to dashboard
+      await waitForElement(() => getByText(/logout/i));
+      expect(window.location.href).toContain('http://localhost/dashboard');
 
     })
   })
