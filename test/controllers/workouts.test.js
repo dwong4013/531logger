@@ -222,7 +222,7 @@ describe('API: Workouts Controllers', () => {
 
         it('should edit workout status', async () => {
             let req = mockRequestStatus();
-            let updateWorkout = sandbox.stub(Workout, 'updateOne').returns({ok: 1})
+            let updateWorkout = sandbox.stub(Workout, 'findOneAndUpdate').returns({ok: 1})
 
             await editWorkout(req, res)
             expect(updateWorkout.calledOnce).to.be.true
@@ -234,13 +234,13 @@ describe('API: Workouts Controllers', () => {
 
         it('should handle error if db call throws error', async () => {
             let req = mockRequestStatus();
-            let updateWorkout = sandbox.stub(Workout, 'updateOne').throws()
+            let updateWorkout = sandbox.stub(Workout, 'findOneAndUpdate').throws()
 
             await editWorkout(req, res)
             expect(updateWorkout.calledOnce).to.be.true
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
 
     })
