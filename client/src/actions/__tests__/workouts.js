@@ -264,16 +264,18 @@ describe('Workouts Action Creators', () => {
                 setType: "mainSets",
                 notes: "it was easy",
                 time: "1:04am",
-                completed: true
+                completed: true,
             }
         }
 
         const res = {
             updateWorkout: {
                 data: {
-                    _id: 'alskjd0fsadfjl',
-                    exercise: 'squat',
-                    week: '1',
+                    workout: {
+                        _id: 'alskjd0fsadfjl',
+                        exercise: 'squat',
+                        week: '1',
+                    }
                 }
             }
           }
@@ -288,7 +290,7 @@ describe('Workouts Action Creators', () => {
         const expectedActions = {
             editWorkout: {
                 type: UPDATE_WORKOUT,
-                payload: res.updateWorkout.data
+                payload: res.updateWorkout.data.workout
             },
         }
         
@@ -309,16 +311,18 @@ describe('Workouts Action Creators', () => {
         }
         const res = {
             editWorkout: {
-                statusCode: 400,
-                data: {
-                    error: {
-                        msg: 'Failed to make changes',
+                response: {
+                    status: 400,
+                    data: {
+                        error: {
+                            msg: 'Failed to make changes',
+                        }
                     }
                 }
             }
           }
         axios.put = jest.fn()
-        .mockImplementationOnce(() => Promise.resolve(res.editWorkout))
+        .mockImplementationOnce(() => Promise.reject(res.editWorkout))
 
         
         const store = mockStore({})
@@ -330,7 +334,7 @@ describe('Workouts Action Creators', () => {
                 type: SET_ALERT,
                 payload: {
                     title: 'Error',
-                    msg: res.editWorkout.data.error.msg,
+                    msg: res.editWorkout.response.data.error.msg,
                     type: 'danger',
                 },
             }   
@@ -344,6 +348,7 @@ describe('Workouts Action Creators', () => {
         const res = {
             editWorkout: {
                 response: {
+                    status: 500,
                     data: {
                         error: {
                             msg: 'Server error'

@@ -158,8 +158,7 @@ const editWorkout = async (req, res) => {
     if (err.kind && err.kind === undefined) {
       return res.status(400).json({error: { msg: 'Invalid cycle.' }})
     }
-
-    return res.status(500).send('Server Error');
+    return res.status(500).json({error: { msg:'Server Error'}});
   }
 }
 
