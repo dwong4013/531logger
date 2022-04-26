@@ -32,7 +32,6 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
   const [desktop, setDesktop] = useState(window.matchMedia('(max-width: 414px)').matches)
 
   const mediaHandler = e => {
-    console.log(e.matches)
     setDesktop(e.matches)
   }
 
@@ -61,6 +60,7 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
   // Set remainingSets state when workout is updated
   useEffect(() => {
     if (workout) {
+      // only take elements in the array that have a false value for completed and missed
       setRemainingSets({
         mainSets: [...workout.mainSets].filter(set => set.completed === false && set.missed === false),
         volumeSets: [...workout.volumeSets].filter(set => set.completed === false && set.missed === false)})
@@ -70,29 +70,28 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
   // Set currentSet state when remainingSets state is updated
   useEffect(() => {
     if (remainingSets) {
-      console.log(remainingSets);
+      // If there are any remainingSets left, then set the currentSet
       if (remainingSets.mainSets.length > 0 || remainingSets.volumeSets.length > 0) {
         // Determine setIndex based on setType
         let setType = remainingSets.mainSets.length > 0 ? 'mainSets': 'volumeSets'
         let expectedSetLength = setType === 'mainSets' ? 3 : 5
         let setIndex = expectedSetLength - remainingSets[setType].length
-  
+        // set the currentSet state with new setType, setIndex
+        // setData is always filled with the first set in the remainingSets[setType] array
         setCurrentSet({...currentSet,
           setIndex, 
           setType,
           setData: {
-            id: remainingSets[setType][currentSet.setIndex]._id,
-            weight: remainingSets[setType][currentSet.setIndex].weight,
-            reps: remainingSets[setType][currentSet.setIndex].reps,
+            id: remainingSets[setType][0]._id,
+            weight: remainingSets[setType][0].weight,
+            reps: remainingSets[setType][0].reps,
         }})
       } else {
+        // Set the currentSet back to inital state when the workout is complete
         setCurrentSet(initialCurrentSetState);
       }
     }
   },[remainingSets])
-
-  console.log(remainingSets)
-  console.log(currentSet);
 
   const onWorkoutSelect = (e) => {
     setTargetWorkout(e.target.value)
@@ -114,6 +113,8 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
         notes
       }
     }
+    // If it is the last element in the volumeSets array, 
+    // then add workoutCompleted to the values to complete the workout
     if (currentSet.setType === 'volumeSets' && currentSet.setIndex === 4) {
       formData.values.workoutCompleted = true;
     }
