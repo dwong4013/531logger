@@ -185,7 +185,7 @@ describe('Landing', () => {
 
         // See new cycle is created
         await waitForElement(() => expect(getByText(res.postCycle.data.msg)))
-        expect(getByRole('button', {name: 'workout'})).toBeTruthy();
+        expect(getByRole('link', {name: 'workout'})).toBeTruthy();
 
     })
   })
