@@ -49,7 +49,7 @@ const registerUser = async (req, res) => {
       }
     );
   } catch (err) {
-    return res.status(500).send('Server Error');
+    return res.status(500).json({error: { msg:'Server Error'}});
   }
 }
 
@@ -71,7 +71,7 @@ const editUser = async (req, res) => {
         return res.status(400).json({error: { msg: 'Invalid user.'}})
       }
   
-      return res.status(500).send('Server Error');
+      return res.status(500).json({error: { msg:'Server Error'}});
     }
   }
   return res.status(400).json({error: { msg: 'Invalid action.'}})
