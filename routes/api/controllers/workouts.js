@@ -17,7 +17,7 @@ const getWorkouts = async (req, res) => {
       return res.json(workouts);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      return res.status(500).json({error: { msg:'Server Error'}});
     }
 }
 
@@ -61,7 +61,7 @@ const createWorkouts = async (req, res) => {
         
     } catch (err) {
         console.log('err: ', err);
-        return res.status(500).send('Server Error');
+        return res.status(500).json({error: { msg:'Server Error'}});
     }
 }
 
@@ -182,7 +182,7 @@ const deleteWorkouts = async (req, res) => {
         return res.status(400).json({error: {msg: 'Invalid cycle.'}})
       }
 
-      return res.status(500).send('Server Error');
+      return res.status(500).json({error: { msg:'Server Error'}});
     }
 }
 
