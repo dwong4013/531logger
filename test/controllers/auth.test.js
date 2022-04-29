@@ -69,7 +69,7 @@ describe('API: Auth Controllers', () => {
             expect(dbCallUser.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true
+            expect(res.json.calledOnce).to.be.true
         })
     })
 
