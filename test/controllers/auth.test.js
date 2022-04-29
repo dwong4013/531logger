@@ -69,7 +69,7 @@ describe('API: Auth Controllers', () => {
             expect(dbCallUser.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true
+            expect(res.json.calledOnce).to.be.true
         })
     })
 
@@ -146,8 +146,8 @@ describe('API: Auth Controllers', () => {
             
             await loginUser(req,res);
             expect(createToken.calledOnce).to.be.true;
-            expect(res.json.calledOnce).to.be.true;
-            expect(res.json.calledWith({token: fakeToken}))
+            expect(res.send.calledOnce).to.be.true;
+            expect(res.send.calledWith({token: fakeToken}))
         });
         it('handles error when token signing throws error', async () => {
             let req = mockRequest();
