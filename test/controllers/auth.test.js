@@ -146,8 +146,8 @@ describe('API: Auth Controllers', () => {
             
             await loginUser(req,res);
             expect(createToken.calledOnce).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
-            expect(res.send.calledWith({token: fakeToken}))
+            expect(res.json.calledOnce).to.be.true;
+            expect(res.json.calledWith({token: fakeToken}))
         });
         it('handles error when token signing throws error', async () => {
             let req = mockRequest();
