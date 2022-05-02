@@ -38,7 +38,6 @@ describe('generateWorkout module', () => {
 
         it('should create a workout document', () => {
             let workout = generateWorkout(user, cycle, exercise, week, max)
-            console.log(workout);
         })
     })
 })
