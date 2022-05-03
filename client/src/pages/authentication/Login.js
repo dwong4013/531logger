@@ -11,7 +11,7 @@ import Submit from '../../components/forms/Submit';
 
 const Login = ({ loginUser, isAuthenticated }) => {
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     mode:"onBlur", 
     reValidateMode: 'onBlur'
   });
