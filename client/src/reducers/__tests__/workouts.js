@@ -34,19 +34,19 @@ import {
 
             // No workouts to load
             let state = reducer(undefined, actions.noWorkouts)
-            expect(state.workouts).toEqual(null);
+            expect(state.workout).toEqual(null);
 
             // Workout error 
             state = reducer(state, actions.getWorkoutError)
-            expect(state.workouts).toEqual(null);
+            expect(state.workout).toEqual(null);
 
             // Load workout action
             state = reducer(state, actions.loadOneWorkout)
-            expect(state.workouts).toEqual(actions.loadOneWorkout.payload);
+            expect(state.workout).toEqual(actions.loadOneWorkout.payload);
 
             // Update workout action
             state = reducer(state, actions.updateWorkout)
-            expect(state.workouts).toEqual(actions.updateWorkout.payload);
+            expect(state.workout).toEqual(actions.updateWorkout.payload);
 
         })
 
