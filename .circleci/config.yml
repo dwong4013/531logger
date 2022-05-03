@@ -1,0 +1,31 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      -image: cimg/node:14.16.1
+    steps:
+      - checkout
+      - run: npm install --prefix client
+      - run: npm run build --prefix client
+  test_client:
+    docker:
+      -image: cimg/node:14.16.1
+    steps:
+      - checkout
+      - run: npm install --prefix client
+      - run: npm test --prefix client
+  test_api:
+    docker:
+      -image: cimg/node:14.16.1
+    steps:
+      - checkout
+      - run: npm test
+workflows:
+  version: 2.1
+  build_test_client_and_api:
+    jobs:
+    - build
+    - test_client
+    - test_api
+
