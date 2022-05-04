@@ -16,10 +16,9 @@ describe('Workouts Action Creators', () => {
   const middlewares = [thunk]
   const mockStore = configureStore(middlewares);
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  })
-  
+  beforeEach(() => jest.restoreAllMocks())
+  afterEach(() => jest.restoreAllMocks())
+
   describe('getWorkout', () => {
     test('dispatches GET_WORKOUT with latest workout on successful get request', async () => {
         const res = {

@@ -365,97 +365,11 @@ describe('Workout', () => {
              
           }]
       },
-      updateWorkout: {
-          data: {
-              workout: {
-                completed: false,
-                _id: '6263089b801f9c06810c1de0',
-                cycle: '6263089b801f9c06810c1ddf',
-                user: '624de9fa6926a5051d0cf9b0',
-                exercise: 'squat',
-                week: 1,
-                mainSets: [
-                  {
-                    missed: false,
-                    completed: true,
-                    _id: '6263089b801f9c06810c1de1',
-                    weight: 115,
-                    reps: 5,
-                    notes: null,
-                    time: '4:02:09 PM'
-                  },
-                  {
-                    missed: false,
-                    completed: true,
-                    _id: '6263089b801f9c06810c1de2',
-                    weight: 135,
-                    reps: 5,
-                    notes: 'also easy set',
-                    time: '10:49:59 AM'
-                  },
-                  {
-                    missed: false,
-                    completed: true,
-                    _id: '6263089b801f9c06810c1de3',
-                    weight: 155,
-                    reps: 5,
-                    notes: 'no problems',
-                    time: '10:51:45 AM'
-                  }
-                ],
-                volumeSets: [
-                  {
-                    missed: false,
-                    completed: true,
-                    _id: '6263089b801f9c06810c1de4',
-                    weight: 115,
-                    reps: 5,
-                    notes: 'easy',
-                    time: '11:49:22 AM'
-                  },
-                  {
-                    missed: false,
-                    completed: true,
-                    _id: '6263089b801f9c06810c1de5',
-                    weight: 115,
-                    reps: 5,
-                    notes: '',
-                    time: '11:52:11 AM'
-                  },
-                  {
-                    missed: false,
-                    completed: true,
-                    _id: '6263089b801f9c06810c1de6',
-                    weight: 115,
-                    reps: 5,
-                    notes: '',
-                    time: '11:54:47 AM'
-                  },
-                  {
-                    missed: false,
-                    completed: true,
-                    _id: '6263089b801f9c06810c1de7',
-                    weight: 115,
-                    reps: 5,
-                    notes: 'getting tough',
-                    time: '11:55:48 AM'
-                  },
-                  {
-                    missed: false,
-                    completed: false,
-                    _id: '6263089b801f9c06810c1de8',
-                    weight: 115,
-                    reps: 5,
-                  }
-                ],
-                __v: 0
-              }
-          }
-      }
 
     }
-
-    afterEach(() => jest.clearAllMocks())
+    
+    beforeEach(() => jest.restoreAllMocks())
+    afterEach(() => jest.restoreAllMocks())
   
     test('complete a workout', async () => {
         // Mock loaduser, getCycles
