@@ -18,9 +18,8 @@ describe('Auth Action Creators', () => {
   const middlewares = [thunk]
   const mockStore = configureStore(middlewares);
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  })
+  beforeEach(() => jest.restoreAllMocks())
+  afterEach(() => jest.restoreAllMocks())
   
   describe('loginUser', () => {
     test('dispatches LOGIN_SUCCESS on successful post request', async () => {

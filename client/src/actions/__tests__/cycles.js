@@ -20,10 +20,9 @@ describe('Cycles Action Creators', () => {
   const middlewares = [thunk]
   const mockStore = configureStore(middlewares);
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  })
-  
+  beforeEach(() => jest.restoreAllMocks())
+  afterEach(() => jest.restoreAllMocks())
+
   describe('getCycles', () => {
     test('dispatches GET_CYCLES on successful get request', async () => {
         const res = {
@@ -179,7 +178,6 @@ describe('Cycles Action Creators', () => {
         
         let actions = store.getActions();
         const [firstAction, secondAction, thirdAction, fourthAction ] = actions
-        console.log(actions)
         const expectedActions = {
             setAlert: {
                 type: SET_ALERT,

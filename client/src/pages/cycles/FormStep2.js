@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createCycle } from '../../actions/cycles';
@@ -17,7 +17,7 @@ function FormStep2({ formUtils: { getValues, handleSubmit }, formState, stepDecr
         }
     }
 
-    const [summaryData, setSummaryData] = useState(initialState)
+    const [summaryData] = useState(initialState)
     const { squat, bench, deadlift, press } = summaryData;
 
     const submitData = (data, e) => {

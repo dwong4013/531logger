@@ -38,7 +38,7 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
   // Load cycle data
   useEffect(() => {
     getCycles()
-  },[])
+  },[getCycles])
 
   const { workout, loading: workoutLoading } = workouts;
   const { currentCycle, loading: cyclesLoading } = cycles;
@@ -55,7 +55,7 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
     } else{ 
       getWorkout(cycleId)
     }
-  }, [targetWorkout]);
+  }, [targetWorkout, cycleId, getWorkout]);
   
   // Set remainingSets state when workout is updated
   useEffect(() => {
@@ -78,14 +78,15 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
         let setIndex = expectedSetLength - remainingSets[setType].length
         // set the currentSet state with new setType, setIndex
         // setData is always filled with the first set in the remainingSets[setType] array
-        setCurrentSet({...currentSet,
+        setCurrentSet((currentSet) => ({...currentSet,
           setIndex, 
           setType,
           setData: {
             id: remainingSets[setType][0]._id,
             weight: remainingSets[setType][0].weight,
             reps: remainingSets[setType][0].reps,
-        }})
+        }
+      }))
       } else {
         // Set the currentSet back to inital state when the workout is complete
         setCurrentSet(initialCurrentSetState);

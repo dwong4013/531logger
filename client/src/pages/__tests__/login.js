@@ -62,7 +62,8 @@ describe('Landing', () => {
       },
     }
 
-    afterEach(() => jest.clearAllMocks())
+    beforeEach(() => jest.restoreAllMocks())
+    afterEach(() => jest.restoreAllMocks())
   
     test('login and redirect to dashboard', async () => {
       axios.get = jest.fn().mockImplementationOnce(() => Promise.reject())

@@ -10,7 +10,7 @@ import Input from '../../components/forms/Input'
 import Submit from '../../components/forms/Submit'
 
 const Register = ({ setAlert, registerUser, isAuthenticated }) => {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     mode:"onBlur", 
     reValidateMode: 'onBlur'
   });
