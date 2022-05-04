@@ -3,7 +3,6 @@ import {
     NO_WORKOUT,
     UPDATE_WORKOUT,
     WORKOUT_ERROR,
-    SET_ALERT
   } from './types';
 import { updateCycle } from './cycles';
 import { setAlert } from './alert';
@@ -41,9 +40,13 @@ export const getWorkout = (cycleId, workoutId = null) => async dispatch => {
         case 400:
           dispatch(setAlert('Error', error.msg, 'danger'));
           dispatch({type: NO_WORKOUT});
+          break;
         case 500:
           dispatch(setAlert('Error', error.msg, 'danger'))
           dispatch({ type: WORKOUT_ERROR });
+          break;
+        default:
+          break;
       }
     }
 
@@ -110,9 +113,13 @@ export const editWorkout = (workoutId, formData) => async dispatch => {
           case 400:
             dispatch(setAlert('Error', error.msg, 'danger'));
             dispatch({type: NO_WORKOUT});
+            break;
           case 500:
             dispatch(setAlert('Error', error.msg, 'danger'))
             dispatch({ type: WORKOUT_ERROR });
+            break;
+          default:
+            break;
         }
       }
 

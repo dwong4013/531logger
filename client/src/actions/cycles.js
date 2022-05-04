@@ -31,9 +31,13 @@ export const getCycles = () => async (dispatch) => {
       case 400:
         dispatch(setAlert('Error', error.msg, 'danger'));
         dispatch({type: NO_CYCLES});
+        break
       case 500:
         dispatch(setAlert('Error', error.msg, 'danger'))
         dispatch({ type: CYCLE_ERROR });
+        break
+      default:
+        break;
     }
   }
 };
