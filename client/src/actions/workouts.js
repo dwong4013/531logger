@@ -25,7 +25,6 @@ export const getWorkout = (cycleId, workoutId = null) => async dispatch => {
         } else {
           // latest workout
           targetWorkout = res.data.find(exercise => !exercise.completed )
-          console.log(targetWorkout);
         }
         
         dispatch({
@@ -51,7 +50,6 @@ export const getWorkout = (cycleId, workoutId = null) => async dispatch => {
 }
 
 export const createWorkouts = (cycleId) => async dispatch => {
-  console.log('called createWorkouts');
     if (localStorage.token) {
         setAuthToken(localStorage.token)
     }
@@ -64,7 +62,6 @@ export const createWorkouts = (cycleId) => async dispatch => {
         };
     
         const res = await axios.post(`/api/workouts/${cycleId}`, config);
-        console.log(new Date(), 'createWorkouts res: ', res.data);
 
         if (res.statusCode === 400) {
             dispatch(setAlert('Error', res.data.error.msg, 'danger'))
@@ -78,7 +75,6 @@ export const createWorkouts = (cycleId) => async dispatch => {
         dispatch(updateCycle(cycleId, cycleData))
     
       } catch (err) {
-        console.log(new Date(), 'createWorkouts err: ', err)
         const error = err.response.data.error;
     
         if (error) {
@@ -92,7 +88,6 @@ export const editWorkout = (workoutId, formData) => async dispatch => {
     if (localStorage.token) {
         setAuthToken(localStorage.token)
     }
-    console.log(workoutId, formData)
     try {
         const config = {
           headers: {
@@ -101,7 +96,6 @@ export const editWorkout = (workoutId, formData) => async dispatch => {
         };
     
         const res = await axios.put(`/api/workouts/${workoutId}`, formData, config);
-        console.log(res)
     
         dispatch({
             type: UPDATE_WORKOUT,
