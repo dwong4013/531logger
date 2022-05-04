@@ -21,7 +21,7 @@ const Dashboard = ({
     loadUser();
     getCycles();
     window.matchMedia('(max-width: 414px)').addEventListener('change', (e) => setDesktop(e.matches))
-  }, []);
+  }, [loadUser,getCycles]);
 
   const [desktop, setDesktop] = useState(window.matchMedia('(max-width: 414px)').matches)
   const [modal, setModal] = useState(false);
