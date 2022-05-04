@@ -179,7 +179,6 @@ describe('Cycles Action Creators', () => {
         
         let actions = store.getActions();
         const [firstAction, secondAction, thirdAction, fourthAction ] = actions
-        console.log(actions)
         const expectedActions = {
             setAlert: {
                 type: SET_ALERT,
