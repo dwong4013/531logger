@@ -76,11 +76,81 @@ describe('API: User Controllers', () => {
 
 
         });
+        it('handles error when user already exists', async () => {
+            let req = mockRequest();
+            let dbUserCall = sandbox.stub(User, 'findOne').returns({});
+            
+            await registerUser(req,res);
+            expect(dbUserCall.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(badCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+        })
         it('handles error when user db call throws an error', async () => {
             let req = mockRequest();
             let dbUserCall = sandbox.stub(User, 'findOne').throws();
             
             await registerUser(req,res);
+            expect(dbUserCall.calledOnce).to.be.true;
+            expect(res.status.calledOnce).to.be.true;
+            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
+        })
+    })
+    describe('edit route controller: editUser', () => {
+        const mockRequest = () => {
+            const req = {
+                user: {
+                    id: '604f7c8d31c4ab00aaca213d'
+                },
+                body: {
+                    key: 'cyclesCompleted',
+                    value: 2,
+                }
+            }
+            return req
+        }
+
+        const mockUser = () => {
+            return new User({
+                id: '604f7c8d31c4ab00aaca213d',
+                name: 'mike',
+                email: 'fake@email.com',
+                cyclesCompleted: 0
+            })
+        }
+
+        const updatedMockUser = () => {
+            return {
+                id: '604f7c8d31c4ab00aaca213d',
+                name: 'mike',
+                email: 'fake@email.com',
+                cyclesCompleted: mockRequest().body.value
+            }
+        }
+
+        it('should edit cyclesCompleted field of user', async () => {
+            let req = mockRequest();
+            let fakeUser = mockUser();
+            let updatedFakeUser = updatedMockUser();
+            let dbUserCall = sandbox.stub(User, 'findById').returns(fakeUser);
+            let save = sandbox.stub(User.prototype, 'save').callsFake(() => Promise.resolve(this))
+
+            await editUser(req, res)
+            expect(dbUserCall.calledOnce).to.be.true;
+            expect(save.calledOnce).to.be.true;
+            expect(save.calledOn(fakeUser)).to.be.true;
+            expect(fakeUser.cyclesCompleted).to.equal(req.body.value);
+            expect(res.json.calledOnce).to.be.true;
+            expect(res.json.calledWith(fakeUser)).to.be.true;
+
+
+        });
+        it('handles error when user db call throws an error', async () => {
+            let req = mockRequest();
+            let dbUserCall = sandbox.stub(User, 'findById').throws();
+            
+            await editUser(req,res);
             expect(dbUserCall.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
