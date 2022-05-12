@@ -21,13 +21,13 @@ services:
       - FAST_REFRESH=false
   backend-api:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     container_name: backend-api
     ports: 
       - "5000:5000"
     volumes:
-        - .:/usr/src/531logger/api
+        - ./backend:/usr/src/531logger/api
         - node_modules_backend:/usr/src/531logger/api/node_modules
     command: ./wait-for.sh mongodb:27017 -- npm run server
     env_file: .env
