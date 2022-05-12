@@ -20,8 +20,8 @@ jobs:
       - image: cimg/node:14.16.1
     steps:
       - checkout
-      - run: npm install
-      - run: npm test
+      - run: npm install --prefix backend
+      - run: npm test --prefix backend
 workflows:
   version: 2
   build_test_client_and_api:
