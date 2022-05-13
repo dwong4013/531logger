@@ -5,7 +5,7 @@ const auth = require('../../middleware/auth');
 const jwt = require('jsonwebtoken');
 
 
-describe('auth middleware', () => {
+describe('Middleware: auth', () => {
     const mockRequest = () => {
         const req = {};
         req.header = () => 'token'
