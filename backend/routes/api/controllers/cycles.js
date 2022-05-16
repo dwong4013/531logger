@@ -8,14 +8,13 @@ const getCycles = async (req, res) => {
       .populate('workoutsToDo', 'exercise week')
       .sort({ dateCreated: 'desc' });
   
-      if (cycles.length === 0) {
+      if (!cycles || cycles && cycles.length === 0) {
         return res
           .status(400)
           .json({error: { msg: 'Please create a cycle to begin' }});
       }
       return res.json(cycles);
     } catch (err) {
-      console.error(err.message);
       return res.status(500).json({error: {msg:'Server Error'}});
     }
 }
