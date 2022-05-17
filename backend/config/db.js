@@ -8,7 +8,13 @@ const {
   MONGO_DB
 } = process.env;
 
-const uri = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
+const uri =  `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}/${MONGO_DB}?retryWrites=true&w=majority`
+
+if (process.env.NODE.ENV === 'production') {
+  uri =  `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}/${MONGO_DB}?retryWrites=true&w=majority`
+} else {
+  uri = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`
+}
 
 const connectDB = async () => {
   try {
@@ -19,12 +25,23 @@ const connectDB = async () => {
       useFindAndModify: false
     });
 
-    console.log('MongoDB Connected...');
   } catch (err) {
+    console.log(err);
     console.error(err.message);
     // Exit process with failure
     process.exit(1);
   }
 };
 
-module.exports = connectDB;
+// Connect Database
+connectDB();
+
+// Event listeners for error after initialization
+const mongoConnection = mongoose.connection;
+mongoConnection.on('error', err => {
+  console.log(`There was an error connecting to the database: ${err}`);
+})
+mongoConnection.once('open', ()=> {
+  console.log(`You have successfully connected to your mongodatabase: ${uri}`);
+})
+
