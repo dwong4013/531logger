@@ -17,6 +17,6 @@ app.use('/api/workouts', require('./routes/api/workouts'))
 // Establish db connection
 require('./config/db');
 
-const PORT = process.env.BACKEND_PORT || 5000;
+const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : process.env.BACKEND_PORT;
 
 app.listen(PORT, () => console.log(`Server started on ${PORT}`));
