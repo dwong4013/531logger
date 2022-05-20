@@ -63,7 +63,7 @@ jobs:
             docker build ./backend -t $HEROKU_USERNAME/$HEROKU_BACKEND_APP
             docker tag $HEROKU_USERNAME/$HEROKU_APP_NAME registry.heroku.com/$HEROKU_BACKEND_APP/web
             docker push registry.heroku.com/$HEROKU_BACKEND_APP/web
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release --app=$HEROKU_BACKEND_APP web
+            HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release --app=$HEROKU_BACKEND_APP web
 workflows:
   version: 2
   build_test_client_and_api:
