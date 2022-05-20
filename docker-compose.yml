@@ -4,6 +4,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+      target: development
     container_name: client
     ports: 
       - "3000:3000"
@@ -23,6 +24,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      target: development
     container_name: backend-api
     ports: 
       - "5000:5000"
