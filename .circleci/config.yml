@@ -32,7 +32,7 @@ jobs:
       - run: 
           name: Build, push, and release client image to Heroku
           command: |
-          sudo curl https://cli-assets.heroku.com/install.sh | sh 
+          npm install -g heroku 
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker build ./client -t $HEROKU_USERNAME/$HEROKU_CLIENT_APP
           docker tag $HEROKU_USERNAME/$HEROKU_APP_NAME registry.heroku.com/$HEROKU_CLIENT_APP/web
@@ -46,7 +46,7 @@ jobs:
       - run: 
           name: Build, push, and release client image to Heroku
           command: |
-          sudo curl https://cli-assets.heroku.com/install.sh | sh 
+          npm install -g heroku  
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker build ./client -t $HEROKU_USERNAME/$HEROKU_BACKEND_APP
           docker tag $HEROKU_USERNAME/$HEROKU_APP_NAME registry.heroku.com/$HEROKU_BACKEND_APP/web
