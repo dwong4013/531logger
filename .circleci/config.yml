@@ -27,8 +27,14 @@ jobs:
   build_and_release_client:
     docker:
       - image: cimg/node:14.16.1
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
+      - setup_remote_docker:
+        version: 20.10.14
+        docker_layer_caching: true
       - run: 
           name: Build, push, and release client image to Heroku
           command: |
@@ -41,8 +47,14 @@ jobs:
   build_and_release_backend:
     docker:
       - image: cimg/node:14.16.1
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
+      - setup_remote_docker:
+        version: 20.10.14
+        docker_layer_caching: true
       - run: 
           name: Build, push, and release client image to Heroku
           command: |
