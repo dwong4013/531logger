@@ -33,8 +33,8 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-        version: 20.10.14
-        docker_layer_caching: true
+          version: 20.10.14
+          docker_layer_caching: true
       - run: 
           name: Build, push, and release client image to Heroku
           command: |
@@ -53,10 +53,10 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-        version: 20.10.14
-        docker_layer_caching: true
+          version: 20.10.14
+          docker_layer_caching: true
       - run: 
-          name: Build, push, and release client image to Heroku
+          name: Build, push, and release backend image to Heroku
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh 
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
