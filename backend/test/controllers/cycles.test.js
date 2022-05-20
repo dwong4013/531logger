@@ -75,17 +75,17 @@ describe('API: Cycles Controllers', () => {
 
         it('should handle error if database call throws error', async () => {
             let req = mockRequest();
-            let dbCallCycle = sandbox.stub(Cycle, "find").returns({sort:sandbox.stub().returns(undefined)});
+            let dbCallCycle = sandbox.stub(Cycle, "find").returns({populate: sandbox.stub().returns({sort:sandbox.stub().returns(undefined)})});
 
             await getCycles(req, res)
             expect(dbCallCycle.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true
-            expect(res.status.calledWith(errorCode)).to.be.true;
+            expect(res.status.calledWith(badCode)).to.be.true;
             expect(res.json.calledOnce).to.be.true
         });
         it('should handle error if database call throws error', async () => {
             let req = mockRequest();
-            let dbCallCycle = sandbox.stub(Cycle, "find").returns({sort:sandbox.stub().throws()});
+            let dbCallCycle = sandbox.stub(Cycle, "find").returns({populate: sandbox.stub().returns({sort:sandbox.stub().throws()})});
 
             await getCycles(req, res)
             expect(dbCallCycle.calledOnce).to.be.true;

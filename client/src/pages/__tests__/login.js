@@ -50,6 +50,16 @@ describe('Landing', () => {
           cyclesCompleted: 0,
         }
       },
+      authError: {
+        response: {
+                status: 500,
+                data: {
+                    error: {
+                        msg: 'Server Error'
+                    }
+                }
+        }
+      },
       getCycles: {
         response: {
             data: {
@@ -62,10 +72,11 @@ describe('Landing', () => {
       },
     }
 
-    afterEach(() => jest.clearAllMocks())
+    beforeEach(() => jest.restoreAllMocks())
+    afterEach(() => jest.restoreAllMocks())
   
     test('login and redirect to dashboard', async () => {
-      axios.get = jest.fn().mockImplementationOnce(() => Promise.reject())
+      axios.get = jest.fn().mockImplementationOnce(() => Promise.reject(res.authError))
 
       // Render Landing and Register Routes, start at Landing
       const { getByText, getByTestId, getByPlaceholderText, getAllByPlaceholderText, getByRole, history } = renderApp();

@@ -18,9 +18,8 @@ describe('Auth Action Creators', () => {
   const middlewares = [thunk]
   const mockStore = configureStore(middlewares);
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  })
+  beforeEach(() => jest.restoreAllMocks())
+  afterEach(() => jest.restoreAllMocks())
   
   describe('loginUser', () => {
     test('dispatches LOGIN_SUCCESS on successful post request', async () => {
@@ -181,21 +180,42 @@ describe('Auth Action Creators', () => {
         expect(actions[0]).toEqual(expectedActions.loadSuccess)
     })
     test('dispatches AUTH_ERROR on get request fail', async () => {
+        const res = {
+            authError: {
+                response: {
+                        status: 500,
+                        data: {
+                            error: {
+                                msg: 'Server Error'
+                            }
+                        }
+                }
+            }
+        }
         axios.get = jest.fn()
-        .mockImplementationOnce(() => Promise.reject())
+        .mockImplementationOnce(() => Promise.reject(res.authError))
 
-        
         const store = mockStore({})
         await store.dispatch(loadUser())
         
         let actions = store.getActions();
+        let [firstAction, secondAction] = actions;
         const expectedActions = {
+            setAlert: {
+                type: SET_ALERT,
+                payload: {
+                    title: 'Error', 
+                    msg: res.authError.response.data.error.msg, 
+                    type: 'danger'
+                }
+            },
             loadFail: {
                 type: AUTH_ERROR,
             }
         }
         expect(axios.get).toHaveBeenCalledTimes(1);
-        expect(actions[0]).toEqual(expectedActions.loadFail)
+        expect(firstAction).toEqual(expectedActions.setAlert)
+        expect(secondAction).toEqual(expectedActions.loadFail)
     })
   })
   describe('logout', () => {

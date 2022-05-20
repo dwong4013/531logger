@@ -31,9 +31,13 @@ export const getCycles = () => async (dispatch) => {
       case 400:
         dispatch(setAlert('Error', error.msg, 'danger'));
         dispatch({type: NO_CYCLES});
+        break
       case 500:
         dispatch(setAlert('Error', error.msg, 'danger'))
         dispatch({ type: CYCLE_ERROR });
+        break
+      default:
+        break;
     }
   }
 };
@@ -51,7 +55,6 @@ export const createCycle = (formData) => async (dispatch) => {
     };
 
     const createCycleRes = await axios.post('/api/cycles', formData, config);
-    console.log('res: ', createCycleRes);
 
     const cycleId = createCycleRes.data.cycle._id
 
@@ -74,7 +77,6 @@ export const createCycle = (formData) => async (dispatch) => {
 
     dispatch(setAlert('Success', createCycleRes.data.msg, 'success'));
   } catch (err) {
-    console.log(err);
     const error = err.response.data.error;
 
     if (error) {
@@ -84,7 +86,6 @@ export const createCycle = (formData) => async (dispatch) => {
 };
 
 export const updateCycle = (cycleId, cycleData) => async (dispatch) => {
-  console.log('updateCycle called')
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -97,13 +98,11 @@ export const updateCycle = (cycleId, cycleData) => async (dispatch) => {
     };
 
     const res = await axios.put(`/api/cycles/${cycleId}`, cycleData, config);
-    console.log(new Date(), 'updateCycle res: ', res)
     dispatch({
       type: UPDATE_CYCLE,
       payload: res.data,
     });
   } catch (err) {
-    console.log('updateCycle err: ', err);
     const error = err.response.data.error;
 
     if (error) {

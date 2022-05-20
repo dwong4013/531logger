@@ -90,10 +90,11 @@ describe('Dashboard', () => {
         }
       }
     }
-
-    afterEach(() => jest.clearAllMocks())
+    beforeEach(() => jest.restoreAllMocks())
+    afterEach(() => jest.restoreAllMocks())
   
     test('login and create a new cycle', async () => {
+      jest.setTimeout(20000);
         // Mock loaduser, getCycles
         axios.get = jest.fn()
         .mockImplementation((url) => {
@@ -128,7 +129,7 @@ describe('Dashboard', () => {
         fireEvent.click(getByTestId('create-cycle-button'), leftClick);
 
         // See modal
-        await waitForElement(() => expect(getByText(/let\'s setup your maxes/i)))
+        await waitForElement(() => getByText(/let\'s setup your maxes/i))
         expect(getByRole('button', {name: /setup/i})).toBeTruthy();
 
         fireEvent.click(getByRole('button', {name: /setup/i}), leftClick);
@@ -151,7 +152,7 @@ describe('Dashboard', () => {
         fireEvent.click(getByRole('button', {name: 'submit'}), leftClick);
 
         // See Summary
-        await waitForElement(() => expect(getByText(/your maxes for the next cycle/i)))
+        await waitForElement(() => getByText(/your maxes for the next cycle/i))
         for (const exercise in maxes) {
             expect(getByText(new RegExp(exercise,'i'))).toBeTruthy();
             expect(getByText(new RegExp(maxes[exercise],'i'))).toBeTruthy();
@@ -171,7 +172,7 @@ describe('Dashboard', () => {
         fireEvent.click(getByRole('button', {name: 'create'}), leftClick);
 
         // See new cycle is created
-        await waitForElement(() => expect(getByText(res.postCycle.data.msg)))
+        await waitForElement(() => getByText(res.postCycle.data.msg))
         expect(getByRole('link', {name: 'workout'})).toBeTruthy();
 
     })

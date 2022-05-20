@@ -72,7 +72,7 @@ describe('API: Workouts Controllers', () => {
             expect(findWorkouts.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true
+            expect(res.json.calledOnce).to.be.true
         });
         it('should handle error if database call returns undefined', async () => {
             let req = mockRequest();
@@ -134,7 +134,7 @@ describe('API: Workouts Controllers', () => {
             expect(findCycle.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
 
         it('should handle error if db insert throws error', async () => {
@@ -148,7 +148,7 @@ describe('API: Workouts Controllers', () => {
             expect(insertMany.calledOnce).to.be.true;
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
 
     })
@@ -278,7 +278,7 @@ describe('API: Workouts Controllers', () => {
             expect(deleteMany.calledOnce).to.be.true
             expect(res.status.calledOnce).to.be.true;
             expect(res.status.calledWith(errorCode)).to.be.true;
-            expect(res.send.calledOnce).to.be.true;
+            expect(res.json.calledOnce).to.be.true;
         })
     })
 })

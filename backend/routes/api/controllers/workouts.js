@@ -11,13 +11,12 @@ const getWorkouts = async (req, res) => {
   
       if (!workouts) {
         return res
-          .status(400)
-          .json({ error: { msg: 'There are no workouts available.' }});
+        .status(400)
+        .json({ error: { msg: 'There are no workouts available.' }});
       }
       return res.json(workouts);
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      return res.status(500).json({error: { msg:'Server Error'}});
     }
 }
 
@@ -50,7 +49,6 @@ const createWorkouts = async (req, res) => {
 
         // Get workout IDs
         let workoutIds = newWorkouts.map(workout => workout._id)
-        console.log(workoutIds);
         let {result: { n }} = await Workout.insertMany(newWorkouts, {rawResult: true})
  
         return res.status(200).json({
@@ -60,16 +58,13 @@ const createWorkouts = async (req, res) => {
 
         
     } catch (err) {
-        console.log('err: ', err);
-        return res.status(500).send('Server Error');
+        return res.status(500).json({error: { msg:'Server Error'}});
     }
 }
 
 const editWorkout = async (req, res) => {
   const { workout_id } = req.params;
   const { type, values } = req.body;
-  console.log('type: ', type)
-  console.log('values: ', values)
 
   try {
     //   handle updates that only edits the notes, time, and completed fields
@@ -108,7 +103,6 @@ const editWorkout = async (req, res) => {
             updateOperator,
             arrayFilters
         );
-        console.log(workout);
     
         // Check if update operation was successful
         if (!workout) {
@@ -154,11 +148,10 @@ const editWorkout = async (req, res) => {
     }
 
 } catch (err) {
-    console.log(err);
     if (err.kind && err.kind === undefined) {
-      return res.status(400).json({error: { msg: 'Invalid cycle.' }})
+        return res.status(400).json({error: { msg: 'Invalid cycle.' }})
     }
-    return res.status(500).json({error: { msg:'Server Error'}});
+        return res.status(500).json({error: { msg:'Server Error'}});
   }
 }
 
@@ -168,7 +161,6 @@ const deleteWorkouts = async (req, res) => {
         user: req.user.id,
         cycle: req.params.cycle_id
       });
-      console.log(result);
 
       if (result.ok !== 1) {
         return res
@@ -182,7 +174,7 @@ const deleteWorkouts = async (req, res) => {
         return res.status(400).json({error: {msg: 'Invalid cycle.'}})
       }
 
-      return res.status(500).send('Server Error');
+      return res.status(500).json({error: { msg:'Server Error'}});
     }
 }
 

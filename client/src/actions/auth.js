@@ -30,7 +30,6 @@ export const loginUser = (formData) => async (dispatch) => {
 
   } catch (err) {
     const error = err.response.data.error;
-    console.log('error: ', error);
 
     if (error) {
       dispatch(setAlert('Error', error.msg, 'danger'));
@@ -55,6 +54,12 @@ export const loadUser = () => async (dispatch) => {
       payload: res.data
     });
   } catch (err) {
+    const error = err.response.data.error;
+
+    if (error) {
+      dispatch(setAlert('Error', error.msg, 'danger'));
+    }
+
     dispatch({
       type: AUTH_ERROR
     });
