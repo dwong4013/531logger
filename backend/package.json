@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=production node server",
+    "start": "node server",
     "server": "nodemon server --legacy-watch",
     "client": "npm start --prefix client",
     "test": "mocha --recursive",
