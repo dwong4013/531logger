@@ -1,4 +1,6 @@
 version: 2.1
+orbs: 
+  heroku: circleci/heroku@1.2.6
 
 jobs:
   build:
@@ -22,11 +24,72 @@ jobs:
       - checkout
       - run: npm install --prefix backend
       - run: npm test --prefix backend
+  build_and_release_client:
+    docker:
+      - image: cimg/node:14.16.1
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - run: 
+          name: Build, push, and release client image to Heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh 
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker login --username=$DOCKER_USERNAME --password=$HEROKU_TOKEN registry.heroku.com
+            docker build ./client -t $DOCKER_USERNAME/$HEROKU_CLIENT_APP
+            docker tag $DOCKER_USERNAME/$HEROKU_CLIENT_APP registry.heroku.com/$HEROKU_CLIENT_APP/web
+            docker push $DOCKER_USERNAME/$HEROKU_CLIENT_APP
+            docker push registry.heroku.com/$HEROKU_CLIENT_APP/web
+            HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release --app=$HEROKU_CLIENT_APP web
+  build_and_release_backend:
+    docker:
+      - image: cimg/node:14.16.1
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - run: 
+          name: Build, push, and release backend image to Heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh 
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker login --username=$DOCKER_USERNAME --password=$HEROKU_TOKEN registry.heroku.com
+            docker build ./backend -t $DOCKER_USERNAME/$HEROKU_BACKEND_APP
+            docker tag $DOCKER_USERNAME/$HEROKU_BACKEND_APP registry.heroku.com/$HEROKU_BACKEND_APP/web
+            docker push $DOCKER_USERNAME/$HEROKU_BACKEND_APP
+            docker push registry.heroku.com/$HEROKU_BACKEND_APP/web
+            HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release --app=$HEROKU_BACKEND_APP web
 workflows:
   version: 2
   build_test_client_and_api:
     jobs:
       - build
-      - test_client
-      - test_api
+      - test_client:
+          requires:
+            - build
+      - test_api:
+          requires:
+            - build
+      - build_and_release_client:
+          requires:
+            - test_client
+          filters:
+            branches:
+              only: v2
+      - build_and_release_backend:
+          requires:
+            - test_api
+          filters:
+            branches:
+              only: v2
+
 
