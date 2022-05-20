@@ -57,20 +57,20 @@ workflows:
   build_test_client_and_api:
     jobs:
       - build
-      - test_client
+      - test_client:
           requires:
             - build
-      - test_api
+      - test_api:
           requires:
             - build
-      - build_and_release_client
+      - build_and_release_client:
           requires:
             - build
             - test_client
           filters:
             branches:
               only: v2
-      - build_and_release_backend
+      - build_and_release_backend:
           requires:
             - build
             - test_api
