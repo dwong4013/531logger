@@ -41,7 +41,8 @@ jobs:
             sudo curl https://cli-assets.heroku.com/install.sh | sh 
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker build ./client -t $DOCKER_USERNAME/$HEROKU_CLIENT_APP
-            docker tag $DOCKER_USERNAME/$HEROKU_APP_NAME registry.heroku.com/$HEROKU_CLIENT_APP/web
+            docker tag $DOCKER_USERNAME/$HEROKU_CLIENT_APP registry.heroku.com/$HEROKU_CLIENT_APP/web
+            docker push $DOCKER_USERNAME/$HEROKU_CLIENT_APP
             docker push registry.heroku.com/$HEROKU_CLIENT_APP/web
             HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release --app=$HEROKU_CLIENT_APP web
   build_and_release_backend:
@@ -61,7 +62,8 @@ jobs:
             sudo curl https://cli-assets.heroku.com/install.sh | sh 
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker build ./backend -t $DOCKER_USERNAME/$HEROKU_BACKEND_APP
-            docker tag $DOCKER_USERNAME/$HEROKU_APP_NAME registry.heroku.com/$HEROKU_BACKEND_APP/web
+            docker tag $DOCKER_USERNAME/$HEROKU_BACKEND_APP registry.heroku.com/$HEROKU_BACKEND_APP/web
+            docker push $DOCKER_USERNAME/$HEROKU_BACKEND_APP
             docker push registry.heroku.com/$HEROKU_BACKEND_APP/web
             HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release --app=$HEROKU_BACKEND_APP web
 workflows:
