@@ -8,7 +8,8 @@ import {
     NO_WORKOUT,
     UPDATE_WORKOUT,
     WORKOUT_ERROR,
-    SET_ALERT
+    SET_ALERT,
+    SET_TIMEOUT
  }
     from '../types';
 
@@ -102,7 +103,7 @@ describe('Workouts Action Creators', () => {
         await store.dispatch(getWorkout())
         
         let actions = store.getActions();
-        let [firstAction, secondAction] = actions
+        let [firstAction, secondAction, thirdAction] = actions
         const expectedActions = {
             getWorkoutError: {
                 type: WORKOUT_ERROR,
@@ -118,7 +119,8 @@ describe('Workouts Action Creators', () => {
         }
         expect(axios.get).toHaveBeenCalledTimes(1);
         expect(firstAction).toEqual(expectedActions.setAlert)
-        expect(secondAction).toEqual(expectedActions.getWorkoutError)
+        expect(secondAction.type).toEqual(SET_TIMEOUT)
+        expect(thirdAction).toEqual(expectedActions.getWorkoutError)
     })
     test('dispatches NO_WORKOUT on get request fail', async () => {
         const res = {
@@ -141,7 +143,7 @@ describe('Workouts Action Creators', () => {
         await store.dispatch(getWorkout())
         
         let actions = store.getActions();
-        let [firstAction, secondAction] = actions
+        let [firstAction, secondAction, thirdAction] = actions
         const expectedActions = {
             getWorkoutError: {
                 type: NO_WORKOUT,
@@ -157,7 +159,8 @@ describe('Workouts Action Creators', () => {
         }
         expect(axios.get).toHaveBeenCalledTimes(1);
         expect(firstAction).toEqual(expectedActions.setAlert)
-        expect(secondAction).toEqual(expectedActions.getWorkoutError)
+        expect(secondAction.type).toEqual(SET_TIMEOUT)
+        expect(thirdAction).toEqual(expectedActions.getWorkoutError)
     })
   })
     describe('createWorkouts', () => {
@@ -213,6 +216,7 @@ describe('Workouts Action Creators', () => {
         
         expect(axios.post).toHaveBeenCalledTimes(1);
         expect(actions[0]).toEqual(expectedActions.setAlert)
+        expect(actions[1].type).toEqual(SET_TIMEOUT)
     })
     test('dispatches SET_ALERT on when post request fails', async () => {
         const cycleId = 'aslfjl1j2312'
@@ -248,6 +252,7 @@ describe('Workouts Action Creators', () => {
         
         expect(axios.post).toHaveBeenCalledTimes(1);
         expect(actions[0]).toEqual(expectedActions.setAlert)
+        expect(actions[1].type).toEqual(SET_TIMEOUT)
     })
 
   })
@@ -341,6 +346,7 @@ describe('Workouts Action Creators', () => {
         
         expect(axios.put).toHaveBeenCalledTimes(1);
         expect(actions[0]).toEqual(expectedActions.setAlert)
+        expect(actions[1].type).toEqual(SET_TIMEOUT)
     })
     test('dispatches SET_ALERT on when put request fails', async () => {
         const workoutId = 'aslfjl1j2312'
@@ -377,6 +383,7 @@ describe('Workouts Action Creators', () => {
         
         expect(axios.put).toHaveBeenCalledTimes(1);
         expect(actions[0]).toEqual(expectedActions.setAlert)
+        expect(actions[1].type).toEqual(SET_TIMEOUT)
     })
   })
 })

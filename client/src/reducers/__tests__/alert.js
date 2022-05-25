@@ -21,15 +21,15 @@ describe('Alert Reducer', () => {
   const initialState = {
     type: null,
     title: null,
-    msg: null
+    msg: null,
+    timeoutId: null
   }
   
   test('adds and removes alert payload from state', () => {
 
     // Add an alert to state
     let state = reducer(undefined, actions.add);
-    expect(state).toEqual(actions.add.payload);
-
+    expect(state).toEqual({...actions.add.payload, timeoutId: null});
     // Remove an alert from state
     state = reducer(state, actions.remove)
     expect(state).toEqual(initialState);
