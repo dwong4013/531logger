@@ -8,11 +8,15 @@ COPY ["package.json", "package-lock.json*", "./"]
 
 RUN npm install
 
+RUN npm install sass -g
+
 COPY . .
 
 CMD npm start
 
 FROM development AS builder
+
+RUN npm uninstall sass -g
 
 RUN npm run build
 
