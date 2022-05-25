@@ -11,7 +11,8 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-    SET_ALERT
+    SET_ALERT,
+    SET_TIMEOUT
   } from '../types';
 
 describe('Auth Action Creators', () => {
@@ -66,7 +67,7 @@ describe('Auth Action Creators', () => {
         await store.dispatch(loginUser())
         
         let actions = store.getActions();
-        let [firstAction, secondAction] = actions
+        let [firstAction, secondAction, thirdAction] = actions
         const expectedActions = {
             loginFail: {
                 type: LOGIN_FAIL,
@@ -82,7 +83,8 @@ describe('Auth Action Creators', () => {
         }
         expect(axios.post).toHaveBeenCalledTimes(1);
         expect(firstAction).toEqual(expectedActions.setAlert)
-        expect(secondAction).toEqual(expectedActions.loginFail)
+        expect(secondAction.type).toEqual(SET_TIMEOUT)
+        expect(thirdAction).toEqual(expectedActions.loginFail)
     })
   })
   describe('registerUser', () => {
@@ -130,7 +132,7 @@ describe('Auth Action Creators', () => {
         await store.dispatch(registerUser())
         
         let actions = store.getActions();
-        let [firstAction, secondAction] = actions
+        let [firstAction, secondAction, thirdAction] = actions
         const expectedActions = {
             registerFail: {
                 type: REGISTER_FAIL,
@@ -146,7 +148,8 @@ describe('Auth Action Creators', () => {
         }
         expect(axios.post).toHaveBeenCalledTimes(1);
         expect(firstAction).toEqual(expectedActions.setAlert)
-        expect(secondAction).toEqual(expectedActions.registerFail)
+        expect(secondAction.type).toEqual(SET_TIMEOUT)
+        expect(thirdAction).toEqual(expectedActions.registerFail)
     })
   })
   describe('loadUser', () => {
@@ -199,7 +202,7 @@ describe('Auth Action Creators', () => {
         await store.dispatch(loadUser())
         
         let actions = store.getActions();
-        let [firstAction, secondAction] = actions;
+        let [firstAction, secondAction, thirdAction] = actions;
         const expectedActions = {
             setAlert: {
                 type: SET_ALERT,
@@ -215,7 +218,8 @@ describe('Auth Action Creators', () => {
         }
         expect(axios.get).toHaveBeenCalledTimes(1);
         expect(firstAction).toEqual(expectedActions.setAlert)
-        expect(secondAction).toEqual(expectedActions.loadFail)
+        expect(secondAction.type).toEqual(SET_TIMEOUT)
+        expect(thirdAction).toEqual(expectedActions.loadFail)
     })
   })
   describe('logout', () => {

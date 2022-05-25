@@ -11,8 +11,9 @@ import {
     DELETE_CYCLE,
     CYCLE_ERROR,
     SET_ALERT,
+    SET_TIMEOUT,
     CYCLE_ACTION_COMPLETE,
-    CYCLE_ACTION_READY
+    CYCLE_ACTION_READY,
  }
     from '../types';
 
@@ -68,13 +69,12 @@ describe('Cycles Action Creators', () => {
           }
         axios.get = jest.fn()
         .mockImplementationOnce(() => Promise.reject(res.getCycles))
-
         
         const store = mockStore({})
         await store.dispatch(getCycles())
-        
+
         let actions = store.getActions();
-        let [firstAction, secondAction] = actions
+        let [firstAction, secondAction, thirdAction] = actions
         const expectedActions = {
             getCyclesError: {
                 type: CYCLE_ERROR,
@@ -86,11 +86,12 @@ describe('Cycles Action Creators', () => {
                     msg: res.getCycles.response.data.error.msg,
                     type: 'danger',
                 }
-            }
+            },
         }
         expect(axios.get).toHaveBeenCalledTimes(1);
         expect(firstAction).toEqual(expectedActions.setAlert)
-        expect(secondAction).toEqual(expectedActions.getCyclesError)
+        expect(secondAction.type).toEqual(SET_TIMEOUT)
+        expect(thirdAction).toEqual(expectedActions.getCyclesError);
     })
     test('dispatches NO_CYCLES on get request fail', async () => {
         const res = {
@@ -113,7 +114,7 @@ describe('Cycles Action Creators', () => {
         await store.dispatch(getCycles())
         
         let actions = store.getActions();
-        let [firstAction, secondAction] = actions
+        let [firstAction, secondAction, thirdAction] = actions
         const expectedActions = {
             getCyclesError: {
                 type: NO_CYCLES,
@@ -129,7 +130,8 @@ describe('Cycles Action Creators', () => {
         }
         expect(axios.get).toHaveBeenCalledTimes(1);
         expect(firstAction).toEqual(expectedActions.setAlert)
-        expect(secondAction).toEqual(expectedActions.getCyclesError)
+        expect(secondAction.type).toEqual(SET_TIMEOUT)
+        expect(thirdAction).toEqual(expectedActions.getCyclesError)
     })
   })
     describe('createCycle', () => {
@@ -177,7 +179,7 @@ describe('Cycles Action Creators', () => {
         jest.runAllTimers();
         
         let actions = store.getActions();
-        const [firstAction, secondAction, thirdAction, fourthAction ] = actions
+        const [firstAction, secondAction, thirdAction, fourthAction, fifthAction ] = actions
         const expectedActions = {
             setAlert: {
                 type: SET_ALERT,
@@ -204,7 +206,8 @@ describe('Cycles Action Creators', () => {
         expect(firstAction).toEqual(expectedActions.createCycle)
         expect(secondAction).toEqual(expectedActions.actionComplete)
         expect(thirdAction).toEqual(expectedActions.setAlert)
-        expect(fourthAction).toEqual(expectedActions.actionReady)
+        expect(fourthAction.type).toEqual(SET_TIMEOUT)
+        expect(fifthAction).toEqual(expectedActions.actionReady)
     })
     test('dispatches SET_ALERT on when post request fails', async () => {
         const res = {
@@ -239,6 +242,7 @@ describe('Cycles Action Creators', () => {
         
         expect(axios.post).toHaveBeenCalledTimes(1);
         expect(actions[0]).toEqual(expectedActions.setAlert)
+        expect(actions[1].type).toEqual(SET_TIMEOUT)
     })
   })
   describe('updateCycle', () => {
