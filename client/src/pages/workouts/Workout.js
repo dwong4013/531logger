@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../../components/layout/Spinner';
@@ -131,7 +131,7 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
     ) : (
       <section className="summary-container container-flex container-vertical container-vertical-center px-6">
         <div className="toolbar">
-        <button className="btn btn-back btn-icon-left btn-small btn-dark toolbar-left"><i className="fa-solid fa-caret-left"/> back</button>
+        <Link to='/dashboard' className="btn btn-back btn-icon-left btn-small btn-dark toolbar-left"><i className="fa-solid fa-caret-left"/> back</Link>
         <select onChange={e=> onWorkoutSelect(e)} className="select toolbar-right" name="pets" id="pet-select">
           {workout && currentCycle && currentCycle.workoutsToDo.map((workoutOption, i) => (
             <option key={i} value={`${workoutOption._id}`} selected={workoutOption._id === workout._id }>{`Week ${workoutOption.week}: ${capitalize(workoutOption.exercise)}`}</option>
