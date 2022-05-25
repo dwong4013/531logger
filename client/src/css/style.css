@@ -226,6 +226,7 @@
   float: right;
   right: 0.5rem;
   top: 0.5rem;
+  cursor: pointer;
 }
 .alert-card .title {
   padding-top: 0.5rem;
