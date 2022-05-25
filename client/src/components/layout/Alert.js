@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { removeAlert } from '../../actions/alert';
 
-const Alert = ({ alert }) => {
+const Alert = ({ alert, removeAlert }) => {
   if (alert.msg === null) {
     return null
   }
@@ -10,7 +11,7 @@ const Alert = ({ alert }) => {
   return (
     <div className="alert-container">
       <div className={`alert-card alert-${alert.type}`}>
-        <i className="fa-solid fa-xmark text-dark"/>
+        <i onClick={() => removeAlert(alert.timeoutId)} className="fa-solid fa-xmark text-dark"/>
         <p className="title text-small text-bold text-dark mx-1">{alert.title}</p>
         <p className="description text-dark mx-1">{alert.msg}</p>
       </div>
@@ -19,11 +20,12 @@ const Alert = ({ alert }) => {
 };
 
 Alert.propTypes = {
-  alert: PropTypes.object.isRequired
+  alert: PropTypes.object.isRequired,
+  removeAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   alert: state.alert
 });
 
-export default connect(mapStateToProps)(Alert);
+export default connect(mapStateToProps, { removeAlert })(Alert);

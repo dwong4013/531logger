@@ -2,7 +2,7 @@ import { setAlert } from '../alert';
 import '@testing-library/jest-dom/extend-expect';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk'
-import { REMOVE_ALERT, SET_ALERT } from '../types';
+import { REMOVE_ALERT, SET_ALERT, SET_TIMEOUT } from '../types';
 
 describe('Alert Action Creators', () => {
   const middlewares = [thunk]
@@ -35,7 +35,8 @@ describe('Alert Action Creators', () => {
       let actions = store.getActions();
 
       expect(actions[0]).toEqual(expectedActions.set)
-      expect(actions[1]).toEqual(expectedActions.remove)
+      expect(actions[1].type).toEqual(SET_TIMEOUT)
+      expect(actions[2]).toEqual(expectedActions.remove)
     })
   })
 })
