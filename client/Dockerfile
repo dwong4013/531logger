@@ -18,7 +18,7 @@ FROM development AS builder
 
 RUN npm uninstall sass -g
 
-RUN npm run build
+RUN INLINE_RUNTIME_CHUNK=false npm run build
 
 FROM nginx:mainline-alpine AS production
 
