@@ -7,6 +7,7 @@ const app = express();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+app.use(require('./middleware/sanitizeBody'))
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
