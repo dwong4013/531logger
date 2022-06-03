@@ -1,0 +1,40 @@
+version: 2.1
+orbs: 
+  heroku: circleci/heroku@1.2.6
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:14.16.1
+    steps:
+      - checkout
+      - run: npm install --prefix client
+      - run: npm run build --prefix client
+  deploy:
+    docker:
+      - image: cimg/node:14.16.1
+    steps:
+      - checkout
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/setup-heroku.sh # run a script to setup Heroku
+      - run: 
+          name: Set heroku git remote and push
+          command: |
+            HEROKU_API_KEY=$HEROKU_TOKEN heroku git:remote -a $HEROKU_531_V1_APP
+            git push heroku v1:main
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: v1
+
+
+

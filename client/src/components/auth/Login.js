@@ -1,8 +1,10 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { loginUser } from '../../actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Login = ({ loginUser, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -26,10 +28,10 @@ const Login = ({ loginUser, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
+    <section className="container-dash">
       <h1 className="large text-primary">Log In</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Log Into Your Account
+        <FontAwesomeIcon icon={faUser}/> Log Into Your Account
       </p>
       <form
         action="dashboard.html"
@@ -63,13 +65,13 @@ const Login = ({ loginUser, isAuthenticated }) => {
           Register
         </Link>
       </p>
-    </Fragment>
+    </section>
   );
 };
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
