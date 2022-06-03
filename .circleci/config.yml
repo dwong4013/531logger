@@ -17,7 +17,7 @@ jobs:
       - checkout
       - run:
           name: Setup Heroku CLI
-          command: npm install heroku -g 
+          command: sudo curl https://cli-assets.heroku.com/install.sh | sh 
       - run: 
           name: Set heroku git remote and push
           command: |
