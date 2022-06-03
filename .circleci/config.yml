@@ -15,14 +15,10 @@ jobs:
       - image: cimg/node:14.16.1
     steps:
       - checkout
-      - run:
-          name: Setup Heroku CLI
-          command: sudo curl https://cli-assets.heroku.com/install.sh | sh 
       - run: 
-          name: Set heroku git remote and push
+          name: Push to heroku
           command: |
-            HEROKU_API_KEY=$HEROKU_TOKEN heroku git:remote -a $HEROKU_531_V1_APP
-            git push heroku v1:main
+            git push https:heroku:$HEROKU_TOKEN@git.heroku.com/$HEROKU_531_V1_APP v1:main
 
 workflows:
   version: 2
