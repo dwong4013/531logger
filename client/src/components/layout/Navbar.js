@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDumbbell, faWeightHanging, faList, faHeartbeat, faSyncAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
@@ -11,38 +14,38 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         <nav className="navbar bg-primary">
           <h1>
             <Link to="/dashboard">
-              <i className="fas fa-dumbbell"></i> 531 Logger
+              <FontAwesomeIcon icon={faDumbbell} /> 531 Logger
             </Link>
           </h1>
           <ul>
             <li>
               <Link to="/maxes">
-                <i className="fas fa-weight-hanging"></i> Maxes
+              <FontAwesomeIcon icon={faWeightHanging} /> Maxes
               </Link>
             </li>
             <li>
               <Link to="/main-templates">
-                <i className="fas fa-list-ol"></i> Main Templates
+              <FontAwesomeIcon icon={faList} /> Main Templates
               </Link>
             </li>
             <li>
               <Link to="/volume-templates">
-                <i className="fas fa-heartbeat"></i> Volume Templates
+              <FontAwesomeIcon icon={faHeartbeat} /> Volume Templates
               </Link>
             </li>
             <li>
               <Link to="/cycles">
-                <i className="fas fa-sync-alt"></i>Cycles
+              <FontAwesomeIcon icon={faSyncAlt} /> Cycles
               </Link>
             </li>
             <li>
               <Link to="/workouts">
-                <i className="fas fa-dumbbell"></i> Workouts
+                <FontAwesomeIcon icon={faDumbbell} /> Workouts
               </Link>
             </li>
             <li>
               <a onClick={logout} href="#!">
-                <i className="fas fa-sign-out-alt"></i> Sign Out
+                <FontAwesomeIcon icon={faSignOutAlt} /> Sign Out
               </a>
             </li>
           </ul>

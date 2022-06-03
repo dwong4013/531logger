@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import { getMaxes, deleteMax } from '../../actions/maxes';
 import MaxCard from './MaxCard';
 import Spinner from '../layout/Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 const Maxes = ({ maxes: { maxes, loading }, getMaxes, deleteMax }) => {
   useEffect(() => {
@@ -27,7 +30,7 @@ const Maxes = ({ maxes: { maxes, loading }, getMaxes, deleteMax }) => {
                 To update your max simply create a new one.
               </p>
               <Link to="/create-max" className="btn btn-primary my-2">
-                <i className="fas fa-plus"></i> Create{' '}
+              <FontAwesomeIcon icon={faPlus}/> Create
               </Link>
               <hr className="my-2" />
               <div
