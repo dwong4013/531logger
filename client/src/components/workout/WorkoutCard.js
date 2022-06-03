@@ -1,4 +1,7 @@
 import React, { Fragment } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+
 
 const WorkoutCard = ({
   onClick,
@@ -14,11 +17,10 @@ const WorkoutCard = ({
             className="card-body"
             onClick={(e) => onClick(e, setType, index)}
           >
-            <h1 className="card-title lead"></h1>
             <p className="card-text lead">
               Set {index + 1}{' '}
               {completed && (
-                <i className="fas fa-check" style={{ color: 'green' }}></i>
+                <FontAwesomeIcon icon={faCheck} style={{color: 'green'}}/>
               )}
             </p>
             <p className="card-text">

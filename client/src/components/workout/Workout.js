@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCycles, updateSetCompleted } from '../../actions/cycles';
 import WorkoutCard from '../workout/WorkoutCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+
 
 const Workout = ({
   getCycles,
@@ -93,14 +96,10 @@ const Workout = ({
                     className="card btn"
                   >
                     <div className="card-body">
-                      <h1 className="card-title lead"></h1>
                       <p>
                         {cycles[0][match.params.week][match.params.index]
                           .accessoryReps.completed && (
-                          <i
-                            className="fas fa-check"
-                            style={{ color: 'green' }}
-                          ></i>
+                            <FontAwesomeIcon icon={faCheck} style={{color: 'green'}}/>
                         )}
                       </p>
                       <p className="card-text">

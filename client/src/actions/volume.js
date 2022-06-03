@@ -74,7 +74,6 @@ export const deleteVolume = (id) => async (dispatch) => {
 
     dispatch(setAlert('Volume Template Removed', 'success'));
   } catch (err) {
-    console.log('err response', err);
     dispatch({
       type: VOLUME_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }

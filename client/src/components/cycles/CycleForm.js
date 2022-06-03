@@ -39,7 +39,6 @@ const CycleForm = ({
   const onSubmit = async (e) => {
     e.preventDefault();
     createCycle({ ...formData, maxId: maxes[0]._id }, history);
-    console.log({ ...formData, maxId: maxes[0]._id });
   };
 
   return (

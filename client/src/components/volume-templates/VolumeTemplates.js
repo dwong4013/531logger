@@ -5,6 +5,9 @@ import { getVolume, deleteVolume } from '../../actions/volume';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 const VolumeTemplates = ({
   volume: { volume, loading },
@@ -36,7 +39,7 @@ const VolumeTemplates = ({
                 one of them when you generate a new cycle
               </p>
               <Link to="/create-volume" className="btn btn-primary my-2">
-                <i className="fas fa-plus"></i> Create
+              <FontAwesomeIcon icon={faPlus} /> Create
               </Link>
               <hr className="my-2" />
               <div

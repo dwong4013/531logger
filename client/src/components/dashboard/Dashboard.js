@@ -28,7 +28,7 @@ const Dashboard = ({
         <Fragment>
           <section className="container-dash">
             <div className="jumbotron">
-              <h1 className="medium text-primary">Hello, {user.name}!</h1>
+              <h1 className="medium text-primary">Hello, {user?.name}!</h1>
               <p className="lead text-primary">
                 Here's the main sets of your current cycle.
               </p>

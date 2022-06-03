@@ -5,6 +5,9 @@ import { getCycles, deleteCycle } from '../../actions/cycles';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import CycleCard from './CycleCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 const Cycles = ({ cycles: { cycles, loading }, getCycles, deleteCycle }) => {
   useEffect(() => {
@@ -26,7 +29,7 @@ const Cycles = ({ cycles: { cycles, loading }, getCycles, deleteCycle }) => {
                 To begin a new cycle, simply create one.
               </p>
               <Link to="/create-cycle" className="btn btn-primary my-2">
-                <i className="fas fa-plus"></i> Create
+                <FontAwesomeIcon icon={faPlus}/> Create
               </Link>
               <hr className="my-2" />
               <div
