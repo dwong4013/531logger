@@ -21,8 +21,8 @@ jobs:
       - run: 
           name: Set heroku git remote and push
           command: |
-          HEROKU_API_KEY=$HEROKU_TOKEN heroku git:remote -a $HEROKU_531_V1_APP
-          git push heroku v1:main
+            HEROKU_API_KEY=$HEROKU_TOKEN heroku git:remote -a $HEROKU_531_V1_APP
+            git push heroku v1:main
 
 workflows:
   version: 2
