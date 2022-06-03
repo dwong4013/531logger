@@ -93,7 +93,6 @@ const Workout = ({
                     className="card btn"
                   >
                     <div className="card-body">
-                      <h1 className="card-title lead"></h1>
                       <p>
                         {cycles[0][match.params.week][match.params.index]
                           .accessoryReps.completed && (

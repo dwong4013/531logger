@@ -14,7 +14,6 @@ const WorkoutCard = ({
             className="card-body"
             onClick={(e) => onClick(e, setType, index)}
           >
-            <h1 className="card-title lead"></h1>
             <p className="card-text lead">
               Set {index + 1}{' '}
               {completed && (
