@@ -16,8 +16,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup Heroku
-          command: bash .circleci/setup-heroku.sh # run a script to setup Heroku
+          name: Setup Heroku CLI
+          command: npm install heroku -g 
       - run: 
           name: Set heroku git remote and push
           command: |
