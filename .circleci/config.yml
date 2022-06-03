@@ -18,7 +18,7 @@ jobs:
       - run: 
           name: Push to heroku
           command: |
-            git push https:heroku:$HEROKU_TOKEN@git.heroku.com/$HEROKU_531_V1_APP v1:main
+            git push https://heroku:$HEROKU_TOKEN@git.heroku.com/$HEROKU_531_V1_APP v1:main
 
 workflows:
   version: 2
