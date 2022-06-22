@@ -1,6 +1,7 @@
 const expect = require('chai').expect;
 const ObjectID = require('mongodb').ObjectID;
 const { generateWorkout, createSet, calculateWeight } = require('../../lib/generateWorkout');
+const workouts = require('../../lib/workouts.json');
 
 describe('generateWorkout module', () => {
     describe('calculateWeight', () => {
@@ -46,6 +47,20 @@ describe('generateWorkout module', () => {
             expect(workout.exercise).to.be.equal(exercise)
             expect(workout.mainSets.length).to.be.equal(3)
             expect(workout.volumeSets.length).to.be.equal(5)
+        })
+    })
+}),
+describe('workout.json file', () => {
+    it.only('shape', () => {
+        // Three workouts
+        expect(workouts.length).to.be.equal(3);
+        // Three main sets per workout
+        // Five volume sets per workout
+        workouts.forEach(workout => {
+            expect(workout).to.be.have.property('main');
+            expect(workout).to.be.have.property('volume');
+            expect(workout.main.length).to.be.equal(3);
+            expect(workout.volume.length).to.be.equal(5);
         })
     })
 })
