@@ -50,10 +50,11 @@ describe('generateWorkout module', () => {
         })
     })
 }),
-describe('workout.json file', () => {
-    it.only('shape', () => {
+describe('workout.json file shape', () => {
+    it.only('has the right shape', () => {
         // Three workouts
         expect(workouts.length).to.be.equal(3);
+        
         // Three main sets per workout
         // Five volume sets per workout
         workouts.forEach(workout => {
@@ -61,6 +62,17 @@ describe('workout.json file', () => {
             expect(workout).to.be.have.property('volume');
             expect(workout.main.length).to.be.equal(3);
             expect(workout.volume.length).to.be.equal(5);
+            
+            // Main set weight and reps are numbers
+            workout.main.forEach(set => {
+                expect(set.setPercent).to.be.a('number');
+                expect(set.reps).to.be.a('number');
+            })
+            // Volume set weight and reps are numbers
+            workout.volume.forEach(set => {
+                expect(set.setPercent).to.be.a('number');
+                expect(set.reps).to.be.a('number');
+            })
         })
     })
 })
