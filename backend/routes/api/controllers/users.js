@@ -19,7 +19,7 @@ const registerUser = async (req, res) => {
         .status(400)
         .json({ error: { msg: 'User already exists' } });
     }
-
+    // Create new user mongo document
     user = new User({
       name,
       email,
@@ -30,7 +30,7 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
     user.password = await bcrypt.hash(password, salt);
-
+    // Save document
     await user.save();
 
     const payload = {
@@ -56,13 +56,17 @@ const registerUser = async (req, res) => {
 const editUser = async (req, res) => {
   const { key, value } = req.body;
 
+  // Update cycleCompleted field only
   if (key === 'cyclesCompleted') {
 
     try {
+      // Find user document
       const user = await User.findById(req.user.id);
-  
+      
+      // Update field
       user.cyclesCompleted = value;
-  
+      
+      // Save document
       await user.save();
   
       return res.json(user);
