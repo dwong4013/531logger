@@ -31,7 +31,7 @@ router.post(
 );
 
 // @route   Edit api/cycle/:cycle_id
-// @desc    Edit cycle id
+// @desc    Edit cycle by id
 // @access  Private
 
 router.put('/:cycle_id', auth, editCycle);
@@ -39,7 +39,7 @@ router.put('/:cycle_id', auth, editCycle);
 module.exports = router;
 
 // @route   GET api/cycle/:cycle_id
-// @desc    Get cycle by user and id
+// @desc    Delete cycle by id
 // @access  Private
 
 router.delete('/:cycle_id', auth, deleteCycle);

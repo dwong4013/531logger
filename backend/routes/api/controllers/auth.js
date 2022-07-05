@@ -5,12 +5,13 @@ const User = require('../../../models/User');
 
 const getUser = async (req, res) => {
     try {
+        // Get user document without password field
         const user = await User.findById(req.user.id).select('-password');
         return res.json(user);
     } catch (err) {
         return res.status(500).json({error: { msg:'Server Error'}});
     }
-  }
+}
 
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
@@ -51,7 +52,7 @@ const loginUser = async (req, res) => {
         return res
         .status(500)
         .json({ error: { msg: 'Servor Error' } });
-}   
+    }   
 }
 
 module.exports = {
