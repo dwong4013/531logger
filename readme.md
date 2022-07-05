@@ -2,9 +2,9 @@
 This v2 redesign of the 5/3/1 logger app is simplified for the beginner user looking to follow the 5/3/1 workout program. There are fewer customizations supported, and is designed to guide the user through the endless cycles of the vanilla 5/3/1 training program.
 
 ## Table of contents
-* General Info
-* Technologies
-* Setup
+* [Features](https://github.com/dwong4013/531logger/tree/v2#features)
+* [Technologies](https://github.com/dwong4013/531logger/tree/v2#technologies)
+* [Setup](https://github.com/dwong4013/531logger/tree/v2#setup)
 
 ## Features
 * Track your max weight for squats, bench, deadlift and overhead press.
