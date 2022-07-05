@@ -14,14 +14,14 @@ This v2 redesign of the 5/3/1 logger app is simplified for the beginner user loo
 * Review your previously completed workouts and cycles to see your progress over time.
 
 ## Technologies
-* Node.js version: 16-alpine
-* Express.js version: 4.17.1
-* Mongoose version: 5.9.11
-* React version: 16.13.1
-* React Redux version: 7.2.0
-* Redux version: 4.0.5
-* React Testing Library version: 9.5.0
-* Docker Desktop version: 4.8.2
+* Node.js v16-alpine
+* Express.js v4.17.1
+* Mongoose v5.9.11
+* React v16.13.1
+* React Redux v7.2.0
+* Redux v4.0.5
+* React Testing Library v9.5.0
+* Docker Desktop v4.8.2
 
 ## Setup
 ### Running the entire project in development
