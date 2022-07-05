@@ -4,19 +4,20 @@ const Cycle = require('../../../models/Cycle');
 
 const getWorkouts = async (req, res) => {
     try {
-      const workouts = await Workout.find({
-        user: req.user.id,
-        cycle: req.params.cycle_id
-      });
-  
-      if (!workouts) {
-        return res
-        .status(400)
-        .json({ error: { msg: 'There are no workouts available.' }});
-      }
-      return res.json(workouts);
+        // Find workout document
+        const workouts = await Workout.find({
+            user: req.user.id,
+            cycle: req.params.cycle_id
+        });
+
+        if (!workouts) {
+            return res
+            .status(400)
+            .json({ error: { msg: 'There are no workouts available.' }});
+        }
+        return res.json(workouts);
     } catch (err) {
-      return res.status(500).json({error: { msg:'Server Error'}});
+        return res.status(500).json({error: { msg:'Server Error'}});
     }
 }
 
@@ -33,7 +34,7 @@ const createWorkouts = async (req, res) => {
             .status(400)
             .json({ error: { msg: 'Failed to generate cycle.' }});
         }
-
+        
         let exercises = [ 'squat', 'bench', 'deadlift', 'press']
         let { maxes } = cycle
         let newWorkouts = [];
@@ -93,11 +94,13 @@ const editWorkout = async (req, res) => {
             }
         }
 
+        // filter document by the workout set id
         const arrayFilters = {
             arrayFilters: [{"elem._id": id}],
             new: true
         }
 
+        // update workout document
         const workout = await Workout.findOneAndUpdate(
             query,
             updateOperator,
@@ -123,12 +126,14 @@ const editWorkout = async (req, res) => {
             _id: workout_id,
             user: req.user.id
         }
+
+        // Set complete status
         const updateOperator = {
             $set: {
                 completed
             }
         }
-
+        // Update workout document
         const workout = await Workout.findOneAndUpdate(
             query,
             updateOperator,
@@ -157,18 +162,19 @@ const editWorkout = async (req, res) => {
 
 const deleteWorkouts = async (req, res) => {
     try {
-      const result = await Workout.deleteMany({
+        // Delete workout records
+        const result = await Workout.deleteMany({
         user: req.user.id,
         cycle: req.params.cycle_id
-      });
+        });
 
-      if (result.ok !== 1) {
+        if (result.ok !== 1) {
         return res
         .status(400)
         .json({error: { msg: 'Removing workouts failed.'}})
-      }
-  
-      res.status(200).json({ msg: 'Workouts have been removed' });
+        }
+
+        res.status(200).json({ msg: 'Workouts have been removed' });
     } catch (err) {
       if (err.kind && err.kind === undefined) {
         return res.status(400).json({error: {msg: 'Invalid cycle.'}})
@@ -177,8 +183,6 @@ const deleteWorkouts = async (req, res) => {
       return res.status(500).json({error: { msg:'Server Error'}});
     }
 }
-
-
 
 module.exports = {
     getWorkouts,

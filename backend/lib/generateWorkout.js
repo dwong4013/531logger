@@ -17,20 +17,21 @@ function generateWorkout(user, cycle, exercise, week, max) {
         mainSets: [],
         volumeSets: [],
     }
-
+    // Arrays of main and volume sets returned from createSet
     let main = workoutTemplate[week].main.map(set => createSet(set, max))
     let volume = workoutTemplate[week].volume.map(set => createSet(set, max))
     
+    // Add new sets to newWorkout object
     newWorkout.mainSets = [...main]
     newWorkout.volumeSets = [...volume]
 
+    // New mongo document
     let workoutDocument = new Workout(newWorkout);
 
     return workoutDocument;
 }
 
 function createSet( { setPercent, reps }, max ) {
-
     return {
         weight: calculateWeight(setPercent, max),
         reps
@@ -38,10 +39,14 @@ function createSet( { setPercent, reps }, max ) {
 }
 
 function calculateWeight (setPercent, max, trainingMax = 0.9) {
+    // weight in lbs calculated from percentages
     let rawWeight = max * trainingMax * setPercent
+    // weight rounded up to 5
     let roundUp = rawWeight + (5 - rawWeight % 5)
+    // weight rounded down to 5
     let roundDown = rawWeight - (rawWeight % 5)
 
+    // use weight rounded to nearest 5
     return rawWeight % 5 >= 2.5 ? roundUp : roundDown
 
 }
