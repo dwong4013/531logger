@@ -9,7 +9,7 @@ const validationHandler = require('../../middleware/validationHandler')
 
 
 // @route   GET api/auth
-// @desc    Test route
+// @desc    Get user token
 // @access  public
 
 router.get('/', [auth, validationHandler], getUser);
