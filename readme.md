@@ -34,7 +34,7 @@ From the root directory:
 * MONGO_HOSTNAME
 * BACKEND_PORT
 * JWTSECRET
-**If you are running the entire project in docker compose, you do not need MONGO_HOSTNAME variable, as this is supplied in the yaml config for the mongodb container.**
+*If you are running the entire project in docker compose, you do not need MONGO_HOSTNAME variable, as this is supplied in the yaml config for the mongodb container.* 
 
 2) Run the command in root directory:
 ```
@@ -53,7 +53,7 @@ docker build -t 531-client .
 ```
 docker run -it -d -p 3000:3000 -p 35729:35729 -v <src-directory>:/usr/src/531logger/client 531-client
 ```
-**Replace <src-directory> with the full project path to bind the volume for hot reloading**
+*Replace <src-directory> with the full project path to bind the volume for hot reloading*
 
 #### Run Sass compiler for development
 
@@ -78,7 +78,7 @@ docker build -t 531-api .
 ```
 docker run -it -p 5000:5000 -v <src-directory>:/usr/src/531logger/api 531-api
 ```
-**Replace <src-directory> with the full project path to bind the volume for hot reloading**
+*Replace <src-directory> with the full project path to bind the volume for hot reloading*
 
 ### Running tests
 After building and running the docker containers, you can run tests from the shell terminal of the backend or client container with:
@@ -86,7 +86,7 @@ After building and running the docker containers, you can run tests from the she
 ```
 docker exec -it <container-id> sh
 ```
-**To find your container-id, run:
+*To find your container-id, run:*
 ```
 docker ps
 ```
