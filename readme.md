@@ -43,7 +43,7 @@ docker compose --verbose up --build
 
 ### Running only the client container in development
 
-**Run the commands from client directory** 
+*Run the commands from client directory*
 
 1. Build the docker container image :
 ```
@@ -67,7 +67,7 @@ sass --watch --poll ./src/scss/style.scss:./src/css/style.css
 ```
 
 ### Running only the backend container in development
-**Run the commands from the backend directory**
+*Run the commands from the backend directory*
 1. Build the docker container image:
 ```
 docker build -t 531-api .
