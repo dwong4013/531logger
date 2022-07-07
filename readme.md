@@ -9,9 +9,8 @@ This v1 is for trainees familiar with the 5/3/1 strength training program. The u
 
 ## Features
 * Track your max weight for squats, bench, deadlift and overhead press.
-* Create 3 week training cycles consisting built around the 4 main exercises.
-* Have complete control over your 5/3/1 program variations.
-* Create custom cycle templates consisting of main sets and volume sets to train with strength focus or conditioning focus.
+* Create 3 week training cycles built around the 4 main exercises.
+* Customize your main working sets and volume sets to train with strength focus or conditioning focus.
 * Mark down your progress as you workout (no more doing less or more sets because you forgot how many you've done).
 * Review your previously completed workouts and cycles to see your progress over time.
 
