@@ -22,6 +22,7 @@ export const loginUser = (formData) => async (dispatch) => {
   try {
     const res = await axios.post('/api/auth', formData, config);
 
+    // Update state with user data
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data
@@ -31,10 +32,12 @@ export const loginUser = (formData) => async (dispatch) => {
   } catch (err) {
     const error = err.response.data.error;
 
+    // Update state with alert
     if (error) {
       dispatch(setAlert('Error', error.msg, 'danger'));
     }
 
+    // Update state to remove user data
     dispatch({
       type: LOGIN_FAIL
     });
@@ -43,23 +46,29 @@ export const loginUser = (formData) => async (dispatch) => {
 
 //Load user
 export const loadUser = () => async (dispatch) => {
+  // Add token to headers
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
+
   try {
     const res = await axios.get('/api/auth');
 
+    // Update state with user data
     dispatch({
       type: USER_LOADED,
       payload: res.data
     });
+
   } catch (err) {
     const error = err.response.data.error;
 
+    // Update state with alert
     if (error) {
       dispatch(setAlert('Error', error.msg, 'danger'));
     }
 
+    // Update state to remove user data
     dispatch({
       type: AUTH_ERROR
     });
@@ -77,27 +86,28 @@ export const registerUser = (formData) => async (dispatch) => {
   try {
     const res = await axios.post('/api/users', formData, config);
 
+    // Update state with user data
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data
     });
-
   } catch (err) {
     const error = err.response.data.error;
 
+    // Update state to add alert
     if (error) {
       dispatch(setAlert('Error', error.msg, 'danger'));
     }
 
+    // Update state to remove user data
     dispatch({
       type: REGISTER_FAIL
     });
   }
 };
 
-// Logout
-
 export const logout = () => (dispatch) => {
+  // Update state to remove user data
   dispatch({
     type: LOGOUT
   });
