@@ -25,6 +25,7 @@ const initialCurrentSetState = {
 }
 
 const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }) => {
+  // Listen to screen width changes
   useEffect(() => {
     window.matchMedia('(max-width: 414px)').addEventListener('change', mediaHandler)
   }, []);
@@ -40,12 +41,19 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
     getCycles()
   },[getCycles])
 
+  // Destructure state
   const { workout, loading: workoutLoading } = workouts;
   const { currentCycle, loading: cyclesLoading } = cycles;
   const { cycleId } = useParams();
+
+  // Hooks
+  // selecting workout
   const [ targetWorkout, setTargetWorkout ] = useState(null)
+  // tracking remaining sets
   const [ remainingSets, setRemainingSets ] = useState(null)
+  // tracking current set
   const [ currentSet, setCurrentSet ] = useState(initialCurrentSetState)
+  // notes field
   const [ notes, setNotes ] = useState('')
   
   // Load workout with or without targetWorkout id
