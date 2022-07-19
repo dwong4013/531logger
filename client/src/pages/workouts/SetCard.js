@@ -2,8 +2,10 @@ import React, { Fragment, useState } from 'react';
 
 export default function SetCard ({id, set, displayNotes}) {
   const  { weight, reps, time, notes } = set;
+  // View notes toggle state
   const [ toggled, setToggled ] = useState(false);
 
+  // Toggle note
   const handleToggle = () => {
     setToggled(!toggled)
   }
