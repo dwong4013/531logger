@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { logout, loadUser } from '../../actions/auth';
 import { getCycles } from '../../actions/cycles';
 import PropTypes from 'prop-types';
+
+// Components
 import Spinner from '../../components/layout/Spinner';
 import SummaryCard from './SummaryCard';
 import CycleCard from './CycleCard';
 import CycleForm from '../cycles/CycleForm';
-
 import UtilityButton from '../../components/buttons/UtilityButton';
 
 const Dashboard = ({
@@ -17,12 +18,14 @@ const Dashboard = ({
   loadUser,
   logout
 }) => {
+  // load user and cycles data and listen to screen width changes
   useEffect(() => {
     loadUser();
     getCycles();
     window.matchMedia('(max-width: 414px)').addEventListener('change', (e) => setDesktop(e.matches))
   }, [loadUser,getCycles]);
 
+  // Expose hooks utils
   const [desktop, setDesktop] = useState(window.matchMedia('(max-width: 414px)').matches)
   const [modal, setModal] = useState(false);
 

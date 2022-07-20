@@ -4,6 +4,7 @@ import React, { Fragment } from 'react'
 import Input from '../../components/forms/Input';
 
 export default function FormStep1({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
+    // Expose react form hook utils
     const { register, formState: { errors }, handleSubmit } = formUtils
     const exercises = ['squat', 'bench', 'deadlift', 'press']
 

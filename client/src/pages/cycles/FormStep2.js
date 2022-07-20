@@ -6,20 +6,22 @@ import { createCycle } from '../../actions/cycles';
 function FormStep2({ formUtils: { getValues, handleSubmit }, formState, stepDecrement, toggleModal, createCycle, actionCompleted }) {
 
     let initialState = {}
-
+    // use existing maxes for repeat cycles
     if (formState.repeat) {
         initialState = {
             ...formState.formData
         }
+    // use form values for new maxes
     } else {
         initialState = {
             ...getValues()
         }
     }
-
+    // hook for summary of maxes
     const [summaryData] = useState(initialState)
     const { squat, bench, deadlift, press } = summaryData;
 
+    //action creator to create new cycle 
     const submitData = (data, e) => {
         if (formState.repeat) {
             createCycle(formState.formData);
