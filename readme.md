@@ -34,6 +34,7 @@ From the root directory:
 * MONGO_HOSTNAME
 * BACKEND_PORT
 * JWTSECRET
+
 *If you are running the entire project in docker compose, you do not need MONGO_HOSTNAME variable, as this is supplied in the yaml config for the mongodb container.* 
 
 2) Run the command in root directory:

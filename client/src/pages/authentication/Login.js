@@ -10,12 +10,12 @@ import Input from '../../components/forms/Input';
 import Submit from '../../components/forms/Submit';
 
 const Login = ({ loginUser, isAuthenticated }) => {
-
+  // expose hook form utils
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode:"onBlur", 
     reValidateMode: 'onBlur'
   });
-
+  // Call login action creator
   const onSubmit = (data) => {
     loginUser(data);
   };
@@ -27,10 +27,12 @@ const Login = ({ loginUser, isAuthenticated }) => {
 
   return (
     <div className="container-flex container-vertical container-vertical-center mx-2">
+    {/* Header Text */}
       <h1 className="text-primary text-large">Welcome Back!</h1>
       <p className="text-dark text-medium">
         Log into your account
       </p>
+      {/* Login Form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -48,6 +50,7 @@ const Login = ({ loginUser, isAuthenticated }) => {
         />
         <Submit text='Login'/>
       </form>
+      {/* Link to register */}
       <p className="my-1 text-dark text-small">
         Don't have an account? {' '}
         <Link to="/register" className="text-primary text-small">
