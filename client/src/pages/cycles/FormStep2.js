@@ -78,7 +78,7 @@ function FormStep2({ formUtils: { getValues, handleSubmit }, formState, stepDecr
 
 FormStep2.propTypes = {
     createCycle: PropTypes.func.isRequired,
-    actionCompleted: PropTypes.bool.isRequired 
+    actionCompleted: PropTypes.bool 
 }
 
 const mapStateToProps = state => ({

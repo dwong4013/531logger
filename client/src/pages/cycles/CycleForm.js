@@ -85,7 +85,7 @@ function CycleForm({ currentCycle, toggleModal }) {
 }
 
 CycleForm.propTypes = {
-  currentCycle: PropTypes.object.isRequired
+  currentCycle: PropTypes.object
 }
 
 const mapStateToProps = state => ({
