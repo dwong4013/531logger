@@ -18,8 +18,8 @@ export default function FormStep1({ formUtils, stepIncrement, stepDecrement, tog
                     <form>
                     {/* Form inputs for each exercise */}
                         {exercises.map((exercise, i) => (
-                            <Fragment>
-                                <label for={exercise} className="text-dark text-bold text-regular">{`${exercise[0].toUpperCase()}${exercise.slice(1)}`}</label>
+                            <Fragment key={exercise}>
+                                <label htmlFor={exercise} className="text-dark text-bold text-regular">{`${exercise[0].toUpperCase()}${exercise.slice(1)}`}</label>
                                 <Input register={register} errors={errors}
                                     name={exercise} 
                                     type='text' 
