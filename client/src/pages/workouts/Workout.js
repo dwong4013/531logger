@@ -141,8 +141,8 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
         <div className="toolbar">
         <Link to='/dashboard' className="btn btn-back btn-icon-left btn-small btn-dark toolbar-left"><i className="fa-solid fa-caret-left"/> back</Link>
         <select onChange={e=> onWorkoutSelect(e)} className="select toolbar-right" name="pets" id="pet-select">
-          {workout && currentCycle && currentCycle.workoutsToDo.map((workoutOption, i) => (
-            <option key={i} value={`${workoutOption._id}`} selected={workoutOption._id === workout._id }>{`Week ${workoutOption.week}: ${capitalize(workoutOption.exercise)}`}</option>
+          {workout && currentCycle && currentCycle.workoutsToDo.map((workoutOption) => (
+            <option key={workoutOption._id} value={`${workoutOption._id}`} defaultValue={workoutOption._id === workout._id }>{`Week ${workoutOption.week}: ${capitalize(workoutOption.exercise)}`}</option>
           ))}
         </select>
         </div>
