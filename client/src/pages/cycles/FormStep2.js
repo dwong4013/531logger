@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createCycle } from '../../actions/cycles';
 
 function FormStep2({ formUtils: { getValues, handleSubmit }, formState, stepDecrement, toggleModal, createCycle, actionCompleted }) {
+    // Close modal after successfully creating cycle
+    useEffect(() => {
+        if (actionCompleted) {
+            toggleModal();
+        }
+    },[actionCompleted, toggleModal])
 
     let initialState = {}
     // use existing maxes for repeat cycles
@@ -27,11 +33,6 @@ function FormStep2({ formUtils: { getValues, handleSubmit }, formState, stepDecr
             createCycle(formState.formData);
         }
         createCycle(data);
-    }
-
-    // Close modal after successfully creating cycle
-    if (actionCompleted) {
-        toggleModal();
     }
 
     return (
