@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect'
 import { screen } from '@testing-library/dom'
-import { render, fireEvent, waitForElement } from '@testing-library/react';
+import { render, fireEvent, waitForElement, act } from '@testing-library/react';
 import axios from 'axios';
 
 // Components
@@ -436,8 +436,11 @@ describe('Workout', () => {
         expect(currentWorkout.exercise).toBe('squat')
         // Complete main sets
         currentWorkout.mainSets.forEach(async (set, i) => {
+          // Enter notes
             let notes = `main set ${i+1}`
-            // fireEvent.change(getByRole('textbox'), {target: { value: notes}})
+            const notesField = getByRole('textbox')
+            fireEvent.change(notesField, {target: { value: notes}})
+            expect(notesField).toHaveValue(notes)
             let updatedSet = {
                 ...set,
                 time: new Date().toLocaleTimeString(),
@@ -454,22 +457,27 @@ describe('Workout', () => {
             })
             currentWorkout.mainSets = updatedMainSets
             axios.put = jest.fn().mockImplementationOnce(() => Promise.resolve({data: {workout: currentWorkout}}))
+            // Click complete button
             fireEvent.click(getByRole('button', {name: /complete/i}),leftClick)
-            await waitForElement(() => getByText(notes));
+            // Notes field reset to blank
             expect(getByText(notes)).toBeTruthy();
+            expect(notesField).toHaveValue('');
         })
 
         // Complete volume sets
         currentWorkout.volumeSets.forEach(async (set, i) => {
+          // Enter notes
             let notes = `volume set ${i+1}`
-            // fireEvent.change(getByRole('textbox'), {target: { value: notes}})
+            const notesField = getByRole('textbox')
+            fireEvent.change(notesField, {target: { value: notes}})
+            expect(notesField).toHaveValue(notes)
             let updatedSet = {
                 ...set,
                 time: new Date().toLocaleTimeString(),
                 notes,
                 completed: true
             }
-            // build new main sets array
+            // build new volue sets array
             let updatedvolumeSets = currentWorkout.volumeSets.map((el) => {
                 if (el._id === set._id) {
                     return updatedSet
@@ -482,15 +490,18 @@ describe('Workout', () => {
             }
             currentWorkout.volumeSets = updatedvolumeSets
             axios.put = jest.fn().mockImplementationOnce(() => Promise.resolve({data: {workout: currentWorkout}}))
+            // Click complete button
             fireEvent.click(getByRole('button', {name: /complete/i}),leftClick)
-            await waitForElement(() => getByText(notes));
+            // Notes field reset to blank
             expect(getByText(notes)).toBeTruthy();
+            if (!currentWorkout.completed) {
+              expect(notesField).toHaveValue('');
+            }
         })
 
         // See completed workout
         await waitForElement(() => getByText('Workout Completed!'))
         expect(getByText('Workout Completed!')).toBeTruthy();
-        expect(getByText(/volume set 5/i)).toBeTruthy();
          
     })
   })
