@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createCycle } from '../../actions/cycles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 function FormStep2({ formUtils: { getValues, handleSubmit }, formState, stepDecrement, toggleModal, createCycle, actionCompleted }) {
     // Close modal after successfully creating cycle
@@ -39,7 +41,7 @@ function FormStep2({ formUtils: { getValues, handleSubmit }, formState, stepDecr
         <div className="modal-background">
             <div className="modal-form-container container-flex container-vertical">
                 <div className='toolbar'>
-                    <button onClick={() => toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
+                    <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><FontAwesomeIcon icon={solid('xmark')} /></button>
                 </div>
                 <div className='modal-form-items container-flex container-vertical container-vertical-center'>
                     <p className="header-text text-primary text-bold text-medium">

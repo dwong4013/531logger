@@ -1,4 +1,7 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+
 
 export default function CycleOptions({ repeatCycle, stepIncrement, toggleModal }) {
 
@@ -6,7 +9,7 @@ export default function CycleOptions({ repeatCycle, stepIncrement, toggleModal }
       <div className="modal-background">
         <div className="modal-form-container container-flex container-vertical">
             <div className='toolbar modal-toolbar'>
-                <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
+                <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><FontAwesomeIcon icon={solid('xmark')} /></button>
             </div>
             <div className='modal-form-items container-flex container-vertical container-vertical-center'>
             <p className="header-text text-primary text-bold text-medium my-2">
