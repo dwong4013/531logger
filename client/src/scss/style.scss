@@ -211,7 +211,7 @@ body {
             grid-template-columns: repeat(4,2fr) 1fr;
         }
         
-        i {
+        svg {
             color: lighten($dark-color,20%);
             align-self: flex-end;
             justify-self: flex-end;
@@ -238,7 +238,7 @@ body {
             margin: 0.4rem 0;
         }
 
-        i {
+        svg {
             color: lighten($dark-color,20%);
         }
 
