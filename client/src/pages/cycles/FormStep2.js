@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import { createCycle } from '../../actions/cycles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 function FormStep2({ formUtils: { getValues, handleSubmit }, formState, stepDecrement, toggleModal, createCycle, actionCompleted }) {
     // Close modal after successfully creating cycle

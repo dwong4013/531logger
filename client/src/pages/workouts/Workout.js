@@ -9,6 +9,11 @@ import SetCard from './SetCard';
 import SummaryCard from '../../pages/dashboard/SummaryCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 const capitalize = (string) => {
   return string[0].toUpperCase()+string.slice(1);
