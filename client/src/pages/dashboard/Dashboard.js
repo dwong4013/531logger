@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import { logout, loadUser } from '../../actions/auth';
 import { getCycles } from '../../actions/cycles';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
 // Components
 import Spinner from '../../components/layout/Spinner';
@@ -10,6 +14,9 @@ import SummaryCard from './SummaryCard';
 import CycleCard from './CycleCard';
 import CycleForm from '../cycles/CycleForm';
 import UtilityButton from '../../components/buttons/UtilityButton';
+
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 const Dashboard = ({
   auth: { loading: authLoading, user },
@@ -49,9 +56,9 @@ const Dashboard = ({
           {/* Logout and Create Cycle Buttons */}
           <div className="toolbar">
             <UtilityButton classes={'toolbar-left'} onClick={()=> logout()}>
-              <i className="fa-solid fa-right-from-bracket"/> logout
+              <FontAwesomeIcon icon={solid('right-from-bracket')} /> logout
             </UtilityButton>
-            <button data-testid='create-cycle-button' className="toolbar-right btn btn-big-action btn-primary" onClick={()=> toggleModal()}><i className="fa-solid fa-plus"/></button>
+            <button data-testid='create-cycle-button' className="toolbar-right btn btn-big-action btn-primary" onClick={()=> toggleModal()}><FontAwesomeIcon icon={solid('plus')} /></button>
           </div>
           {/* Summary Info */}
           <div className="summary-cards-container my-2">

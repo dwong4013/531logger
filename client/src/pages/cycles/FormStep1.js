@@ -1,7 +1,14 @@
 import React, { Fragment } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
 // Components
 import Input from '../../components/forms/Input';
+
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 export default function FormStep1({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
     // Expose react form hook utils
@@ -12,7 +19,7 @@ export default function FormStep1({ formUtils, stepIncrement, stepDecrement, tog
         <div className="modal-background">
             <div className="modal-form-container container-flex container-vertical">
                 <div className='toolbar'>
-                    <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><i className="fa-solid fa-xmark"/></button>
+                    <button onClick={()=> toggleModal()} className="toolbar-right btn btn-small-action btn-dark"><FontAwesomeIcon icon={solid('xmark')} /></button>
                 </div>
                 <div className='modal-form-items container-flex container-vertical container-vertical-center'>
                     <form>
