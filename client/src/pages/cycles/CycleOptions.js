@@ -1,7 +1,11 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 export default function CycleOptions({ repeatCycle, stepIncrement, toggleModal }) {
 

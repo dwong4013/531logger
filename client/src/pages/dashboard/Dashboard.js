@@ -5,6 +5,8 @@ import { getCycles } from '../../actions/cycles';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
 // Components
 import Spinner from '../../components/layout/Spinner';
@@ -12,6 +14,9 @@ import SummaryCard from './SummaryCard';
 import CycleCard from './CycleCard';
 import CycleForm from '../cycles/CycleForm';
 import UtilityButton from '../../components/buttons/UtilityButton';
+
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 const Dashboard = ({
   auth: { loading: authLoading, user },

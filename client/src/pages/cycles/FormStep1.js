@@ -1,9 +1,14 @@
 import React, { Fragment } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
 // Components
 import Input from '../../components/forms/Input';
+
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 export default function FormStep1({ formUtils, stepIncrement, stepDecrement, toggleModal }) {
     // Expose react form hook utils

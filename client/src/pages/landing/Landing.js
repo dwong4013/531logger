@@ -1,14 +1,19 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { config } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 const Landing = () => {
   return (
     <Fragment>
       <section className="container-landing">
         <div className="landing-items container-flex container-vertical container-vertical-center bg-primary">
-            <FontAwesomeIcon className="logo" icon={solid('dumbbell')} size="8x" />
+            <FontAwesomeIcon className="logo" icon={solid('dumbbell')} size='8x' />
             <h1 className="app-name text text-large">
               More Plates
             </h1>
