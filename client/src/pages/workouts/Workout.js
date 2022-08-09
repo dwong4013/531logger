@@ -7,6 +7,13 @@ import { getWorkout, editWorkout } from '../../actions/workouts';
 import { getCycles } from '../../actions/cycles';
 import SetCard from './SetCard';
 import SummaryCard from '../../pages/dashboard/SummaryCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+// Prevent fontawesome from adding css to the head
+config.autoAddCss = false;
 
 const capitalize = (string) => {
   return string[0].toUpperCase()+string.slice(1);
@@ -139,7 +146,7 @@ const Workout = ({ getWorkout, editWorkout, getCycles, cycles, workouts, match }
     ) : (
       <section className="summary-container container-flex container-vertical container-vertical-center px-6">
         <div className="toolbar">
-        <Link to='/dashboard' className="btn btn-back btn-icon-left btn-small btn-dark toolbar-left"><i className="fa-solid fa-caret-left"/> back</Link>
+        <Link to='/dashboard' className="btn btn-back btn-icon-left btn-small btn-dark toolbar-left"><FontAwesomeIcon icon={solid('caret-left')} /> back</Link>
         <select onChange={e=> onWorkoutSelect(e)} className="select toolbar-right" name="pets" id="pet-select">
           {workout && currentCycle && currentCycle.workoutsToDo.map((workoutOption) => (
             <option key={workoutOption._id} value={`${workoutOption._id}`} defaultValue={workoutOption._id === workout._id }>{`Week ${workoutOption.week}: ${capitalize(workoutOption.exercise)}`}</option>
