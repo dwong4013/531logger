@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 const WorkoutCard = ({ week, index, workout: { exercise, workingSets } }) => {
   return (
@@ -17,7 +17,7 @@ const WorkoutCard = ({ week, index, workout: { exercise, workingSets } }) => {
                     <ul className="horizontal-list">
                       {workingSets.map((set, index) => (
                         <li className="lead m-1" key={index}>
-                          <strong>Set {index + 1}:</strong> {set.weight} x{' '}
+                          <strong>Set {index + 1}:</strong> {set.weight} x{" "}
                           {set.reps}
                         </li>
                       ))}
