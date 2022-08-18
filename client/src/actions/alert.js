@@ -1,10 +1,10 @@
-import { SET_ALERT, REMOVE_ALERT, SET_TIMEOUT } from '../actions/types';
+import { SET_ALERT, REMOVE_ALERT, SET_TIMEOUT } from "../actions/types";
 
 export const setAlert = (title, msg, type) => (dispatch) => {
   // Update state with new alert
   dispatch({
     type: SET_ALERT,
-    payload: { title, msg, type }
+    payload: { title, msg, type },
   });
 
   // Timeout id required for clearing timeout in removeAlert
@@ -13,15 +13,15 @@ export const setAlert = (title, msg, type) => (dispatch) => {
   // Update state with timeoutId
   dispatch({
     type: SET_TIMEOUT,
-    payload: { timeoutId}
-  })
+    payload: { timeoutId },
+  });
 };
 
 export const removeAlert = (timeoutId) => (dispatch) => {
-  clearTimeout(timeoutId)
+  clearTimeout(timeoutId);
 
   // Update state to remove alert
   dispatch({
-    type: REMOVE_ALERT
-  })
-}
+    type: REMOVE_ALERT,
+  });
+};

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { setAlert } from './alert';
+import axios from "axios";
+import { setAlert } from "./alert";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -7,39 +7,37 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
-} from './types';
-import setAuthToken from '../utils/setAuthToken';
+  LOGOUT,
+} from "./types";
+import setAuthToken from "../utils/setAuthToken";
 
 //Login User
 export const loginUser = (formData) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   };
 
   try {
-    const res = await axios.post('/api/auth', formData, config);
+    const res = await axios.post("/api/auth", formData, config);
 
     // Update state with user data
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
-
-
   } catch (err) {
     const error = err.response.data.error;
 
     // Update state with alert
     if (error) {
-      dispatch(setAlert('Error', error.msg, 'danger'));
+      dispatch(setAlert("Error", error.msg, "danger"));
     }
 
     // Update state to remove user data
     dispatch({
-      type: LOGIN_FAIL
+      type: LOGIN_FAIL,
     });
   }
 };
@@ -52,25 +50,24 @@ export const loadUser = () => async (dispatch) => {
   }
 
   try {
-    const res = await axios.get('/api/auth');
+    const res = await axios.get("/api/auth");
 
     // Update state with user data
     dispatch({
       type: USER_LOADED,
-      payload: res.data
+      payload: res.data,
     });
-
   } catch (err) {
     const error = err.response.data.error;
 
     // Update state with alert
     if (error) {
-      dispatch(setAlert('Error', error.msg, 'danger'));
+      dispatch(setAlert("Error", error.msg, "danger"));
     }
 
     // Update state to remove user data
     dispatch({
-      type: AUTH_ERROR
+      type: AUTH_ERROR,
     });
   }
 };
@@ -79,29 +76,29 @@ export const loadUser = () => async (dispatch) => {
 export const registerUser = (formData) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   };
 
   try {
-    const res = await axios.post('/api/users', formData, config);
+    const res = await axios.post("/api/users", formData, config);
 
     // Update state with user data
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     const error = err.response.data.error;
 
     // Update state to add alert
     if (error) {
-      dispatch(setAlert('Error', error.msg, 'danger'));
+      dispatch(setAlert("Error", error.msg, "danger"));
     }
 
     // Update state to remove user data
     dispatch({
-      type: REGISTER_FAIL
+      type: REGISTER_FAIL,
     });
   }
 };
@@ -109,6 +106,6 @@ export const registerUser = (formData) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   // Update state to remove user data
   dispatch({
-    type: LOGOUT
+    type: LOGOUT,
   });
 };
