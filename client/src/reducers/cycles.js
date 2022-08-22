@@ -6,14 +6,14 @@ import {
   DELETE_CYCLE,
   CYCLE_ERROR,
   CYCLE_ACTION_COMPLETE,
-  CYCLE_ACTION_READY
-} from '../actions/types';
+  CYCLE_ACTION_READY,
+} from "../actions/types";
 
 const initialState = {
   cycles: null,
   currentCycle: null,
   loading: true,
-  created: false
+  created: false,
 };
 
 export default function (state = initialState, action) {
@@ -25,7 +25,7 @@ export default function (state = initialState, action) {
         ...state,
         cycles: payload,
         currentCycle: payload[0],
-        loading: false
+        loading: false,
       };
     case ADD_CYCLE:
       return {
@@ -35,40 +35,42 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case UPDATE_CYCLE:
-      let removedCycles = state.cycles.filter(cycle => cycle._id !== payload._id)
+      let removedCycles = state.cycles.filter(
+        (cycle) => cycle._id !== payload._id
+      );
       return {
         ...state,
         cycles: [payload, ...removedCycles],
         currentCycle: payload,
-        loading: false
-      }
+        loading: false,
+      };
     case CYCLE_ACTION_COMPLETE:
       return {
         ...state,
-        actionCompleted: true
-      }
+        actionCompleted: true,
+      };
     case CYCLE_ACTION_READY:
       return {
         ...state,
-        actionCompleted: false
-      }
+        actionCompleted: false,
+      };
     case NO_CYCLES:
       return {
         ...state,
         cycles: null,
-        loading: false
+        loading: false,
       };
     case CYCLE_ERROR:
       return {
         ...state,
         error: payload,
-        loading: false
+        loading: false,
       };
     case DELETE_CYCLE:
       return {
         ...state,
         cycles: state.cycles.filter((cycle) => cycle._id !== payload),
-        loading: false
+        loading: false,
       };
     default:
       return state;

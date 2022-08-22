@@ -5,13 +5,13 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
-} from '../actions/types';
+  LOGOUT,
+} from "../actions/types";
 
 const initialState = {
   isAuthenticated: null,
   loading: true,
-  user: null
+  user: null,
 };
 
 export default function (state = initialState, action) {
@@ -27,21 +27,21 @@ export default function (state = initialState, action) {
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', payload);
+      localStorage.setItem("token", payload);
       return {
         ...state,
         isAuthenticated: true,
-        loading: true
+        loading: true,
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       return {
         ...state,
         isAuthenticated: false,
-        loading: false
+        loading: false,
       };
     default:
       return state;
